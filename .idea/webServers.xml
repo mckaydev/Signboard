@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="596944ba-9f49-4538-a6be-f45b06761c57" name="EC2 Signboard">
+        <fileTransfer accessType="SFTP" host="3.34.72.64" port="22" sshConfigId="781a33e1-6bce-45b7-a2d5-b5f254a3a11a" sshConfig="ubuntu@3.34.72.64:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,69 @@
+.fileBox input[type="file"] {
+    /*position 기본값 : static (left, right, top, bottom 옵셋 적용 x)*/
+    /*relative: 부모에 상대적인 위치 이동 (옵셋 사용 가능)*/
+    /*absolute: html을 기준으로 절대적인 위치 이동
+    기본 값은 원래 위치, left, top 지정했을 때 html 기준*/
+    /*fixed: 스크롤에 영향을 받지 않는 절대적 위치*/
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
+
+.fileBox label, input[type="submit"], button {
+    display: inline-block;
+    padding: .5em .75em;
+    color: #999;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #fdfdfd;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+}
+
+/* named upload */
+.fileBox .upload-name {
+    display: inline-block;
+    padding: .5em .75em;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.fileBox .upload-name.select {
+    width: 250px;
+}
+
+.fileBox button:hover {
+    color: #ffffff;
+    background-color: darkcyan;
+    border-color: darkslateblue;
+}
+
+.fileBox.upload label {
+    color: #ffffff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
+
+.fileBox.upload input[type="submit"] {
+    color: #ffffff;
+    background-color: #B9B999;
+    border-color: #B2B222;
+}

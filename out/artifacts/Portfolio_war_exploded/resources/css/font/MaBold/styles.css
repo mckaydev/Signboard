@@ -1,0 +1,11 @@
+
+@font-face {
+  font-family: 'MaplestoryOTFBold';
+  src: url('MaplestoryOTFBold.eot?#iefix') format('embedded-opentype'),
+  		url('MaplestoryOTFBold.otf')  format('opentype'),
+	     url('MaplestoryOTFBold.woff') format('woff'),
+	     url('MaplestoryOTFBold.ttf')  format('truetype'),
+	     url('MaplestoryOTFBold.svg#MaplestoryOTFBold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

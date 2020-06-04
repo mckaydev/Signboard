@@ -1,0 +1,73 @@
+*, *:before, *:after {
+    font-size: 1.3rem;
+    box-sizing: content-box;
+}
+
+.infoBox {
+    width: 820px;
+    text-align: justify;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+            "infoImgArea infoTextArea"
+            "ButtonArea ButtonArea"
+}
+
+.ButtonArea {
+    grid-area: ButtonArea;
+    padding-top: 30px;
+}
+.infoImgArea {
+    grid-area: infoImgArea;
+}
+.infoTextArea {
+    grid-area: infoTextArea;
+}
+.infoImgArea, .infoTextArea {
+    padding-left: 25px;
+    /*border: 1px solid #B9B999;*/
+    /*border-radius: 3%;*/
+}
+
+#infoImg, #infoText {
+    width: 360px;
+    vertical-align: middle;
+}
+
+.reInputButton {
+    width: 820px;
+    display: inline-block;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #babab1;
+    border: 1px solid #808067;
+    border-bottom-color: #5c5c55;
+    border-radius: .25em;
+}
+.reInputButton:hover {
+    color: #ffffff;
+    background-color: darkcyan;
+    border-color: darkslateblue;
+}
+
+@media (max-width: 900px) {
+    .infoBox {
+        width: 400px;
+        grid-template-columns: 100%;
+        grid-template-rows: auto auto auto;
+        grid-template-areas:
+            "infoImgArea"
+            "infoTextArea"
+            "ButtonArea";
+    }
+    .reInputButton {
+        width: 360px;
+    }
+    .ButtonArea {
+        padding-top: 10px;
+    }
+    .infoImgArea, .infoTextArea, .ButtonArea{
+        padding-left: 20px;
+    }
+}
