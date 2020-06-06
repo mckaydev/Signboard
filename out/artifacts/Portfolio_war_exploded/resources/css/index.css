@@ -11,11 +11,11 @@
 }
 
 *, *:before, *:after {
-    font: 1rem "MaplestoryOTFLight", serif;
+    font-family: "MaplestoryOTFLight", serif;
     margin: 0;
     padding: 0;    /*보더 박스의 크기로 width 를 정한다.*/
     /*content-box 가 기본값*/
-    box-sizing: border-box;
+    box-sizing: content-box;
 }
 
 html, body {
@@ -24,7 +24,8 @@ html, body {
 }
 
 .container {
-    background: url("../img/ERBxnnOU8AIolbZ.jpg") fixed no-repeat center;
+    font-size: 1rem;
+    background: url("../img/background/background.jpg") fixed no-repeat center;
     background-size: cover;
     background-position: 0% 40%;
     min-height: 600px;
@@ -34,11 +35,42 @@ html, body {
 }
 
 .infoBox {
-    width: 500px;
+    width: 450px;
     height: auto;
     margin: auto auto;
     padding: 30px;
     background-color: white;
     box-shadow: 0 0 80px black;
     text-align: center;
+}
+
+.signIn, .signUp, .modify, .logout, .remove{
+    font-size: 1rem;
+    position: fixed;
+    width: 61px;
+    top: 20px;
+    display: inline-block;
+    padding: .5em .75em;
+    color: #999;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #fdfdfd;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+}
+.signIn, .remove{
+    right: 20px;
+}
+.signUp, .logout {
+    right: 130px;
+}
+.modify {
+    right: 240px;
+}
+.signUp:hover, .signIn:hover, .modify:hover, .logout:hover, .remove:hover{
+    color: #ffffff;
+    background-color: darkcyan;
+    border-color: darkslateblue;
 }

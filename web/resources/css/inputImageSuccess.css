@@ -1,6 +1,9 @@
 *, *:before, *:after {
-    font-size: 1.3rem;
     box-sizing: content-box;
+}
+
+.container {
+    font-size: 1.5rem;
 }
 
 .infoBox {
@@ -30,7 +33,7 @@
     /*border-radius: 3%;*/
 }
 
-#infoImg, #infoText {
+.infoImg, .infoText {
     width: 360px;
     vertical-align: middle;
 }
@@ -44,6 +47,7 @@
     border: 1px solid #808067;
     border-bottom-color: #5c5c55;
     border-radius: .25em;
+    font-size: 1.5em;
 }
 .reInputButton:hover {
     color: #ffffff;
@@ -62,6 +66,7 @@
             "ButtonArea";
     }
     .reInputButton {
+        font-size: 1.3rem;
         width: 360px;
     }
     .ButtonArea {

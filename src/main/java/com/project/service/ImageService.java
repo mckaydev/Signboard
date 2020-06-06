@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 
-@Service("imageService")
+@Service
 public class ImageService {
     public void saveImage(HttpSession session, MultipartFile imageFile) throws IOException {
         String path = session.getServletContext().getRealPath("/") + "/resources/img/" + imageFile.getOriginalFilename();

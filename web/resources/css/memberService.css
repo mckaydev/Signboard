@@ -1,0 +1,19 @@
+* {
+    font-size: 1.3rem;
+}
+
+button {
+    padding: 5px;
+    display: inline-block;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #babab1;
+    border: 1px solid #808067;
+    border-bottom-color: #5c5c55;
+    border-radius: .25em;
+}
+button:hover {
+    color: #ffffff;
+    background-color: darkcyan;
+    border-color: darkslateblue;
+}
