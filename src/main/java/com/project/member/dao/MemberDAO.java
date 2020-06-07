@@ -7,13 +7,19 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.sql.*;
 
 @Service
 public class MemberDAO implements IMemberDAO{
-    private String driver = "oracle.jdbc.driver.OracleDriver";
-    private String url = "jdbc:oracle:thin:@localhost:1521:xe";
-    private String dbId = "C##MCKAY";
-    private String dbPw = "";
+//    private String driver = "oracle.jdbc.driver.OracleDriver";
+//    private String url = "jdbc:oracle:thin:@localhost:1521:xe";
+//    private String dbId = "C##MCKAY";
+//    private String dbPw = "rewq7428";
+
+    private String mysqlDriver = "com.mysql.cj.jdbc.Driver";
+    private String mysqlUrl = "jdbc:mysql://localhost:3306/signboard?serverTimezone=Asia/Seoul";
+    private String mysqldbId = "jutabi";
+    private String mysqldbPw = "test1234";
 
     private DriverManagerDataSource dataSource;
     private JdbcTemplate template;
@@ -23,10 +29,10 @@ public class MemberDAO implements IMemberDAO{
 //    private ResultSet resultSet = null;
     public MemberDAO() {
         dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(driver);
-        dataSource.setUrl(url);
-        dataSource.setUsername(dbId);
-        dataSource.setPassword(dbPw);
+        dataSource.setDriverClassName(mysqlDriver);
+        dataSource.setUrl(mysqlUrl);
+        dataSource.setUsername(mysqldbId);
+        dataSource.setPassword(mysqldbPw);
         // dataSource.setDriverClass(driver) - (c3p0)
         // dataSource.setJdbcUrl(url) - (c3p0)
         // dataSource.setUser(dbId) - (c3p0)
@@ -88,7 +94,8 @@ public class MemberDAO implements IMemberDAO{
     @Override
     public int memberDelete(Member member) {
         int result;
-        String sql = "delete member where memberId = ? and memberPw = ? and memberEmail = ?";
+//        String oraclesql = "delete member where memberId = ? and memberPw = ? and memberEmail = ?";
+        String sql = "delete from member where memberId = ? and memberPw = ? and memberEmail = ?";
         result = template.update(sql, member.getMemberId(), member.getMemberPw(), member.getMemberEmail());
         return result;
     }
