@@ -28,4 +28,8 @@
     padding: 25px;
     bottom: 5px;
     font-size: 1.5rem;
+    opacity: 50%;
+}
+.reInputButton:hover {
+    opacity: 100%;
 }
