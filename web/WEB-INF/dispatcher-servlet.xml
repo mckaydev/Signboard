@@ -37,4 +37,14 @@
         <property name="password" value="test1234" />
     </bean>
 
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!--        <property name="configLocation" value="classpath:/com/project/mybatisConfig.xml"/>-->
+        <property name="mapperLocations" value="classpath:/mappers/*Mapper.xml"/>
+    </bean>
+
+    <bean id="sqlSession" name="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+        <constructor-arg index="0" name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+
 </beans>

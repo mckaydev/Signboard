@@ -2,7 +2,6 @@
   <artifact type="exploded-war" name="Portfolio:war exploded">
     <output-path>$PROJECT_DIR$/out/artifacts/Portfolio_war_exploded</output-path>
     <root id="root">
-      <element id="javaee-facet-resources" facet="Portfolio/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="Portfolio" />
@@ -10,35 +9,36 @@
         <element id="directory" name="lib">
           <element id="library" level="project" name="Spring-5.2.3.RELEASE" />
           <element id="library" level="project" name="Spring MVC-5.2.3.RELEASE" />
-          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:4.0.1" />
-          <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
-          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
-          <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:2.0.0-alpha1" />
-          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:2.0.0-alpha1" />
-          <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:2.0.0-alpha1" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:5.2.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.2.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:5.2.3.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-context:5.2.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-core:5.2.3.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.2.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.2.3.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-test:5.2.3.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-web:5.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.2.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:5.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-web:5.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:2.0.0-alpha1" />
+          <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:2.0.0-alpha1" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:2.0.0-alpha1" />
+          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
+          <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-test:5.2.3.RELEASE" />
           <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.4" />
           <element id="library" level="project" name="Maven: commons-io:commons-io:2.5" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.5.4" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:2.0.4" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.2.6.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.2.6.RELEASE" />
           <element id="library" level="project" name="Maven: com.mchange:c3p0:0.9.5.5" />
           <element id="library" level="project" name="Maven: com.mchange:mchange-commons-java:0.2.19" />
           <element id="library" level="project" name="Maven: commons-dbcp:commons-dbcp:1.4" />
           <element id="library" level="project" name="Maven: commons-pool:commons-pool:1.5.4" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.2.6.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.2.6.RELEASE" />
-          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.6.1" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.20" />
-          <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:2.0.4" />
-          <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.5.4" />
+          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.6.1" />
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:4.0.1" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="Portfolio/web/Web" />
     </root>
   </artifact>
 </component>
