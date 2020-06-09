@@ -11,7 +11,6 @@
 <head>
     <title>Find</title>
     <link rel="stylesheet" type="text/css" href="resources/css/index.css">
-    <link rel="stylesheet" type="text/css" href="resources/css/inputImageSuccess.css">
     <link rel="stylesheet" type="text/css" href="resources/css/findOk.css">
 </head>
 <body>
@@ -178,7 +177,7 @@
                 </p>
             </div>
         </div>
-        <button class="reInputButton" onclick="location.href='/'">메인화면</button>
+        <button class="mainButton" onclick="location.href='/'">메인화면</button>
     </div>
 </body>
 </html>

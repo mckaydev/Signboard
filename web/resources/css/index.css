@@ -16,6 +16,7 @@
     padding: 0;    /*보더 박스의 크기로 width 를 정한다.*/
     /*content-box 가 기본값*/
     box-sizing: content-box;
+    font-size: 1rem;
 }
 
 html, body {
@@ -24,7 +25,6 @@ html, body {
 }
 
 .container {
-    font-size: 1rem;
     background: url("../img/background/background.jpg") fixed no-repeat center;
     background-size: cover;
     background-position: 0% 40%;
@@ -45,7 +45,6 @@ html, body {
 }
 
 .signIn, .signUp, .modify, .logout, .remove{
-    font-size: 1rem;
     position: fixed;
     width: 61px;
     top: 20px;
@@ -60,16 +59,32 @@ html, body {
     border-bottom-color: #e2e2e2;
     border-radius: .25em;
 }
-.signIn, .remove{
+.signUp, .remove{
     right: 20px;
 }
-.signUp, .logout {
+.signIn, .logout {
     right: 130px;
 }
 .modify {
     right: 240px;
 }
 .signUp:hover, .signIn:hover, .modify:hover, .logout:hover, .remove:hover{
+    color: #ffffff;
+    background-color: darkcyan;
+    border-color: darkslateblue;
+}
+
+button {
+    padding: 5px;
+    display: inline-block;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #babab1;
+    border: 1px solid #808067;
+    border-bottom-color: #5c5c55;
+    border-radius: .25em;
+}
+button:hover {
     color: #ffffff;
     background-color: darkcyan;
     border-color: darkslateblue;

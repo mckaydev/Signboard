@@ -1,8 +1,4 @@
-*, *:before, *:after {
-    box-sizing: content-box;
-}
-
-.container {
+.container * {
     font-size: 1.5rem;
 }
 
@@ -17,20 +13,17 @@
             "ButtonArea ButtonArea"
 }
 
-.ButtonArea {
-    grid-area: ButtonArea;
-    padding-top: 30px;
-}
 .infoImgArea {
     grid-area: infoImgArea;
+    padding-left: 25px;
 }
 .infoTextArea {
     grid-area: infoTextArea;
-}
-.infoImgArea, .infoTextArea {
     padding-left: 25px;
-    /*border: 1px solid #B9B999;*/
-    /*border-radius: 3%;*/
+}
+.ButtonArea {
+    grid-area: ButtonArea;
+    padding-top: 30px;
 }
 
 .infoImg, .infoText {
@@ -39,20 +32,7 @@
 }
 
 .reInputButton {
-    width: 820px;
-    display: inline-block;
-    line-height: normal;
-    vertical-align: middle;
-    background-color: #babab1;
-    border: 1px solid #808067;
-    border-bottom-color: #5c5c55;
-    border-radius: .25em;
-    font-size: 1.5em;
-}
-.reInputButton:hover {
-    color: #ffffff;
-    background-color: darkcyan;
-    border-color: darkslateblue;
+    width: 808px;
 }
 
 @media (max-width: 900px) {
@@ -66,8 +46,8 @@
             "ButtonArea";
     }
     .reInputButton {
-        font-size: 1.3rem;
-        width: 360px;
+        width: 348px;
+        font-size: 1.2rem;
     }
     .ButtonArea {
         padding-top: 10px;

@@ -102,7 +102,7 @@
             </p>
         </div>
     </div>
-    <button class="reInputButton" onclick="location.href='/'">메인화면</button>
+    <button class="mainButton" onclick="location.href='/'">메인화면</button>
 </div>
 </body>
 </html>
