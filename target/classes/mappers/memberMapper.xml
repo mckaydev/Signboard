@@ -35,11 +35,9 @@
 
     <update id="memberUpdate" parameterType="com.project.member.Member">
         update member set memberPw = #{memberPw},  memberEmail = #{memberEmail} where memberId = #{memberId};
-        commit;
     </update>
 
     <delete id="memberDelete" parameterType="com.project.member.Member">
         delete from member where memberId = #{memberId} and memberPw = #{memberPw} and memberEmail = #{memberEmail};
-        commit;
     </delete>
 </mapper>
