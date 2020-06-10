@@ -7,4 +7,6 @@ public interface IMemberDAO {
     Member memberRead(Member member);
     int memberUpdate(Member member);
     int memberDelete(Member member);
+    void tableCreate(Member member);
+    void tableDelete(Member member);
 }

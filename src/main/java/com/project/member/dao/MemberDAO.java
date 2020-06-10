@@ -123,9 +123,23 @@ public class MemberDAO implements IMemberDAO {
     }
 
     @Override
+    public void tableCreate(Member member) {
+
+    }
+
+    @Override
+    public void tableDelete(Member member) {
+
+    }
+
+    @Override
     public int memberCreate(Member member) {
         IMemberDAO dao = sqlSession.getMapper(IMemberDAO.class);
-        return dao.memberCreate(member);
+        int result = dao.memberCreate(member);
+        if(result == 1) {
+            dao.tableCreate(member);
+        }
+        return result;
     }
 
     @Override
@@ -143,6 +157,10 @@ public class MemberDAO implements IMemberDAO {
     @Override
     public int memberDelete(Member member) {
         IMemberDAO dao = sqlSession.getMapper(IMemberDAO.class);
-        return dao.memberDelete(member);
+        int result = dao.memberDelete(member);
+        if (result == 1) {
+            dao.tableDelete(member);
+        }
+        return result;
     }
 }

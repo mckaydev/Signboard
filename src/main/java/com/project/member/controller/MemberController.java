@@ -28,9 +28,10 @@ public class MemberController {
     }
     @RequestMapping(value = "/joinResult", method = RequestMethod.POST)
     public String joinResult(Member member) {
-
-        service.memberRegister(member);
-
+        int result = service.memberRegister(member);
+        if (result != 1) {
+            return "redirect:/member/joinForm";
+        }
         return "joinResult";
     }
 

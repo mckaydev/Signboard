@@ -15,16 +15,17 @@ public class MemberService implements IMemberService {
     }
 
     @Override
-    public void memberRegister(Member member) {
+    public int memberRegister(Member member) {
         int result = dao.memberCreate(member);
         System.out.println(result);
         if(result == 1) {
-            System.out.println("member register fail");
+            System.out.println("new member register: " +
+                "\nId: " + member.getMemberId() +
+                "\nEmail: " + member.getMemberEmail());
         } else {
-            System.out.print("new member register: " +
-                    "\nId: " + member.getMemberId() +
-                    "\nEmail: " + member.getMemberEmail());
+            System.out.println("member register fail");
         }
+        return result;
     }
 
     @Override
@@ -46,7 +47,7 @@ public class MemberService implements IMemberService {
         if(result == 0) {
             System.out.println("member modify fail");
         } else {
-            System.out.print("modified member " +
+            System.out.println("modified member " +
                     "\nId: " + member.getMemberId() +
                     "\nEmail: " + member.getMemberEmail());
         }
@@ -60,7 +61,7 @@ public class MemberService implements IMemberService {
         if(result == 0) {
             System.out.println("member remove fail");
         } else {
-            System.out.print("removed member " +
+            System.out.println("removed member " +
                     "\nId: " + member.getMemberId());
         }
         return result;
