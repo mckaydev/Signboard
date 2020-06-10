@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class ImageService {
@@ -18,6 +19,19 @@ public class ImageService {
     @Autowired
     public ImageService(SrchhistoDAO srchhistoDAO) {
         this.dao = srchhistoDAO;
+    }
+
+    public void viewPrior(HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        List<Srchhisto> list = dao.storeSelect(member);
+        for (Srchhisto srchhisto : list) {
+            System.out.println("------");
+            System.out.print(srchhisto.getImageFileName() + " | ");
+            System.out.print(srchhisto.getStoreName() + " | ");
+            System.out.print(srchhisto.getStoreMenu() + " | ");
+            System.out.print(srchhisto.getStorePhone() + " | ");
+            System.out.println(srchhisto.getIsBookmarked());
+        }
     }
 
     public void saveImageToTable(HttpSession session, Srchhisto srchhisto) {
@@ -29,7 +43,6 @@ public class ImageService {
         // 회원일 경우
         if(member != null) {
             // 테이블에 데이터 저장.
-            // 새로운 매퍼 생성?
             srchhisto.setMemberId(member.getMemberId());
             srchhisto.setIsBookmarked("0");
             srchhisto.setGpsAddress("234324423324");

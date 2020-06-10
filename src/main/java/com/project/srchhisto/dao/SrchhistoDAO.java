@@ -1,9 +1,12 @@
 package com.project.srchhisto.dao;
 
+import com.project.member.Member;
 import com.project.srchhisto.Srchhisto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SrchhistoDAO implements ISrchhistoDAO{
@@ -23,8 +26,9 @@ public class SrchhistoDAO implements ISrchhistoDAO{
     }
 
     @Override
-    public int storeSelect(Srchhisto srchhisto) {
-        return 0;
+    public List<Srchhisto> storeSelect(Member member) {
+        ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
+        return dao.storeSelect(member);
     }
 
     @Override

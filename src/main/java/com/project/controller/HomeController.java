@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -55,14 +56,23 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/find", method = RequestMethod.GET)
-    public String find(Model model) {
+    public ModelAndView find(Model model) {
+        ModelAndView mav = new ModelAndView();
+        // addObject로 select한 테이블 데이터들 List로 전달.
+//        mav.addObject();
+        mav.setViewName("findOk");
 
-        return "findOk";
+        return mav;
     }
 
     @RequestMapping(value = "/priorSearch", method = RequestMethod.GET)
-    public String priorSearch(Model model) {
+    public ModelAndView priorSearch(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        // addObject로 select한 테이블 데이터들 List으로 전달.
+//        mav.addObject();
+        imageService.viewPrior(session);
+        mav.setViewName("priorSearch");
 
-        return "priorSearch";
+        return mav;
     }
 }

@@ -11,7 +11,7 @@
         values (#{imageFileName}, #{gpsAddress}, #{storeName}, #{storePhone}, #{storeMenu}, #{isBookmarked})
     </insert>
 
-    <select id="storeSelect" parameterType="com.project.srchhisto.Srchhisto">
+    <select id="storeSelect" parameterType="com.project.member.Member" resultType="com.project.srchhisto.Srchhisto">
         use srchhisto;
         select * from ${memberId}
     </select>
