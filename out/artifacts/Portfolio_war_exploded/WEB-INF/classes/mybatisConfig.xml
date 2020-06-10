@@ -11,5 +11,6 @@
 
     <mappers>
         <mapper resource="mappers/memberMapper.xml"/>
+        <mapper resource="mappers/srchhistoMapper.xml"/>
     </mappers>
 </configuration>

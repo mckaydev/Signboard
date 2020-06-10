@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import com.project.service.ImageService;
+import com.project.srchhisto.Srchhisto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,13 +40,18 @@ public class HomeController {
     @RequestMapping(value = "/inputImageSuccess", method = RequestMethod.POST)
     public String inputImageSuccess(Model model, HttpSession session,
                                     @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-//        System.out.println(request.getRequestURL());
-//        System.out.println(session.getServletContext().getRealPath("/"));
-//        String path = "D:Portfolio/out/artifacts/Portfolio_war_exploded/resources/img/" + imageFile.getOriginalFilename();
+
         imageService.saveImage(session, imageFile);
         model.addAttribute("getOriginalFilename", imageFile.getOriginalFilename());
 
         return "inputImageSuccess";
+    }
+
+    @RequestMapping(value = "/storeData", method = RequestMethod.POST)
+    public String storeData(HttpSession session, Srchhisto srchhisto) {
+        imageService.saveImageToTable(session, srchhisto);
+
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/find", method = RequestMethod.GET)

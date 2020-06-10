@@ -8,9 +8,11 @@
     <insert id="tableCreate" parameterType="com.project.member.Member">
         use srchhisto;
         create table ${memberId} (
-            imageFileName varchar(20),
-            gpsAddress varchar(20),
+            imageFileName varchar(40),
+            gpsAddress varchar(40),
             storeName varchar(20),
+            storeMenu varchar(100),
+            storePhone varchar(20),
             isBookmarked boolean default 0
         );
     </insert>
@@ -24,14 +26,14 @@
         use signboard;
     </sql>
 
+    <insert id="memberCreate" parameterType="com.project.member.Member">
+        insert ignore into member (memberId, memberPw, memberEmail) values (#{memberId}, #{memberPw}, #{memberEmail});
+    </insert>
+
     <select id="memberRead" parameterType="com.project.member.Member" resultType="com.project.member.Member">
          <!-- <include refid="useSignboard"/> -->
         select * from member where memberId = #{memberId} and memberPw = #{memberPw};
     </select>
-
-    <insert id="memberCreate" parameterType="com.project.member.Member">
-        insert ignore into member (memberId, memberPw, memberEmail) values (#{memberId}, #{memberPw}, #{memberEmail});
-    </insert>
 
     <update id="memberUpdate" parameterType="com.project.member.Member">
         update member set memberPw = #{memberPw},  memberEmail = #{memberEmail} where memberId = #{memberId};
