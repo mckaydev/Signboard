@@ -17,10 +17,11 @@ public class MemberService implements IMemberService {
     @Override
     public void memberRegister(Member member) {
         int result = dao.memberCreate(member);
-        if(result == 0) {
-            System.out.println("회원가입 실패");
+        System.out.println(result);
+        if(result == 1) {
+            System.out.println("member register fail");
         } else {
-            System.out.println("신규 회원 가입: " +
+            System.out.print("new member register: " +
                     "\nId: " + member.getMemberId() +
                     "\nEmail: " + member.getMemberEmail());
         }
@@ -30,9 +31,9 @@ public class MemberService implements IMemberService {
     public Member memberSearch(Member member) {
         Member member1 = dao.memberRead(member);
         if(member1 == null) {
-            System.out.println("로그인 실패");
+            System.out.println("member login fail");
         } else {
-            System.out.println("회원 로그인: " +
+            System.out.println("member login " +
                     "\nId: " + member.getMemberId());
         }
         return member1;
@@ -41,10 +42,11 @@ public class MemberService implements IMemberService {
     @Override
     public Member memberModify(Member member) {
         int result = dao.memberUpdate(member);
+        System.out.println(result);
         if(result == 0) {
-            System.out.println("정보 변경 실패");
+            System.out.println("member modify fail");
         } else {
-            System.out.println("실패 회원: " +
+            System.out.print("modified member " +
                     "\nId: " + member.getMemberId() +
                     "\nEmail: " + member.getMemberEmail());
         }
@@ -54,10 +56,11 @@ public class MemberService implements IMemberService {
     @Override
     public int memberRemove(Member member) {
         int result = dao.memberDelete(member);
+        System.out.println(result);
         if(result == 0) {
-            System.out.println("회원 탈퇴 실패");
+            System.out.println("member remove fail");
         } else {
-            System.out.println("실패 회원: " +
+            System.out.print("removed member " +
                     "\nId: " + member.getMemberId());
         }
         return result;

@@ -4,11 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-    <typeAliases>
-        <package name="com.project.member"/>
-    </typeAliases>
+<!--    <typeAliases>-->
+<!--        <package name="com.project.member"/>-->
+<!--    </typeAliases>-->
+
 
     <mappers>
-        <mapper resource="classpath:/com/project/mappers/memberMapper.xml"/>
+        <mapper resource="mappers/memberMapper.xml"/>
     </mappers>
 </configuration>

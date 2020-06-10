@@ -52,7 +52,7 @@ public class MemberController {
     public String logout(Member member, HttpSession session) {
 
         Member member1 = (Member) session.getAttribute("member");
-        System.out.println("회원 로그아웃: Id: " + member1.getMemberId());
+        System.out.println("member logout: Id: " + member1.getMemberId());
         session.invalidate();
 
         return "redirect:/";

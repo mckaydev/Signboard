@@ -48,16 +48,16 @@ html, body {
     position: fixed;
     width: 61px;
     top: 20px;
-    display: inline-block;
     padding: .5em .75em;
-    color: #999;
-    line-height: normal;
-    vertical-align: middle;
-    background-color: #fdfdfd;
     cursor: pointer;
+    color: #999;
+    /*display: inline-block;*/
+    /*line-height: normal;*/
+    /*vertical-align: middle;*/
+    /*border-radius: .25em;*/
+    background-color: #fdfdfd;
     border: 1px solid #ebebeb;
     border-bottom-color: #e2e2e2;
-    border-radius: .25em;
 }
 .signUp, .remove{
     right: 20px;
@@ -68,11 +68,11 @@ html, body {
 .modify {
     right: 240px;
 }
-.signUp:hover, .signIn:hover, .modify:hover, .logout:hover, .remove:hover{
-    color: #ffffff;
-    background-color: darkcyan;
-    border-color: darkslateblue;
-}
+/*.signUp:hover, .signIn:hover, .modify:hover, .logout:hover, .remove:hover{*/
+/*    color: #ffffff;*/
+/*    background-color: darkcyan;*/
+/*    border-color: darkslateblue;*/
+/*}*/
 
 button {
     padding: 5px;
