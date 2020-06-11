@@ -1,5 +1,7 @@
 package com.project.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.service.ImageService;
 import com.project.srchhisto.Srchhisto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -66,11 +69,21 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/priorSearch", method = RequestMethod.GET)
-    public ModelAndView priorSearch(HttpSession session) {
+    public ModelAndView priorSearch(HttpSession session) throws JsonProcessingException {
         ModelAndView mav = new ModelAndView();
         // addObject로 select한 테이블 데이터들 List으로 전달.
 //        mav.addObject();
-        imageService.viewPrior(session);
+        List<Srchhisto> list = imageService.viewPrior(session);
+        if (list != null) {
+            String shListJson = new ObjectMapper().writeValueAsString(list);
+            mav.addObject("shListJson", shListJson);
+            System.out.println(shListJson);
+        } else {
+            // 로그인 해주세요 alert
+            mav.setViewName("redirect:/");
+            return mav;
+        }
+        mav.addObject("listSize", list.size());
         mav.setViewName("priorSearch");
 
         return mav;

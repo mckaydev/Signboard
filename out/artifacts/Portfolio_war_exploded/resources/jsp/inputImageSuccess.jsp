@@ -46,7 +46,7 @@
             <form action="storeData" method="post">
                 <input style="display: none" type="text" name="imageFileName" value="${getOriginalFilename}">
                 <input style="display: none" type="text" name="storeName" value="jutabi's store">
-                <input style="display: none" type="text" name="storeMenu" value="A: $5\nB: $5\nC: $5\nD: $5">
+                <input style="display: none" type="text" name="storeMenu" value="A: $5<br>B: $5<br>C: $5<br>D: $5">
                 <input style="display: none" type="text" name="storePhone" value="02-1234-5678">
                 <button type="submit" class="reInputButton">사진 재입력</button>
             </form>

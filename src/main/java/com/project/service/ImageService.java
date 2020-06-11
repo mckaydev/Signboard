@@ -21,17 +21,21 @@ public class ImageService {
         this.dao = srchhistoDAO;
     }
 
-    public void viewPrior(HttpSession session) {
+    public List<Srchhisto> viewPrior(HttpSession session) {
         Member member = (Member) session.getAttribute("member");
-        List<Srchhisto> list = dao.storeSelect(member);
-        for (Srchhisto srchhisto : list) {
-            System.out.println("------");
-            System.out.print(srchhisto.getImageFileName() + " | ");
-            System.out.print(srchhisto.getStoreName() + " | ");
-            System.out.print(srchhisto.getStoreMenu() + " | ");
-            System.out.print(srchhisto.getStorePhone() + " | ");
-            System.out.println(srchhisto.getIsBookmarked());
+        if (member != null) {
+            List<Srchhisto> list = dao.storeSelect(member);
+            for (Srchhisto srchhisto : list) {
+                System.out.println("------");
+                System.out.print(srchhisto.getImageFileName() + " | ");
+                System.out.print(srchhisto.getStoreName() + " | ");
+                System.out.print(srchhisto.getStoreMenu() + " | ");
+                System.out.print(srchhisto.getStorePhone() + " | ");
+                System.out.println(srchhisto.getIsBookmarked());
+            }
+            return list;
         }
+        return null;
     }
 
     public void saveImageToTable(HttpSession session, Srchhisto srchhisto) {

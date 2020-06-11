@@ -28,6 +28,7 @@ public class SrchhistoDAO implements ISrchhistoDAO{
     @Override
     public List<Srchhisto> storeSelect(Member member) {
         ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
+
         return dao.storeSelect(member);
     }
 

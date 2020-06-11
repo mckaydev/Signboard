@@ -8,22 +8,22 @@
     <insert id="storeInsert" parameterType="com.project.srchhisto.Srchhisto">
         use srchhisto;
         insert ignore into ${memberId} (imageFileName, gpsAddress, storeName, storePhone, storeMenu, isBookmarked)
-        values (#{imageFileName}, #{gpsAddress}, #{storeName}, #{storePhone}, #{storeMenu}, #{isBookmarked})
+        values (#{imageFileName}, #{gpsAddress}, #{storeName}, #{storePhone}, #{storeMenu}, #{isBookmarked});
     </insert>
 
     <select id="storeSelect" parameterType="com.project.member.Member" resultType="com.project.srchhisto.Srchhisto">
         use srchhisto;
-        select * from ${memberId}
+        select * from ${memberId};
     </select>
 
     <select id="bookmarkedStoreSelect" parameterType="com.project.srchhisto.Srchhisto">
         use srchhisto;
-        select * from ${memberId} where isBookmarked = 1;
+        select * from ${memberId} where isBookmarked = '1';
     </select>
 
     <delete id="storeDelete" parameterType="com.project.srchhisto.Srchhisto">
         use srchhisto;
-        delete from ${memberId} where imageFileName = #{imageFileName}
+        delete from ${memberId} where imageFileName = #{imageFileName};
     </delete>
 
 </mapper>
