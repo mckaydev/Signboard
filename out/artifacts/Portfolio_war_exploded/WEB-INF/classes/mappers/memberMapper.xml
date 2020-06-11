@@ -8,7 +8,7 @@
     <insert id="tableCreate" parameterType="com.project.member.Member">
         use srchhisto;
         create table ${memberId} (
-            imageFileName varchar(40),
+            imageFileName varchar(40) primary key,
             gpsAddress varchar(40),
             storeName varchar(20),
             storeMenu varchar(100),
