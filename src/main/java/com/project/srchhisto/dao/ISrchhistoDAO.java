@@ -8,6 +8,6 @@ import java.util.List;
 public interface ISrchhistoDAO {
     int storeInsert(Srchhisto srchhisto);
     List<Srchhisto> storeSelect(Member member);
-    int bookmarkedStoreSelect(Srchhisto srchhisto);
+    List<Srchhisto> bookmarkedStoreSelect(Member member);
     int storeDelete(Srchhisto srchhisto);
 }

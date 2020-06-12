@@ -33,8 +33,10 @@ public class SrchhistoDAO implements ISrchhistoDAO{
     }
 
     @Override
-    public int bookmarkedStoreSelect(Srchhisto srchhisto) {
-        return 0;
+    public List<Srchhisto> bookmarkedStoreSelect(Member member) {
+        ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
+
+        return dao.bookmarkedStoreSelect(member);
     }
 
     @Override

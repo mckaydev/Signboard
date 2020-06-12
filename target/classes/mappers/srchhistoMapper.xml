@@ -16,7 +16,7 @@
         select * from ${memberId};
     </select>
 
-    <select id="bookmarkedStoreSelect" parameterType="com.project.srchhisto.Srchhisto">
+    <select id="bookmarkedStoreSelect" parameterType="com.project.srchhisto.Srchhisto" resultType="com.project.srchhisto.Srchhisto">
         use srchhisto;
         select * from ${memberId} where isBookmarked = '1';
     </select>

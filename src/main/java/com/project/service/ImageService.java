@@ -21,6 +21,14 @@ public class ImageService {
         this.dao = srchhistoDAO;
     }
 
+    public List<Srchhisto> viewBookmarked(HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        if (member != null) {
+            return dao.bookmarkedStoreSelect(member);
+        }
+        return null;
+    }
+
     public List<Srchhisto> viewPrior(HttpSession session) {
         Member member = (Member) session.getAttribute("member");
         if (member != null) {

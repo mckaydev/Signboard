@@ -2,6 +2,7 @@ package com.project.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.member.Member;
 import com.project.service.ImageService;
 import com.project.srchhisto.Srchhisto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,13 +69,9 @@ public class HomeController {
         return mav;
     }
 
-    @RequestMapping(value = "/priorSearch", method = RequestMethod.GET)
-    public ModelAndView priorSearch(HttpSession session) throws JsonProcessingException {
-        ModelAndView mav = new ModelAndView();
-        // addObject로 select한 테이블 데이터들 List으로 전달.
-//        mav.addObject();
-        List<Srchhisto> list = imageService.viewPrior(session);
-        if (list != null) {
+    public ModelAndView makeJson(HttpSession session, ModelAndView mav, List<Srchhisto> list) throws JsonProcessingException {
+        Member member = (Member) session.getAttribute("member");
+        if (member != null) {
             String shListJson = new ObjectMapper().writeValueAsString(list);
             mav.addObject("shListJson", shListJson);
             System.out.println(shListJson);
@@ -84,7 +81,27 @@ public class HomeController {
             return mav;
         }
         mav.addObject("listSize", list.size());
+        return mav;
+    }
+
+    @RequestMapping(value = "/bookmarkedSearch", method = RequestMethod.GET)
+    public ModelAndView bookmarkedSearch(HttpSession session) throws JsonProcessingException {
+        ModelAndView mav = new ModelAndView();
+        List<Srchhisto> list = imageService.viewBookmarked(session);
+
         mav.setViewName("priorSearch");
+        mav = makeJson(session, mav, list);
+
+        return mav;
+    }
+
+    @RequestMapping(value = "/priorSearch", method = RequestMethod.GET)
+    public ModelAndView priorSearch(HttpSession session) throws JsonProcessingException {
+        ModelAndView mav = new ModelAndView();
+        List<Srchhisto> list = imageService.viewPrior(session);
+
+        mav.setViewName("priorSearch");
+        mav = makeJson(session, mav, list);
 
         return mav;
     }
