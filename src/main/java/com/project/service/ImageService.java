@@ -21,6 +21,18 @@ public class ImageService {
         this.dao = srchhistoDAO;
     }
 
+    public int storeBookmark(Srchhisto srchhisto) {
+        if (srchhisto.getIsBookmarked() == 0) {
+            return dao.storeBookmark(srchhisto);
+        }
+        return dao.storeUnBookmark(srchhisto);
+    }
+
+    public int storeDelete(Srchhisto srchhisto) {
+
+        return dao.storeDelete(srchhisto);
+    }
+
     public List<Srchhisto> viewBookmarked(HttpSession session) {
         Member member = (Member) session.getAttribute("member");
         if (member != null) {
@@ -56,7 +68,7 @@ public class ImageService {
         if(member != null) {
             // 테이블에 데이터 저장.
             srchhisto.setMemberId(member.getMemberId());
-            srchhisto.setIsBookmarked("0");
+            srchhisto.setIsBookmarked(0);
             srchhisto.setGpsAddress("234324423324");
             dao.storeInsert(srchhisto);
         }

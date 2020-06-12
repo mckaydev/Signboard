@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.HttpCookie;
 import java.util.List;
 
 @Controller
@@ -85,9 +89,13 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/bookmarkedSearch", method = RequestMethod.GET)
-    public ModelAndView bookmarkedSearch(HttpSession session) throws JsonProcessingException {
+    public ModelAndView bookmarkedSearch(HttpSession session, HttpServletResponse response) throws JsonProcessingException {
         ModelAndView mav = new ModelAndView();
         List<Srchhisto> list = imageService.viewBookmarked(session);
+
+        Cookie cookie = new Cookie("where", "bookmarkedSearch");
+        cookie.setPath("/");
+        response.addCookie(cookie);
 
         mav.setViewName("priorSearch");
         mav = makeJson(session, mav, list);
@@ -96,13 +104,55 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/priorSearch", method = RequestMethod.GET)
-    public ModelAndView priorSearch(HttpSession session) throws JsonProcessingException {
+    public ModelAndView priorSearch(HttpSession session,  HttpServletResponse response) throws JsonProcessingException {
         ModelAndView mav = new ModelAndView();
         List<Srchhisto> list = imageService.viewPrior(session);
+
+        Cookie cookie = new Cookie("where", "priorSearch");
+        cookie.setPath("/");
+        response.addCookie(cookie);
 
         mav.setViewName("priorSearch");
         mav = makeJson(session, mav, list);
 
         return mav;
+    }
+
+    @RequestMapping(value = "/bookmarkHistory", method = RequestMethod.POST)
+    public String bookmarkHistory(HttpSession session, HttpServletRequest request, Srchhisto srchhisto) {
+
+        Member member = (Member) session.getAttribute("member");
+        srchhisto.setMemberId(member.getMemberId());
+
+        Cookie[] cookies = request.getCookies();
+        String where = "priorSearch";
+        for(Cookie cookie : cookies) {
+            if(cookie.getName().equals("where")) {
+                where = cookie.getValue();
+            }
+        }
+
+        int temp = srchhisto.getIsBookmarked();
+        System.out.println(temp);
+        int result = imageService.storeBookmark(srchhisto);
+        return "redirect:/" + where;
+    }
+
+    @RequestMapping(value = "/deleteHistory", method = RequestMethod.POST)
+    public String deleteHistory(HttpSession session, HttpServletRequest request, Srchhisto srchhisto) {
+
+        Member member = (Member) session.getAttribute("member");
+        srchhisto.setMemberId(member.getMemberId());
+
+        Cookie[] cookies = request.getCookies();
+        String where = "priorSearch";
+        for(Cookie cookie : cookies) {
+            if(cookie.getName().equals("where")) {
+                where = cookie.getValue();
+            }
+        }
+
+        int result = imageService.storeDelete(srchhisto);
+        return "redirect:/" + where;
     }
 }

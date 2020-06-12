@@ -16,10 +16,20 @@
         select * from ${memberId};
     </select>
 
-    <select id="bookmarkedStoreSelect" parameterType="com.project.srchhisto.Srchhisto" resultType="com.project.srchhisto.Srchhisto">
+    <select id="bookmarkedStoreSelect" parameterType="com.project.member.Member" resultType="com.project.srchhisto.Srchhisto">
         use srchhisto;
         select * from ${memberId} where isBookmarked = '1';
     </select>
+
+    <update id="storeBookmark" parameterType="com.project.srchhisto.Srchhisto">
+        use srchhisto;
+        update ${memberId} set isBookmarked = '1' where imageFileName = #{imageFileName};
+    </update>
+
+    <update id="storeUnBookmark" parameterType="com.project.srchhisto.Srchhisto">
+        use srchhisto;
+        update ${memberId} set isBookmarked = '0' where imageFileName = #{imageFileName};
+    </update>
 
     <delete id="storeDelete" parameterType="com.project.srchhisto.Srchhisto">
         use srchhisto;

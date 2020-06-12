@@ -7,7 +7,7 @@ public class Srchhisto {
     private String storeName;
     private String storeMenu;
     private String storePhone;
-    private String isBookmarked;
+    private int isBookmarked;
 
     public String getImageFileName() {
         return imageFileName;
@@ -33,11 +33,11 @@ public class Srchhisto {
         this.storeName = storeName;
     }
 
-    public String getIsBookmarked() {
+    public int getIsBookmarked() {
         return isBookmarked;
     }
 
-    public void setIsBookmarked(String isBookmarked) {
+    public void setIsBookmarked(int isBookmarked) {
         this.isBookmarked = isBookmarked;
     }
 

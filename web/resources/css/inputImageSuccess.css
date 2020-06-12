@@ -2,7 +2,16 @@
     font-size: 1.5rem;
 }
 
+.bmkHistory, .delHistory {
+    font-size: 1rem;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.bmkHistory { right: 100px; }
+
 .infoBox {
+    position: relative;
     width: 820px;
     text-align: justify;
     display: grid;

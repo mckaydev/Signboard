@@ -19,7 +19,7 @@ public class SrchhistoDAO implements ISrchhistoDAO{
     }
 
     @Override
-    public int storeInsert( Srchhisto srchhisto) {
+    public int storeInsert(Srchhisto srchhisto) {
         ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
 
         return dao.storeInsert(srchhisto);
@@ -40,7 +40,23 @@ public class SrchhistoDAO implements ISrchhistoDAO{
     }
 
     @Override
+    public int storeBookmark(Srchhisto srchhisto) {
+        ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
+
+        return dao.storeBookmark(srchhisto);
+    }
+
+    @Override
+    public int storeUnBookmark(Srchhisto srchhisto) {
+        ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
+
+        return dao.storeUnBookmark(srchhisto);
+    }
+
+    @Override
     public int storeDelete(Srchhisto srchhisto) {
-        return 0;
+        ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
+
+        return dao.storeDelete(srchhisto);
     }
 }
