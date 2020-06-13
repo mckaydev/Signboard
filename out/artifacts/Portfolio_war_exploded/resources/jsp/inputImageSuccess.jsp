@@ -31,8 +31,8 @@
             </div>
             <div class="infoTextArea">
                 <p class="infoText">
-                    ★4.7 주타비네 가게<br><br>
-                    메뉴 : </p>
+                    ★4.7 ${ocrResult}</p><br><br>
+                    <p>메뉴 : </p>
                 <ul class="infoText" style="padding-left: 25px">
                     <li>짬뽕 5000원</li>
                     <li>짜장면 5000원</li>

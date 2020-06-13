@@ -50,8 +50,9 @@ public class HomeController {
     public String inputImageSuccess(Model model, HttpSession session,
                                     @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
 
-        imageService.saveImage(session, imageFile);
+        String ocrResult = imageService.saveImage(session, imageFile);
         model.addAttribute("getOriginalFilename", imageFile.getOriginalFilename());
+        model.addAttribute("ocrResult", ocrResult);
 
         return "inputImageSuccess";
     }

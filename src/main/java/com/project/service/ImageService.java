@@ -3,6 +3,8 @@ package com.project.service;
 import com.project.member.Member;
 import com.project.srchhisto.Srchhisto;
 import com.project.srchhisto.dao.SrchhistoDAO;
+import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +22,7 @@ public class ImageService {
     public ImageService(SrchhistoDAO srchhistoDAO) {
         this.dao = srchhistoDAO;
     }
+
 
     public int storeBookmark(Srchhisto srchhisto) {
         if (srchhisto.getIsBookmarked() == 0) {
@@ -74,10 +77,11 @@ public class ImageService {
         }
     }
 
-    public void saveImage(HttpSession session, MultipartFile imageFile) throws IOException {
-        String path = session.getServletContext().getRealPath("/") + "/resources/img/" + imageFile.getOriginalFilename();
-        System.out.println("Path:" + path);
-        File file = new File(path);
+    public String saveImage(HttpSession session, MultipartFile imageFile) throws IOException {
+        String imgPath = session.getServletContext().getRealPath("/") + "/resources/img/" + imageFile.getOriginalFilename();
+        String ocrPath = session.getServletContext().getRealPath("/") + "/WEB-INF/classes/tessdata";
+        System.out.println("Path:" + imgPath);
+        File file = new File(imgPath);
         if(!file.exists()) {
             boolean created = file.mkdirs();
             if(created) {
@@ -87,5 +91,22 @@ public class ImageService {
             }
         }
         imageFile.transferTo(file);
+
+        return OCR(file, ocrPath);
+    }
+
+    public String OCR(File imgFile, String ocrPath) {
+        String result = null;
+        Tesseract tesseract = new Tesseract();
+        tesseract.setDatapath(ocrPath);
+
+        try {
+            result = tesseract.doOCR(imgFile);
+            System.out.println(result);
+        } catch (TesseractException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return result;
     }
 }
