@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ImageService {
@@ -107,6 +108,24 @@ public class ImageService {
             System.err.println(e.getMessage());
         }
 
-        return result;
+        StringBuffer result1 = new StringBuffer();
+
+        System.out.println("result: ");
+        System.out.println("----------------------------------------------");
+        for(int i = 0; i < Objects.requireNonNull(result).length(); i ++) {
+            if(result.charAt(i) >= 'A' && result.charAt(i) <= 'Z') {
+                result1.append(result.charAt(i));
+            }
+            if (result.charAt(i) >= 'a' && result.charAt(i) <= 'z') {
+                result1.append(result.charAt(i));
+            }
+            if (result.charAt(i) == ' ') {
+                result1.append(result.charAt(i));
+            }
+        }
+        System.out.println(result1);
+        System.out.println("----------------------------------------------");
+
+        return result1.toString();
     }
 }
