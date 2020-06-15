@@ -2,6 +2,7 @@ package com.project.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.CropLoc;
 import com.project.member.Member;
 import com.project.service.ImageService;
 import com.project.srchhisto.Srchhisto;
@@ -55,6 +56,20 @@ public class HomeController {
         model.addAttribute("ocrResult", ocrResult);
 
         return "inputImageSuccess";
+    }
+
+    @RequestMapping(value = "/cropImage", method = RequestMethod.GET)
+    public String cropImage(Model model) {
+
+        return "cropImage";
+    }
+    @RequestMapping(value = "/cropResult", method = RequestMethod.GET)
+    public String cropResult(CropLoc cropLoc) {
+        System.out.println(cropLoc.getX1());
+        System.out.println(cropLoc.getY1());
+        System.out.println(cropLoc.getX2());
+        System.out.println(cropLoc.getY2());
+        return "cropImage";
     }
 
     @RequestMapping(value = "/storeData", method = RequestMethod.POST)
