@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>Crop Image</title>
-    <link rel="stylesheet" type="text/css" href="/resources/css/index.css">
+<%--    <link rel="stylesheet" type="text/css" href="/resources/css/index.css">--%>
 <%--    <link rel="stylesheet" href="https://unpkg.com/jcrop/dist/jcrop.css">--%>
     <link rel="stylesheet" href="/resources/css/jcrop.css">
     <script src="https://unpkg.com/jcrop"></script>
@@ -27,13 +27,19 @@
                 });
                 const widget = Jcrop.Widget.create();
 
-                $('#coords').on('change','input',function(e){
-                    let x1 = $('#x1').val(),
-                        x2 = $('#x2').val(),
-                        y1 = $('#y1').val(),
-                        y2 = $('#y2').val();
-                    jcrop.setSelect([x1,y1,x2,y2]);
-                });
+                jcrop.listen('crop.change', function(widget, c){
+                    const pos = widget.pos;
+                    $('#x1').val(c.x);
+                    $('#y1').val(c.y);
+                    $('#x2').val(c.x2);
+                    $('#y2').val(c.y2);
+                    $('#w').val(pos.x1);
+                    $('#h').val(pos.x);
+                    document.getElementById("x1").val = pos.x;
+                    document.getElementById("y1").val = pos.x1;
+                    document.getElementById("x2").val = pos.x2;
+                    document.getElementById("y2").val = pos.w;
+                })
 
                 function showCoords(c) {
                     $('#x1').val(c.x);
@@ -60,7 +66,7 @@
                 <label>x2<input id="x2" name="x2" type="text"></label>
                 <label>y2<input id="y2" name="y2" type="text"></label>
                 <label>w<input id="w" name="w" type="text"></label>
-                <label>h<input id="h" name="h" type="text"></label>
+                <label>h<input id="h" name="h" type="text" value="324"></label>
                 <button type="submit">제출</button>
             </form>
         </div>

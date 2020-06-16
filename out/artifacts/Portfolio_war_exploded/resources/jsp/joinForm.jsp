@@ -17,11 +17,22 @@
     <div class="container">
         <div class="infoBox">
             <form action="joinResult" method="post">
-                Id : <input type="text" name="memberId" required maxlength="10" placeholder=" 최대10자"> <br>
-                Pw : <input type="password" name="memberPw" required maxlength="10" placeholder=" 최대10자"> <br>
-                Email : <input type="email" name="memberEmail" required maxlength="20" placeholder=" 최대20자"> <br>
-                <button type="submit">회원가입</button>
-                <button type="reset"  onclick="location.href='/'">취소</button>
+                <table>
+                    <tr>
+                        <td>Id :</td>
+                        <td><input type="text" name="memberId" required maxlength="10" placeholder=" 최대10자"></td>
+                    </tr>
+                    <tr>
+                        <td>Pw :</td>
+                        <td><input type="password" name="memberPw" required maxlength="10" placeholder=" 최대10자"></td>
+                    </tr>
+                    <tr>
+                        <td>Email :</td>
+                        <td><input type="email" name="memberEmail" required maxlength="20" placeholder=" 최대20자"></td>
+                    </tr>
+                </table>
+                <button style="margin-top: 10px" type="submit">회원가입</button>
+                <button style="margin-top: 10px" type="reset"  onclick="location.href='/'">취소</button>
             </form>
         </div>
     </div>

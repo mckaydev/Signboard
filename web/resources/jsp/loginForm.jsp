@@ -16,8 +16,16 @@
     <div class="container">
         <div class="infoBox">
             <form action="loginResult" method="post">
-                Id : <input type="text" name="memberId" required maxlength="10"> <br>
-                Pw : <input type="password" name="memberPw" required maxlength="10"> <br>
+                <table>
+                    <tr>
+                        <td>Id :</td>
+                        <td><input type="text" name="memberId" required maxlength="10"></td>
+                    </tr>
+                    <tr>
+                        <td>Pw :</td>
+                        <td><input type="password" name="memberPw" required maxlength="10"></td>
+                    </tr>
+                </table>
                 <button type="submit">로그인</button>
                 <button type="reset"  onclick="location.href='/'">취소</button>
             </form>
