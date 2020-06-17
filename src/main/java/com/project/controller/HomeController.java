@@ -47,29 +47,43 @@ public class HomeController {
         return "inputImageForm";
     }
 
-    @RequestMapping(value = "/inputImageSuccess", method = RequestMethod.POST)
-    public String inputImageSuccess(Model model, HttpSession session,
-                                    @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+//    @RequestMapping(value = "/inputImageSuccess", method = RequestMethod.POST)
+//    public String inputImageSuccess(Model model, HttpSession session,
+//                                    @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+//
+////        String ocrResult = imageService.saveImage(session, imageFile);
+//        imageService.saveImage(session, imageFile);
+//        model.addAttribute("getOriginalFilename", imageFile.getOriginalFilename());
+////        model.addAttribute("ocrResult", ocrResult);
+//
+//        return "inputImageSuccess";
+//    }
 
-        String ocrResult = imageService.saveImage(session, imageFile);
+    @RequestMapping(value = "/cropImage", method = RequestMethod.POST)
+    public String cropImage(Model model, HttpSession session,
+                            @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+
+        imageService.saveImage(session, imageFile);
         model.addAttribute("getOriginalFilename", imageFile.getOriginalFilename());
-        model.addAttribute("ocrResult", ocrResult);
-
-        return "inputImageSuccess";
-    }
-
-    @RequestMapping(value = "/cropImage", method = RequestMethod.GET)
-    public String cropImage(Model model) {
 
         return "cropImage";
     }
+
     @RequestMapping(value = "/cropResult", method = RequestMethod.GET)
-    public String cropResult(CropLoc cropLoc) {
+    public String cropResult(Model model, HttpSession session, CropLoc cropLoc,
+                             @RequestParam("originalFileName") String originalFileName) throws IOException {
         System.out.println(cropLoc.getX1());
         System.out.println(cropLoc.getY1());
         System.out.println(cropLoc.getX2());
         System.out.println(cropLoc.getY2());
-        return "cropImage";
+        System.out.println(cropLoc.getW());
+        System.out.println(cropLoc.getH());
+        String ocrResult = imageService.imageCrop(originalFileName, cropLoc, session);
+        model.addAttribute("cropImageLoc", "cropImageLoc");
+        model.addAttribute("getOriginalFilename", originalFileName);
+        model.addAttribute("ocrResult", ocrResult);
+
+        return "inputImageSuccess";
     }
 
     @RequestMapping(value = "/storeData", method = RequestMethod.POST)

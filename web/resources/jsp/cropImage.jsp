@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>Crop Image</title>
-<%--    <link rel="stylesheet" type="text/css" href="/resources/css/index.css">--%>
+    <link rel="stylesheet" type="text/css" href="/resources/css/index.css">
 <%--    <link rel="stylesheet" href="https://unpkg.com/jcrop/dist/jcrop.css">--%>
     <link rel="stylesheet" href="/resources/css/jcrop.css">
     <script src="https://unpkg.com/jcrop"></script>
@@ -17,58 +17,38 @@
 <body>
     <div class="container">
         <div class="infoBox" id="infoBox" style="width: auto">
-            <img src="/resources/img/test.jpg" id="target" alt="[JcropExample]"/>
+            <img src="/img/${getOriginalFilename}" id="target" alt="[JcropExample]"/>
             <script>
                 const jcrop = Jcrop.attach('target', {
-                    shadeColor: 'light',
-                    onchange: showCoords,
-                    onSelect: showCoords,
-                    onRelease:  clearCoords
+                    shadeColor: 'light'
                 });
-                const widget = Jcrop.Widget.create();
+                let x = 100, y = 100, w = 100, h = 100;
 
-                jcrop.listen('crop.change', function(widget, c){
-                    const pos = widget.pos;
-                    $('#x1').val(c.x);
-                    $('#y1').val(c.y);
-                    $('#x2').val(c.x2);
-                    $('#y2').val(c.y2);
-                    $('#w').val(pos.x1);
-                    $('#h').val(pos.x);
-                    document.getElementById("x1").val = pos.x;
-                    document.getElementById("y1").val = pos.x1;
-                    document.getElementById("x2").val = pos.x2;
-                    document.getElementById("y2").val = pos.w;
-                })
-
-                function showCoords(c) {
-                    $('#x1').val(c.x);
-                    $('#y1').val(c.y);
-                    $('#x2').val(c.x2);
-                    $('#y2').val(c.y2);
-                    $('#w').val(c.w);
-                    $('#h').val(c.h);
-                }
-
-                function clearCoords()
-                {
-                    $('#coords input').val('');
-                }
-                // let locInfo = document.createElement("p");
-                // locInfo.appendChild(document.createTextNode(jcrop.top))
-                // locInfo.appendChild(document.createTextNode(jcrop.left))
-                // document.getElementById("infoBox").appendChild(locInfo);
-                // jcrop.addClass('jcrop-ux-fade-more');
+                const rect = Jcrop.Rect.create(x,y,w,h);
+                const options = {};
+                jcrop.newWidget(rect, options);
             </script>
-            <form action="cropResult" id="coords" class="coords">
-                <label>x1<input id="x1" name="x1" type="text"></label>
-                <label>y1<input id="y1" name="y1" type="text"></label>
-                <label>x2<input id="x2" name="x2" type="text"></label>
-                <label>y2<input id="y2" name="y2" type="text"></label>
-                <label>w<input id="w" name="w" type="text"></label>
-                <label>h<input id="h" name="h" type="text" value="324"></label>
+            <form action="cropResult" id="coords" class="coords" method="get">
+                <label>x1: <input id="x1" name="x1" type="text"></label>
+                <label>y1: <input id="y1" name="y1" type="text"></label><br>
+                <label>x2: <input id="x2" name="x2" type="text"></label>
+                <label>y2: <input id="y2" name="y2" type="text"></label><br>
+                <label>w: <input id="w" name="w" type="text"></label>
+                <label>h: <input id="h" name="h" type="text"></label> <br>
+                <label><input name="originalFileName" value="${getOriginalFilename}" style="display: none"></label>
                 <button type="submit">제출</button>
             </form>
+            <script>
+                jcrop.listen('crop.update', (widget,e) => {
+                    let test = widget.pos;
+                    document.getElementById("x1").value = test.x;
+                    document.getElementById("y1").value = test.y;
+                    document.getElementById("x2").value = test.x + test.w;
+                    document.getElementById("y2").value = test.y + test.h;
+                    document.getElementById("w").value = test.w;
+                    document.getElementById("h").value = test.h;
+                })
+            </script>
         </div>
     </div>
 </body>

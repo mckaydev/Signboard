@@ -32,7 +32,7 @@
                 간판의 사진을 업로드 해주세요.
             </p> <br>
             <div class="fileBox upload">
-                <form action="inputImageSuccess" method="post" enctype="multipart/form-data">
+                <form action="cropImage" method="post" enctype="multipart/form-data">
                     <input class="upload-name select" value="파일선택" disabled="disabled">
                     <label for="ex_filename">업로드</label>
                     <input type="file" id="ex_filename" class="upload-hidden" name="imageFile">

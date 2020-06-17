@@ -1,5 +1,6 @@
 package com.project.service;
 
+import com.project.CropLoc;
 import com.project.member.Member;
 import com.project.srchhisto.Srchhisto;
 import com.project.srchhisto.dao.SrchhistoDAO;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -78,9 +81,8 @@ public class ImageService {
         }
     }
 
-    public String saveImage(HttpSession session, MultipartFile imageFile) throws IOException {
+    public void saveImage(HttpSession session, MultipartFile imageFile) throws IOException {
         String imgPath = session.getServletContext().getRealPath("/") + "/resources/img/" + imageFile.getOriginalFilename();
-        String ocrPath = session.getServletContext().getRealPath("/") + "/WEB-INF/classes/tessdata";
         System.out.println("Path:" + imgPath);
         File file = new File(imgPath);
         if(!file.exists()) {
@@ -92,11 +94,19 @@ public class ImageService {
             }
         }
         imageFile.transferTo(file);
-
-        return OCR(file, ocrPath);
     }
 
-    public String OCR(File imgFile, String ocrPath) {
+    public String imageCrop(String originalFileName, CropLoc cropLoc, HttpSession session) throws IOException {
+        String imgPath = session.getServletContext().getRealPath("/") + "/resources/img/" + originalFileName;
+        String ocrPath = session.getServletContext().getRealPath("/") + "/WEB-INF/classes/tessdata";
+        File file = new File(imgPath);
+        BufferedImage bufferedImage = ImageIO.read(file);
+        BufferedImage cropImage = bufferedImage.getSubimage(cropLoc.getX1(), cropLoc.getY1(), cropLoc.getW(), cropLoc.getH());
+
+        return OCR(cropImage, ocrPath);
+    }
+
+    public String OCR(BufferedImage imgFile, String ocrPath) {
         String result = null;
         Tesseract tesseract = new Tesseract();
         tesseract.setDatapath(ocrPath);
