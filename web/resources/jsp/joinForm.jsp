@@ -17,7 +17,7 @@
     <div class="container">
         <div class="infoBox">
             <form action="joinResult" method="post">
-                <table>
+                <table style="margin: auto">
                     <tr>
                         <td>Id :</td>
                         <td><input type="text" name="memberId" required maxlength="10" placeholder=" 최대10자"></td>
@@ -31,8 +31,8 @@
                         <td><input type="email" name="memberEmail" required maxlength="20" placeholder=" 최대20자"></td>
                     </tr>
                 </table>
-                <button style="margin-top: 10px" type="submit">회원가입</button>
-                <button style="margin-top: 10px" type="reset"  onclick="location.href='/'">취소</button>
+                <button type="submit">회원가입</button>
+                <button type="reset"  onclick="location.href='/'">취소</button>
             </form>
         </div>
     </div>

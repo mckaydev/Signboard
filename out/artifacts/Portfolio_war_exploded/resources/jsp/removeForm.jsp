@@ -17,7 +17,7 @@
         <div class="infoBox">
             <form action="removeResult" method="post">
                 <%--                readonly는 폼 전송시 객체 전송이 되지만 disabled는 해당 객체는 폼으로 전송되지 않는다.--%>
-                    <table>
+                    <table style="margin: auto">
                         <tr>
                             <td>Id :</td>
                             <td><input type="text" name="memberId" readonly value=${member.memberId}></td>

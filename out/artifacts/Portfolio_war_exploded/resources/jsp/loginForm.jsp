@@ -16,7 +16,7 @@
     <div class="container">
         <div class="infoBox">
             <form action="loginResult" method="post">
-                <table>
+                <table style="margin: auto">
                     <tr>
                         <td>Id :</td>
                         <td><input type="text" name="memberId" required maxlength="10"></td>
