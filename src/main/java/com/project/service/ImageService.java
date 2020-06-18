@@ -96,12 +96,22 @@ public class ImageService {
         imageFile.transferTo(file);
     }
 
-    public String imageCrop(String originalFileName, CropLoc cropLoc, HttpSession session) throws IOException {
+    public String imageCrop(String originalFileName, CropLoc cropLoc, HttpSession session,
+                            double offsetWidth, double offsetHeight) throws IOException {
         String imgPath = session.getServletContext().getRealPath("/") + "/resources/img/" + originalFileName;
         String ocrPath = session.getServletContext().getRealPath("/") + "/WEB-INF/classes/tessdata";
         File file = new File(imgPath);
         BufferedImage bufferedImage = ImageIO.read(file);
-        BufferedImage cropImage = bufferedImage.getSubimage(cropLoc.getX1(), cropLoc.getY1(), cropLoc.getW(), cropLoc.getH());
+
+        System.out.println(bufferedImage.getHeight());
+        System.out.println(bufferedImage.getWidth());
+
+        double x1 = cropLoc.getX1() * (bufferedImage.getHeight() / offsetHeight);
+        double y1 = cropLoc.getY1() * (bufferedImage.getWidth() / offsetWidth);
+        double w = cropLoc.getW() * (bufferedImage.getWidth() / offsetWidth);
+        double h = cropLoc.getH() * (bufferedImage.getHeight() / offsetHeight);
+
+        BufferedImage cropImage = bufferedImage.getSubimage((int)x1, (int)y1, (int)w, (int)h);
 
         return OCR(cropImage, ocrPath);
     }

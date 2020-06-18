@@ -17,7 +17,7 @@
 <body>
     <div class="container">
         <div class="infoBox" id="infoBox" style="width: auto">
-            <img src="/img/${getOriginalFilename}" id="target" alt="[JcropExample]"/>
+            <img src="/img/${getOriginalFilename}" id="target" alt="[JcropExample]" style="width: 768px; max-height: 1024px"/>
             <script>
                 const jcrop = Jcrop.attach('target', {
                     shadeColor: 'light'
@@ -36,7 +36,9 @@
                 <label>w: <input id="w" name="w" type="text"></label>
                 <label>h: <input id="h" name="h" type="text"></label> <br>
                 <label><input name="originalFileName" value="${getOriginalFilename}" style="display: none"></label>
-                <button type="submit">제출</button>
+                <label><input id="oW" name="offsetWidth" style="display: none"></label>
+                <label><input id="oH" name="offsetHeight" style="display: none"></label>
+                <button type="submit" onclick="offset()">제출</button>
             </form>
             <script>
                 jcrop.listen('crop.update', (widget,e) => {
@@ -48,6 +50,10 @@
                     document.getElementById("w").value = test.w;
                     document.getElementById("h").value = test.h;
                 })
+                function offset() {
+                    document.getElementById("oW").value = document.getElementById("target").offsetWidth;
+                    document.getElementById("oH").value = document.getElementById("target").offsetHeight;
+                }
             </script>
         </div>
     </div>

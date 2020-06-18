@@ -71,14 +71,16 @@ public class HomeController {
 
     @RequestMapping(value = "/cropResult", method = RequestMethod.GET)
     public String cropResult(Model model, HttpSession session, CropLoc cropLoc,
-                             @RequestParam("originalFileName") String originalFileName) throws IOException {
+                             @RequestParam("originalFileName") String originalFileName,
+                             @RequestParam("offsetWidth") double offsetWidth,
+                             @RequestParam("offsetHeight") double offsetHeight) throws IOException {
         System.out.println(cropLoc.getX1());
         System.out.println(cropLoc.getY1());
         System.out.println(cropLoc.getX2());
         System.out.println(cropLoc.getY2());
         System.out.println(cropLoc.getW());
         System.out.println(cropLoc.getH());
-        String ocrResult = imageService.imageCrop(originalFileName, cropLoc, session);
+        String ocrResult = imageService.imageCrop(originalFileName, cropLoc, session, offsetWidth, offsetHeight);
         model.addAttribute("cropImageLoc", "cropImageLoc");
         model.addAttribute("getOriginalFilename", originalFileName);
         model.addAttribute("ocrResult", ocrResult);
