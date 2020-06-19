@@ -94,7 +94,7 @@ public class MemberController {
     }
     @RequestMapping(value = "removeResult")
     public String removeResult(Member member, HttpSession session) {
-        int result = service.memberRemove(member);
+        int result = service.memberRemove(member, session);
         if(result == 0) {
             return "redirect:/member/removeForm";
         }

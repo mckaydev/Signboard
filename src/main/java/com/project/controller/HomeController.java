@@ -62,12 +62,7 @@ public class HomeController {
                              @RequestParam("originalFileName") String originalFileName,
                              @RequestParam("offsetWidth") double offsetWidth,
                              @RequestParam("offsetHeight") double offsetHeight) throws IOException {
-        System.out.println(cropLoc.getX1());
-        System.out.println(cropLoc.getY1());
-        System.out.println(cropLoc.getX2());
-        System.out.println(cropLoc.getY2());
-        System.out.println(cropLoc.getW());
-        System.out.println(cropLoc.getH());
+
         String ocrResult = imageService.imageCrop(originalFileName, cropLoc, session, offsetWidth, offsetHeight);
         model.addAttribute("cropImageLoc", "cropImageLoc");
         model.addAttribute("getOriginalFilename", originalFileName);
@@ -162,7 +157,7 @@ public class HomeController {
             }
         }
 
-        int result = imageService.storeDelete(srchhisto);
+        int result = imageService.storeDelete(srchhisto, session);
         return "redirect:/" + where;
     }
 }

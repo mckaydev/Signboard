@@ -35,7 +35,21 @@ public class ImageService {
         return dao.storeUnBookmark(srchhisto);
     }
 
-    public int storeDelete(Srchhisto srchhisto) {
+    public void imageFileDel(Srchhisto srchhisto, HttpSession session) {
+        String imgPath = session.getServletContext().getRealPath("/") +
+                "/resources/img/" +srchhisto.getImageFileName();
+        File file = new File(imgPath);
+        if(file.exists()) {
+            if(file.delete()) {
+                System.out.println("삭제 이미지:" + srchhisto.getImageFileName());
+            } else {
+                System.out.println("삭제 실패");
+            }
+        }
+    }
+
+    public int storeDelete(Srchhisto srchhisto, HttpSession session) {
+        imageFileDel(srchhisto, session);
 
         return dao.storeDelete(srchhisto);
     }
@@ -78,6 +92,8 @@ public class ImageService {
             srchhisto.setIsBookmarked(0);
             srchhisto.setGpsAddress("234324423324");
             dao.storeInsert(srchhisto);
+        } else {
+            imageFileDel(srchhisto, session);
         }
     }
 

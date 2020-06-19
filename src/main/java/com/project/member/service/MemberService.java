@@ -2,16 +2,24 @@ package com.project.member.service;
 
 import com.project.member.Member;
 import com.project.member.dao.MemberDAO;
+import com.project.srchhisto.Srchhisto;
+import com.project.srchhisto.dao.SrchhistoDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.util.List;
 
 @Service
 public class MemberService implements IMemberService {
     private final MemberDAO dao;
+    private final SrchhistoDAO srchhistoDAO;
 
     @Autowired
-    public MemberService(MemberDAO memberDAO) {
+    public MemberService(MemberDAO memberDAO, SrchhistoDAO srchhistoDAO) {
         this.dao = memberDAO;
+        this.srchhistoDAO = srchhistoDAO;
     }
 
     @Override
@@ -55,7 +63,22 @@ public class MemberService implements IMemberService {
     }
 
     @Override
-    public int memberRemove(Member member) {
+    public int memberRemove(Member member, HttpSession session) {
+        List<Srchhisto> list = srchhistoDAO.storeSelect(member);
+        String imgPath;
+        for (Srchhisto srchhisto : list) {
+            imgPath = session.getServletContext().getRealPath("/") +
+                    "/resources/img/" +srchhisto.getImageFileName();
+            File file = new File(imgPath);
+            if(file.exists()) {
+                if(file.delete()) {
+                    System.out.println("삭제 이미지:" + srchhisto.getImageFileName());
+                } else {
+                    System.out.println("삭제 실패");
+                }
+            }
+        }
+
         int result = dao.memberDelete(member);
         System.out.println(result);
         if(result == 0) {
