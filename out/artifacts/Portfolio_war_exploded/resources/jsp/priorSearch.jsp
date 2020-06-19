@@ -10,10 +10,10 @@
 <html>
 <head>
     <title>Prior Search</title>
-    <link rel="stylesheet" type="text/css" href="resources/css/index.css">
-    <link rel="stylesheet" type="text/css" href="resources/css/inputImageSuccess.css">
-    <link rel="stylesheet" type="text/css" href="resources/css/findOk.css">
-    <script src="resources/js/priorSearch.js"></script>
+    <link rel="stylesheet" type="text/css" href="/resources/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/inputImageSuccess.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/findOk.css">
+    <script src="/resources/js/priorSearch.js"></script>
 </head>
 <body>
 <c:if test="${empty member}">

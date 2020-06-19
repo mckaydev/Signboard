@@ -47,18 +47,6 @@ public class HomeController {
         return "inputImageForm";
     }
 
-//    @RequestMapping(value = "/inputImageSuccess", method = RequestMethod.POST)
-//    public String inputImageSuccess(Model model, HttpSession session,
-//                                    @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-//
-////        String ocrResult = imageService.saveImage(session, imageFile);
-//        imageService.saveImage(session, imageFile);
-//        model.addAttribute("getOriginalFilename", imageFile.getOriginalFilename());
-////        model.addAttribute("ocrResult", ocrResult);
-//
-//        return "inputImageSuccess";
-//    }
-
     @RequestMapping(value = "/cropImage", method = RequestMethod.POST)
     public String cropImage(Model model, HttpSession session,
                             @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
@@ -69,7 +57,7 @@ public class HomeController {
         return "cropImage";
     }
 
-    @RequestMapping(value = "/cropResult", method = RequestMethod.GET)
+    @RequestMapping(value = "/cropResult", method = RequestMethod.POST)
     public String cropResult(Model model, HttpSession session, CropLoc cropLoc,
                              @RequestParam("originalFileName") String originalFileName,
                              @RequestParam("offsetWidth") double offsetWidth,
@@ -93,16 +81,6 @@ public class HomeController {
         imageService.saveImageToTable(session, srchhisto);
 
         return "redirect:/";
-    }
-
-    @RequestMapping(value = "/find", method = RequestMethod.GET)
-    public ModelAndView find(Model model) {
-        ModelAndView mav = new ModelAndView();
-        // addObject로 select한 테이블 데이터들 List로 전달.
-//        mav.addObject();
-        mav.setViewName("findOk");
-
-        return mav;
     }
 
     public ModelAndView makeJson(HttpSession session, ModelAndView mav, List<Srchhisto> list) throws JsonProcessingException {

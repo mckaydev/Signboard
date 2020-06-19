@@ -10,9 +10,8 @@
 <head>
     <title>Crop Image</title>
     <link rel="stylesheet" type="text/css" href="/resources/css/index.css">
-<%--    <link rel="stylesheet" href="https://unpkg.com/jcrop/dist/jcrop.css">--%>
     <link rel="stylesheet" href="/resources/css/jcrop.css">
-    <script src="https://unpkg.com/jcrop"></script>
+    <script src="/resources/js/jcrop.js"></script>
 </head>
 <body>
     <div class="container">
@@ -28,7 +27,7 @@
                 const options = {};
                 jcrop.newWidget(rect, options);
             </script>
-            <form action="cropResult" id="coords" class="coords" method="get">
+            <form action="cropResult" id="coords" class="coords" method="post">
                 <label>x1: <input id="x1" name="x1" type="text"></label>
                 <label>y1: <input id="y1" name="y1" type="text"></label><br>
                 <label>x2: <input id="x2" name="x2" type="text"></label>

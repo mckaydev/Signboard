@@ -12,8 +12,8 @@
     <title>간판 검색기</title>
     <link rel="stylesheet" type="text/css" href="/resources/css/index.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/fileBox.css">
-    <script src="resources/js/jquery-3.5.1.js"></script>
-    <script src="resources/js/imageUploadButton.js"></script>
+    <script src="/resources/js/jquery-3.5.1.js"></script>
+    <script src="/resources/js/imageUploadButton.js"></script>
 </head>
 <body>
     <c:if test="${empty member}">
