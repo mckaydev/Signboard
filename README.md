@@ -1,6 +1,35 @@
 # 개인 프로젝트 - **간판검색기**
 
 ## 이용 기술
+<table>
+    <thead>
+    <tr bgcolor="#add8e6">
+        <th>이름</th> <th>버전</th> <th>이름</th> <th>버전</th> <th>이름</th> <th>버전</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>AWS EC2 </td> <td>t2.micro</td>
+        <td>maven </td> <td></td>
+        <td>tess4j </td> <td>4.5.1</td>
+    </tr>
+    <tr>
+        <td>tomcat </td> <td>9.0.31</td>
+        <td>OpenJDK </td> <td>1.8.0_221</td>
+        <td>Jackson </td> <td>2.11.0</td>
+    </tr>
+    <tr>
+        <td>Spring </td> <td>5.2.3</td>
+        <td>MySQL </td> <td>8.0.20</td>
+        <td>Mybatis </td> <td>3.5.4</td>
+    </tr>
+    <tr>
+        <td>commons-fileupload </td> <td>1.4</td>
+        <td>commons-io </td> <td>2.5</td>
+        <td></td> <td></td>
+    </tr>
+    </tbody>
+</table>
 - AWS EC2로 배포합니다.
 - DBMS는 MySQL을 사용합니다.
 - SQL Mapper로 Mybatis를 사용합니다.
