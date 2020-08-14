@@ -70,7 +70,7 @@
 ex) 회원 Id가 'test1234' 일 때, 테이블명은 'test1234'
 - **첫 간판 검색시**에 테이블이 생성됩니다.
 - 테이블 구조는 다음과 같습니다.
-    <table border="1">
+    <table>
         <thead>
         <tr>
             <th>MemberId</th>
