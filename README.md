@@ -30,6 +30,7 @@
     </tr>
     </tbody>
 </table>
+
 - AWS EC2로 배포합니다.
 - DBMS는 MySQL을 사용합니다.
 - SQL Mapper로 Mybatis를 사용합니다.
