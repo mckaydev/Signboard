@@ -31,16 +31,17 @@
     </tbody>
 </table>
 
-- AWS EC2로 배포합니다.
-- DBMS는 MySQL을 사용합니다.
-- SQL Mapper로 Mybatis를 사용합니다.
-- WAS는 tomcat을 이용합니다.
-- 자바는 OpenJDK 1.8을 사용합니다.
-- Spring 프레임워크 MVC를 사용합니다.
-- 이미지 ROI(region of interest)지정에는 https://jcrop.com/ 을 사용합니다.
-- tesseract를 이용하여 간판을 OCR합니다.
+- **AWS EC2**로 배포합니다.
+- DBMS는 **MySQL**을 사용합니다.
+- SQL Mapper로 **Mybatis**를 사용합니다.
+- WAS는 **tomcat**을 이용합니다.
+- 자바는 **OpenJDK 1.8**을 사용합니다.
+- **Spring 프레임워크 MVC**를 사용합니다.
+- 이미지 ROI(region of interest)지정에는 **https://jcrop.com/** 을 사용합니다.
+- **tesseract**를 이용하여 간판을 OCR합니다.
 - 이미지 EXIF 정보는 'test'를 이용하여 추출합니다.
 - 네이버 Map API를 사용합니다.
+- 형상 관리는 **GitHub**를 이용합니다.
 
 ## 기능 1: 간판 검색
 1. 사용자는 간판의 사진을 업로드합니다.
