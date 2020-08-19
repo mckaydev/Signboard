@@ -15,7 +15,7 @@
             storePhone varchar(20),
             aLineReview varchar(200),
             isBookmarked boolean default 0
-        );
+        ) default character set utf8 collate utf8_general_ci;
     </insert>
 
     <delete id="tableDelete" parameterType="com.project.member.Member">
