@@ -7,6 +7,7 @@ public class Srchhisto {
     private String storeName;
     private String storeMenu;
     private String storePhone;
+    private String aLineReview;
     private int isBookmarked;
 
     public String getImageFileName() {
@@ -63,5 +64,13 @@ public class Srchhisto {
 
     public void setStoreMenu(String storeMenu) {
         this.storeMenu = storeMenu;
+    }
+
+    public String getaLineReview() {
+        return aLineReview;
+    }
+
+    public void setaLineReview(String aLineReview) {
+        this.aLineReview = aLineReview;
     }
 }

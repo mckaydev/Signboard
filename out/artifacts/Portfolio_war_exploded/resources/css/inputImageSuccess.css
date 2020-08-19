@@ -40,6 +40,11 @@
     vertical-align: middle;
 }
 
+#aLineReview {
+    width: 816px;
+    margin: 10px 0;
+    padding: 10px 0;
+}
 .reInputButton {
     width: 808px;
 }
@@ -53,6 +58,9 @@
             "infoImgArea"
             "infoTextArea"
             "ButtonArea";
+    }
+    #aLineReview {
+        width: 348px;
     }
     .reInputButton {
         width: 348px;

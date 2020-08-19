@@ -13,6 +13,7 @@
             storeName varchar(20),
             storeMenu varchar(100),
             storePhone varchar(20),
+            aLineReview varchar(200),
             isBookmarked boolean default 0
         );
     </insert>

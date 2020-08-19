@@ -7,8 +7,8 @@
 
     <insert id="storeInsert" parameterType="com.project.srchhisto.Srchhisto">
         use srchhisto;
-        insert ignore into ${memberId} (imageFileName, gpsAddress, storeName, storePhone, storeMenu, isBookmarked)
-        values (#{imageFileName}, #{gpsAddress}, #{storeName}, #{storePhone}, #{storeMenu}, #{isBookmarked});
+        insert ignore into ${memberId} (imageFileName, gpsAddress, storeName, storePhone, storeMenu, aLineReview, isBookmarked)
+        values (#{imageFileName}, #{gpsAddress}, #{storeName}, #{storePhone}, #{storeMenu}, #{aLineReview}, #{isBookmarked});
     </insert>
 
     <select id="storeSelect" parameterType="com.project.member.Member" resultType="com.project.srchhisto.Srchhisto">

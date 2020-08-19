@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.net.HttpCookie;
 import java.util.List;
 
 @Controller
@@ -32,6 +31,12 @@ public class HomeController {
     @Autowired
     public HomeController(ImageService imageService) {
         this.imageService = imageService;
+    }
+
+    @RequestMapping(value = "/map", method = RequestMethod.GET)
+    public String mapAPITest(Model model) {
+
+        return "mapAPITest";
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)

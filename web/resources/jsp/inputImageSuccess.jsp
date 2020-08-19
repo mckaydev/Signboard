@@ -31,7 +31,7 @@
             </div>
             <div class="infoTextArea">
                 <p class="infoText">
-                    ★4.7 ${ocrResult}</p><br><br>
+                    ★4.7 ${ocrResult}</p><br>
                     <p>메뉴 : </p>
                 <ul class="infoText" style="padding-left: 25px">
                     <li>짬뽕 5000원</li>
@@ -48,6 +48,7 @@
                 <input style="display: none" type="text" name="storeName" value="${ocrResult}">
                 <input style="display: none" type="text" name="storeMenu" value="A: $5<br>B: $5<br>C: $5<br>D: $5">
                 <input style="display: none" type="text" name="storePhone" value="02-1234-5678">
+                <input type="text" id="aLineReview" name="aLineReview" placeholder="한줄평을 써주세요.">
                 <button type="submit" class="reInputButton">사진 재입력</button>
             </form>
         </div>
