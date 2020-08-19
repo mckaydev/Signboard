@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.CropLoc;
 import com.project.member.Member;
 import com.project.service.ImageService;
+import com.project.service.NaverSearch;
 import com.project.srchhisto.Srchhisto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,12 +26,14 @@ import java.util.List;
 @Controller
 public class HomeController {
     private final ImageService imageService;
+    private final NaverSearch naverSearch;
 
     // 단일 생성자의 경우에는 Autowired annotation 생략 가능하다.
     // @controller 위에 @RequiredArgsConstructor 를 이용하여 아래의 코드도 생략 가능하다.(22~25)
     @Autowired
-    public HomeController(ImageService imageService) {
+    public HomeController(ImageService imageService, NaverSearch naverSearch) {
         this.imageService = imageService;
+        this.naverSearch = naverSearch;
     }
 
     @RequestMapping(value = "/map", method = RequestMethod.GET)
@@ -72,6 +75,9 @@ public class HomeController {
         model.addAttribute("cropImageLoc", "cropImageLoc");
         model.addAttribute("getOriginalFilename", originalFileName);
         model.addAttribute("ocrResult", ocrResult);
+        String searchResult = naverSearch.search(ocrResult);
+        System.out.println(searchResult);
+        model.addAttribute("searchResult", searchResult);
 
         return "inputImageSuccess";
     }

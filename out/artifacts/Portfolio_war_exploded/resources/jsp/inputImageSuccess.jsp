@@ -46,12 +46,18 @@
             <form action="storeData" method="post">
                 <input style="display: none" type="text" name="imageFileName" value="${getOriginalFilename}">
                 <input style="display: none" type="text" name="storeName" value="${ocrResult}">
-                <input style="display: none" type="text" name="storeMenu" value="A: $5<br>B: $5<br>C: $5<br>D: $5">
+                <input style="display: none" type="text" name="storeMenu" value="menu test data">
                 <input style="display: none" type="text" name="storePhone" value="02-1234-5678">
                 <input type="text" id="aLineReview" name="aLineReview" placeholder="한줄평을 써주세요.">
                 <button type="submit" class="reInputButton">사진 재입력</button>
             </form>
         </div>
     </div>
+    <script>
+        let jsonF = ${searchResult};
+        let roadAddress = jsonF[0]['items']['roadAddress'];
+
+        document.getElementById("testContent").innerText = "tt";
+    </script>
 </body>
 </html>

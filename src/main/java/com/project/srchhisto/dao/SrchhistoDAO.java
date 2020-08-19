@@ -21,10 +21,6 @@ public class SrchhistoDAO implements ISrchhistoDAO{
     @Override
     public int storeInsert(Srchhisto srchhisto) {
         ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
-        System.out.println("------------------------------");
-        System.out.println(srchhisto.getaLineReview());
-        System.out.println("한글");
-        System.out.println("------------------------------");
 
         return dao.storeInsert(srchhisto);
     }

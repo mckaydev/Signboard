@@ -83,7 +83,7 @@ function createFunction() {
         storeName.textContent = jsonFile[i]['storeName'];
         storeMenu.textContent = jsonFile[i]['storeMenu'];
         storePhone.textContent = jsonFile[i]['storePhone'];
-        aLineReview.textContent = jsonFile[i]['aLineReview']
+        aLineReview.textContent = jsonFile[i]['aLineReview'];
         if (jsonFile[i]['isBookmarked'] === 0) {
             bmkHistory.innerText = "북마크 추가";
         } else {
