@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.CropLoc;
 import com.project.member.Member;
 import com.project.service.ImageService;
+import com.project.service.NaverGeocoding;
 import com.project.service.NaverSearch;
 import com.project.srchhisto.Srchhisto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +33,15 @@ import java.util.Map;
 public class HomeController {
     private final ImageService imageService;
     private final NaverSearch naverSearch;
+    private final NaverGeocoding naverGeocoding;
 
     // 단일 생성자의 경우에는 Autowired annotation 생략 가능하다.
     // @controller 위에 @RequiredArgsConstructor 를 이용하여 아래의 코드도 생략 가능하다.(22~25)
     @Autowired
-    public HomeController(ImageService imageService, NaverSearch naverSearch) {
+    public HomeController(ImageService imageService, NaverSearch naverSearch, NaverGeocoding naverGeocoding) {
         this.imageService = imageService;
         this.naverSearch = naverSearch;
+        this.naverGeocoding = naverGeocoding;
     }
 
     @RequestMapping(value = "/map", method = RequestMethod.GET)
@@ -76,17 +79,25 @@ public class HomeController {
                              @RequestParam("offsetWidth") double offsetWidth,
                              @RequestParam("offsetHeight") double offsetHeight) throws IOException {
 
+        // 간판 사진을 OCR 하고 OCR한 정보 model에 탑재
         String ocrResult = imageService.imageCrop(originalFileName, cropLoc, session, offsetWidth, offsetHeight);
         model.addAttribute("cropImageLoc", "cropImageLoc");
         model.addAttribute("getOriginalFilename", originalFileName);
         model.addAttribute("ocrResult", ocrResult);
 
+        // 가게의 정보를 네이버 검색 API로 검색하고 가게의 정보(json)을 model에 탑재
         String searchResult = naverSearch.search(ocrResult);
         System.out.println(searchResult);
         model.addAttribute("searchResult", searchResult);
 
+        // 검색 API에서 뽑은 정보에서 가게의 도로명 주소만을 추출한다.
         String roadAddress = naverSearch.exportRoadAddress(searchResult);
         System.out.println(roadAddress);
+
+        // 가게의 도로명 주소를 네이버 맵 API의 geocoding에 전송하여 위도와 경도를 뽑아낸다.
+        String geoLoc = naverGeocoding.geocode(roadAddress);
+        System.out.println(geoLoc);
+        model.addAttribute("geoLoc", geoLoc);
 
         return "inputImageSuccess";
     }

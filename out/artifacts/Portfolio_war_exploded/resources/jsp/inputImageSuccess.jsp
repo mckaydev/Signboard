@@ -13,6 +13,8 @@
     <title>Image Input Success</title>
     <link rel="stylesheet" type="text/css" href="/resources/css/index.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/inputImageSuccess.css">
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ai9wkb82y8"></script>
+    <script src="/resources/js/naverMap.js"></script>
 </head>
 <body>
     <c:if test="${empty member}">
