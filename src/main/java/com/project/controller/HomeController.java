@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.CropLoc;
 import com.project.member.Member;
@@ -21,7 +22,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -75,9 +80,21 @@ public class HomeController {
         model.addAttribute("cropImageLoc", "cropImageLoc");
         model.addAttribute("getOriginalFilename", originalFileName);
         model.addAttribute("ocrResult", ocrResult);
+
         String searchResult = naverSearch.search(ocrResult);
         System.out.println(searchResult);
         model.addAttribute("searchResult", searchResult);
+
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map = mapper.readValue(searchResult, new TypeReference<HashMap<String, Object>>() {});
+
+
+//        searchResult['items'][0]['title']
+
+        System.out.println("--------------------------");
+        System.out.println(map.get("items"));
+        System.out.println("--------------------------");
 
         return "inputImageSuccess";
     }

@@ -30,18 +30,19 @@
                 <img class="infoImg" src="/img/${getOriginalFilename}" alt="img"/>
             </div>
             <div class="infoTextArea">
-                <p class="infoText">
-                    ★4.7 ${ocrResult}</p><br>
-                    <p>메뉴 : </p>
-                <ul class="infoText" style="padding-left: 25px">
-                    <li>짬뽕 5000원</li>
-                    <li>짜장면 5000원</li>
-                    <li>간짜장 5000원</li>
-                    <li>울면 5000원</li>
-                </ul> <br>
-                <p class="infoText" >
-                영업 시간 : 09:00 ~ 21:00
-                </p>
+                OCR: <input class="infoText" value="${ocrResult}">
+                검색결과: <input class="infoText" id="title"><br><br>
+<%--                <p>메뉴 : </p>--%>
+<%--                <ul class="infoText" style="padding-left: 25px">--%>
+<%--                    <li>짬뽕 5000원</li>--%>
+<%--                    <li>짜장면 5000원</li>--%>
+<%--                    <li>간짜장 5000원</li>--%>
+<%--                    <li>울면 5000원</li>--%>
+<%--                </ul> <br>--%>
+<%--                <p class="infoText" >영업 시간 : 09:00 ~ 21:00</p><br>--%>
+                <p id="category"></p> <br>
+                <p id="roadAddress"></p> <br>
+                <p id="link"></p>
             </div>
             <form action="storeData" method="post">
                 <input style="display: none" type="text" name="imageFileName" value="${getOriginalFilename}">
@@ -49,8 +50,15 @@
                 <input style="display: none" type="text" name="storeMenu" value="menu test data">
                 <input style="display: none" type="text" name="storePhone" value="02-1234-5678">
                 <input type="text" id="aLineReview" name="aLineReview" placeholder="한줄평을 써주세요.">
-                <button type="submit" class="reInputButton">사진 재입력</button>
+                <button type="submit" class="reInputButton">메인화면(기록 저장)</button>
             </form>
+            <script>
+                let searchResult = ${searchResult};
+                document.getElementById("category").textContent = searchResult['items'][0]['category'];
+                document.getElementById("roadAddress").textContent = searchResult['items'][0]['roadAddress'];
+                document.getElementById("link").textContent = searchResult['items'][0]['link'];
+                document.getElementById("title").value = searchResult['items'][0]['title'];
+            </script>
         </div>
     </div>
     <script>
