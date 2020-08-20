@@ -85,16 +85,8 @@ public class HomeController {
         System.out.println(searchResult);
         model.addAttribute("searchResult", searchResult);
 
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map = mapper.readValue(searchResult, new TypeReference<HashMap<String, Object>>() {});
-
-
-//        searchResult['items'][0]['title']
-
-        System.out.println("--------------------------");
-        System.out.println(map.get("items"));
-        System.out.println("--------------------------");
+        String roadAddress = naverSearch.exportRoadAddress(searchResult);
+        System.out.println(roadAddress);
 
         return "inputImageSuccess";
     }
