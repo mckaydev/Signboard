@@ -30,7 +30,10 @@
         <div class="infoBox">
             <div class="infoImgArea">
                 <img class="infoImg" src="/img/${getOriginalFilename}" alt="img"/>
+                <div id="map" class="infoImg"></div>
             </div>
+            <script>
+            </script>
             <div class="infoTextArea">
                 OCR: <input class="infoText" value="${ocrResult}">
                 검색결과: <input class="infoText" id="title"><br><br>
@@ -56,18 +59,16 @@
             </form>
             <script>
                 let searchResult = ${searchResult};
+                let geoLoc = ${geoLoc};
+
                 document.getElementById("category").textContent = searchResult['items'][0]['category'];
                 document.getElementById("roadAddress").textContent = searchResult['items'][0]['roadAddress'];
                 document.getElementById("link").textContent = searchResult['items'][0]['link'];
                 document.getElementById("title").value = searchResult['items'][0]['title'];
+
+                naverMapConf(geoLoc['addresses'][0]['x'], geoLoc['addresses'][0]['y']);
             </script>
         </div>
     </div>
-    <script>
-        let jsonF = ${searchResult};
-        let roadAddress = jsonF[0]['items']['roadAddress'];
-
-        document.getElementById("testContent").innerText = "tt";
-    </script>
 </body>
 </html>
