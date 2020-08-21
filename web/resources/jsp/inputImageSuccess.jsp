@@ -30,33 +30,59 @@
         <div class="infoBox">
             <div class="infoImgArea">
                 <img class="infoImg" src="/img/${getOriginalFilename}" alt="img"/>
+            </div>
+            <div class="infoMapArea">
                 <div id="map" class="infoImg"></div>
             </div>
             <script>
             </script>
             <div class="infoTextArea">
-                OCR: <input class="infoText" value="${ocrResult}">
-                검색결과: <input class="infoText" id="title"><br><br>
-<%--                <p>메뉴 : </p>--%>
-<%--                <ul class="infoText" style="padding-left: 25px">--%>
-<%--                    <li>짬뽕 5000원</li>--%>
-<%--                    <li>짜장면 5000원</li>--%>
-<%--                    <li>간짜장 5000원</li>--%>
-<%--                    <li>울면 5000원</li>--%>
-<%--                </ul> <br>--%>
-<%--                <p class="infoText" >영업 시간 : 09:00 ~ 21:00</p><br>--%>
-                <p id="category"></p> <br>
-                <p id="roadAddress"></p> <br>
-                <p id="link"></p>
+                <table>
+                    <tr>
+                        <td>OCR :</td>
+                        <td><input class="infoText" value="${ocrResult}"><br></td>
+                    </tr>
+                    <tr>
+                        <td>상호명 :</td>
+                        <td><input class="infoText" id="title"></td>
+                    </tr>
+                </table><br>
+                <table>
+                    <tr>
+                        <td><p>추천 메뉴 : </p></td>
+                        <td><p style="color: red">(테스트용)</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>스위티 자몽&라임 블렌디드</p></td>
+                        <td><p>6,300원</p></td></tr>
+                    <tr>
+                        <td><p>스위트 멜론 블렌디드</p></td>
+                        <td><p>6,300원</p></td></tr>
+                    <tr>
+                        <td><p>블론드 서머 라떼</p></td>
+                        <td><p>5,900원</p></td></tr>
+                    <tr>
+                        <td><p>카페 아메리카노</p></td>
+                        <td><p>4,100원</p></td></tr>
+                </table><br>
+                <table>
+                    <tr><td><p id="category"></p></td></tr>
+                    <tr><td><p id="roadAddress"></p></td></tr>
+                    <tr><td><p id="link"></td></tr>
+                </table><br><br>
+                <form action="storeData" method="post">
+                    <input style="display: none" type="text" name="imageFileName" value="${getOriginalFilename}">
+                    <input style="display: none" type="text" name="storeName" value="${ocrResult}">
+                    <input style="display: none" type="text" name="storeMenu" value="menu test data">
+                    <input style="display: none" type="text" name="storePhone" value="02-1234-5678">
+                    <table>
+                        <tr>
+                            <td><input type="text" id="aLineReview" name="aLineReview" placeholder="한줄평을 써주세요."></td></tr>
+                        <tr>
+                            <td><button type="submit" class="reInputButton">메인화면(기록 저장)</button></td></tr>
+                    </table>
+                </form>
             </div>
-            <form action="storeData" method="post">
-                <input style="display: none" type="text" name="imageFileName" value="${getOriginalFilename}">
-                <input style="display: none" type="text" name="storeName" value="${ocrResult}">
-                <input style="display: none" type="text" name="storeMenu" value="menu test data">
-                <input style="display: none" type="text" name="storePhone" value="02-1234-5678">
-                <input type="text" id="aLineReview" name="aLineReview" placeholder="한줄평을 써주세요.">
-                <button type="submit" class="reInputButton">메인화면(기록 저장)</button>
-            </form>
             <script>
                 let searchResult = ${searchResult};
                 let geoLoc = ${geoLoc};

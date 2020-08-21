@@ -2,79 +2,75 @@
     font-size: 1.5rem;
 }
 
-.bmkHistory, .delHistory {
-    font-size: 1rem;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
-.bmkHistory { right: 100px; }
-
 .infoBox {
     position: relative;
-    width: 820px;
+    width: 50vw;
     text-align: justify;
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-rows: auto auto;
     grid-template-areas:
             "infoImgArea infoTextArea"
-            "ButtonArea ButtonArea"
+            "infoMapArea infoTextArea"
 }
 
 .infoImgArea {
+    border: lightseagreen 3px solid;
+    border-radius: 1%;
     grid-area: infoImgArea;
-    padding-left: 25px;
+    display: flex;
+    justify-content: center;
+}
+.infoMapArea {
+    border: lightseagreen 3px solid;
+    border-radius: 1%;
+    grid-area: infoMapArea;
+    display: flex;
+    justify-content: center;
 }
 .infoTextArea {
+    border: lightseagreen 3px solid;
+    border-radius: 1%;
     grid-area: infoTextArea;
-    padding-left: 25px;
-}
-.ButtonArea {
-    grid-area: ButtonArea;
-    padding-top: 30px;
+    /*padding-left: 25px;*/
 }
 
 .infoImg, .infoText {
-    width: 360px;
-    vertical-align: middle;
+    max-width: 25vw;
+    max-height: 30vh;
+    /*vertical-align: middle;*/
 }
+
 #map {
-    width: 360px;
-    height: 300px;
+    width: 25vw;
+    height: 30vh;
     vertical-align: middle;
 }
 
 #aLineReview {
-    width: 816px;
-    margin: 10px 0;
+    box-sizing: border-box;
+    width: 24.5vw;
     padding: 10px 0;
 }
+
 .reInputButton {
-    width: 808px;
+    box-sizing: border-box;
+    width: 24.5vw;
 }
 
-@media (max-width: 900px) {
+.infoTextArea table {
+    margin: auto;
+    /*border: black 1px solid;*/
+    width: 25vw
+}
+
+@media (max-width: 1506px) {
     .infoBox {
-        width: 400px;
         grid-template-columns: 100%;
         grid-template-rows: auto auto auto;
         grid-template-areas:
             "infoImgArea"
-            "infoTextArea"
-            "ButtonArea";
-    }
-    #aLineReview {
-        width: 348px;
-    }
-    .reInputButton {
-        width: 348px;
-        font-size: 1.2rem;
-    }
-    .ButtonArea {
-        padding-top: 10px;
-    }
-    .infoImgArea, .infoTextArea, .ButtonArea{
-        padding-left: 20px;
+            "infoMapArea"
+            "infoTextArea";
     }
 }
