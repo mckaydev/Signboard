@@ -90,7 +90,6 @@ public class ImageService {
             // 테이블에 데이터 저장.
             srchhisto.setMemberId(member.getMemberId());
             srchhisto.setIsBookmarked(0);
-            srchhisto.setGpsAddress("234324423324");
             dao.storeInsert(srchhisto);
         } else {
             imageFileDel(srchhisto, session);
@@ -113,7 +112,7 @@ public class ImageService {
     }
 
     public String imageCrop(String originalFileName, CropLoc cropLoc, HttpSession session,
-                            double offsetWidth, double offsetHeight) throws IOException {
+                            double offsetWidth, double offsetHeight, String whatLang) throws IOException {
         String imgPath = session.getServletContext().getRealPath("/") + "/resources/img/" + originalFileName;
         String ocrPath = session.getServletContext().getRealPath("/") + "/WEB-INF/classes/tessdata";
         File file = new File(imgPath);
@@ -129,37 +128,41 @@ public class ImageService {
 
         BufferedImage cropImage = bufferedImage.getSubimage((int)x1, (int)y1, (int)w, (int)h);
 
-        return OCR(cropImage, ocrPath);
+        return OCR(cropImage, ocrPath, whatLang);
     }
 
-    public String OCR(BufferedImage imgFile, String ocrPath) {
+    public String OCR(BufferedImage imgFile, String ocrPath, String whatLang) {
         String result = null;
         Tesseract tesseract = new Tesseract();
         tesseract.setDatapath(ocrPath);
+        tesseract.setLanguage(whatLang);
 
+        System.out.println("----------------------------------------------");
         try {
             result = tesseract.doOCR(imgFile);
-            System.out.println(result);
+            System.out.println("result: " + result);
         } catch (TesseractException e) {
             System.err.println(e.getMessage());
         }
 
         StringBuffer result1 = new StringBuffer();
 
-        System.out.println("result: ");
-        System.out.println("----------------------------------------------");
         for(int i = 0; i < Objects.requireNonNull(result).length(); i ++) {
             if(result.charAt(i) >= 'A' && result.charAt(i) <= 'Z') {
                 result1.append(result.charAt(i));
             }
-            if (result.charAt(i) >= 'a' && result.charAt(i) <= 'z') {
+            else if (result.charAt(i) >= 'a' && result.charAt(i) <= 'z') {
                 result1.append(result.charAt(i));
             }
-            if (result.charAt(i) == ' ') {
+            else if (result.charAt(i) == ' ') {
                 result1.append(result.charAt(i));
             }
+            else if(Character.getType(result.charAt(i)) == 5) {
+                result1.append(result.charAt(i));
+            }
+
         }
-        System.out.println(result1);
+        System.out.println("remove special character: " + result1);
         System.out.println("----------------------------------------------");
 
         return result1.toString();

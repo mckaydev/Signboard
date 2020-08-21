@@ -7,6 +7,7 @@ public class Srchhisto {
     private String storeName;
     private String storeMenu;
     private String storePhone;
+    private int rate;
     private String aLineReview;
     private int isBookmarked;
 
@@ -65,6 +66,10 @@ public class Srchhisto {
     public void setStoreMenu(String storeMenu) {
         this.storeMenu = storeMenu;
     }
+
+    public int getRate() { return rate; }
+
+    public void setRate(int rate) { this.rate = rate; }
 
     public String getaLineReview() {
         return aLineReview;

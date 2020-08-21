@@ -72,10 +72,18 @@
                 </table><br><br>
                 <form action="storeData" method="post">
                     <input style="display: none" type="text" name="imageFileName" value="${getOriginalFilename}">
-                    <input style="display: none" type="text" name="storeName" value="${ocrResult}">
+                    <input style="display: none" type="text" id="storeName" name="storeName">
+                    <input style="display: none" type="text" id="gpsAddress" name="gpsAddress">
                     <input style="display: none" type="text" name="storeMenu" value="menu test data">
                     <input style="display: none" type="text" name="storePhone" value="02-1234-5678">
                     <table>
+                        <tr>
+                            <td>별점: <label><input type="radio" name="rate" value="1">1점</label>
+                                <label><input type="radio" name="rate" value="2">2점</label>
+                                <label><input type="radio" name="rate" value="3">3점</label>
+                                <label><input type="radio" name="rate" value="4">4점</label>
+                                <label><input type="radio" name="rate" checked="checked" value="5">5점</label></td>
+                        </tr>
                         <tr>
                             <td><input type="text" id="aLineReview" name="aLineReview" placeholder="한줄평을 써주세요."></td></tr>
                         <tr>
@@ -91,6 +99,8 @@
                 document.getElementById("roadAddress").textContent = searchResult['items'][0]['roadAddress'];
                 document.getElementById("link").textContent = searchResult['items'][0]['link'];
                 document.getElementById("title").value = searchResult['items'][0]['title'];
+                document.getElementById("storeName").value = searchResult['items'][0]['title'];
+                document.getElementById("gpsAddress").value = geoLoc['addresses'][0]['x'] + " " + geoLoc['addresses'][0]['y'];
 
                 naverMapConf(geoLoc['addresses'][0]['x'], geoLoc['addresses'][0]['y']);
             </script>

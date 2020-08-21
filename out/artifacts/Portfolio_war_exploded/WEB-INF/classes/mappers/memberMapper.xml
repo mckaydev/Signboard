@@ -13,6 +13,7 @@
             storeName varchar(20),
             storeMenu varchar(100),
             storePhone varchar(20),
+            rate varchar(1),
             aLineReview varchar(200),
             isBookmarked boolean default 0
         ) default character set utf8 collate utf8_general_ci;

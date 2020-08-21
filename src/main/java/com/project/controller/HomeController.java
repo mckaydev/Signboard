@@ -77,10 +77,11 @@ public class HomeController {
     public String cropResult(Model model, HttpSession session, CropLoc cropLoc,
                              @RequestParam("originalFileName") String originalFileName,
                              @RequestParam("offsetWidth") double offsetWidth,
-                             @RequestParam("offsetHeight") double offsetHeight) throws IOException {
+                             @RequestParam("offsetHeight") double offsetHeight,
+                             @RequestParam("whatLang") String whatLang) throws IOException {
 
         // 간판 사진을 OCR 하고 OCR한 정보 model에 탑재
-        String ocrResult = imageService.imageCrop(originalFileName, cropLoc, session, offsetWidth, offsetHeight);
+        String ocrResult = imageService.imageCrop(originalFileName, cropLoc, session, offsetWidth, offsetHeight, whatLang);
         model.addAttribute("cropImageLoc", "cropImageLoc");
         model.addAttribute("getOriginalFilename", originalFileName);
         model.addAttribute("ocrResult", ocrResult);
