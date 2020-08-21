@@ -40,9 +40,9 @@
 - 이미지 ROI(region of interest)지정에는 **https://jcrop.com/** 을 사용합니다.
 - **tesseract**를 이용하여 간판을 OCR합니다.
 - 이미지 EXIF 정보는 'test'를 이용하여 추출합니다.
-- 네이버 검색 API를 사용합니다.
-- 네이버 geocode API를 사용합니다.
-- 네이버 Maps API를 사용합니다.
+- **네이버 검색 API**를 사용합니다.
+- **네이버 geocode API**를 사용합니다.
+- **네이버 Maps API**를 사용합니다.
 - 형상 관리는 **GitHub**를 이용합니다.
 
 ## 기능 1: 간판 검색
