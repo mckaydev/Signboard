@@ -21,4 +21,10 @@ public class NaverGeocoding {
 
         return useAPI.api(apiURL, address, header1, clientId, header2, clientSecret);
     }
+
+    public static void main(String[] args) {
+        UseAPI useAPI = new UseAPI();
+        NaverGeocoding ng = new NaverGeocoding(useAPI);
+        System.out.println(ng.geocode("경기도 수원시 팔달구 세지로 406"));
+    }
 }

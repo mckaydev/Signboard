@@ -7,6 +7,7 @@ import com.project.CropLoc;
 import com.project.member.Member;
 import com.project.service.ImageService;
 import com.project.service.NaverGeocoding;
+import com.project.service.NaverRvrsGeocoding;
 import com.project.service.NaverSearch;
 import com.project.srchhisto.Srchhisto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,20 +35,31 @@ public class HomeController {
     private final ImageService imageService;
     private final NaverSearch naverSearch;
     private final NaverGeocoding naverGeocoding;
+    private final NaverRvrsGeocoding naverRGeocoding;
 
     // 단일 생성자의 경우에는 Autowired annotation 생략 가능하다.
     // @controller 위에 @RequiredArgsConstructor 를 이용하여 아래의 코드도 생략 가능하다.(22~25)
     @Autowired
-    public HomeController(ImageService imageService, NaverSearch naverSearch, NaverGeocoding naverGeocoding) {
+    public HomeController(ImageService imageService,
+                          NaverSearch naverSearch,
+                          NaverGeocoding naverGeocoding,
+                          NaverRvrsGeocoding naverRGeocoding) {
         this.imageService = imageService;
         this.naverSearch = naverSearch;
         this.naverGeocoding = naverGeocoding;
+        this.naverRGeocoding = naverRGeocoding;
     }
 
     @RequestMapping(value = "/map", method = RequestMethod.GET)
     public String mapAPITest(Model model) {
 
         return "mapAPITest";
+    }
+
+    @RequestMapping(value = "/exif", method = RequestMethod.GET)
+    public String exifTest(Model model) {
+
+        return "exifTest";
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -78,6 +90,8 @@ public class HomeController {
                              @RequestParam("originalFileName") String originalFileName,
                              @RequestParam("offsetWidth") double offsetWidth,
                              @RequestParam("offsetHeight") double offsetHeight,
+                             @RequestParam("ddX") double ddX,
+                             @RequestParam("ddY") double ddY,
                              @RequestParam("whatLang") String whatLang) throws IOException {
 
         // 간판 사진을 OCR 하고 OCR한 정보 model에 탑재
@@ -86,14 +100,22 @@ public class HomeController {
         model.addAttribute("getOriginalFilename", originalFileName);
         model.addAttribute("ocrResult", ocrResult);
 
+        System.out.println("ddX: " + ddX);
+        System.out.println("ddY: " + ddY);
+        // /cropImage 에서 받아온 DD_X, DD_Y 좌표를 통해 네이버 reverse geocoding을 진행한다.
+        // 결과값에서 지번주소를 추출한다.
+        String address = naverRGeocoding.rvrsGeocode(ddX, ddY);
+        String dong = naverRGeocoding.exportAddress(address);
+        System.out.println(dong);
+
         // 가게의 정보를 네이버 검색 API로 검색하고 가게의 정보(json)을 model에 탑재
-        String searchResult = naverSearch.search(ocrResult);
-        System.out.println(searchResult);
+        String searchResult = naverSearch.search(dong + " " + ocrResult);
+        System.out.println(dong + " " + ocrResult);
         model.addAttribute("searchResult", searchResult);
 
         // 검색 API에서 뽑은 정보에서 가게의 도로명 주소만을 추출한다.
         String roadAddress = naverSearch.exportRoadAddress(searchResult);
-        System.out.println(roadAddress);
+//        System.out.println(roadAddress);
 
         // 가게의 도로명 주소를 네이버 맵 API의 geocoding에 전송하여 위도와 경도를 뽑아낸다.
         String geoLoc = naverGeocoding.geocode(roadAddress);

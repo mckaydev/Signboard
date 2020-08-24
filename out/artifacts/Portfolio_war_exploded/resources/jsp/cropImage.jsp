@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/index.css">
     <link rel="stylesheet" href="/resources/css/jcrop.css">
     <script src="/resources/js/jcrop.js"></script>
+    <script type="text/javascript" src="/resources/js/exif.js"></script>
 </head>
 <body>
     <div class="container">
@@ -28,6 +29,8 @@
                 <label style="display: none"><input name="originalFileName" value="${getOriginalFilename}"></label>
                 <label style="display: none"><input id="oW" name="offsetWidth" ></label>
                 <label style="display: none"><input id="oH" name="offsetHeight" ></label>
+                <label>GPS X: <input id="ddX" name="ddX"></label>
+                <label>GPS Y: <input id="ddY" name="ddY"></label><br>
                 <label style="font-size: 2rem"><input type="radio" name="whatLang" checked="checked" value="kor">한국어</label>
                 <label style="font-size: 2rem"><input type="radio" name="whatLang" value="eng">영어</label>
                 <button style="width: 50vw; box-sizing: border-box" type="submit" onclick="offset()">제출</button>
@@ -50,7 +53,19 @@
                     document.getElementById("y2").value = test.y + test.h;
                     document.getElementById("w").value = test.w;
                     document.getElementById("h").value = test.h;
+
+                    let img = document.getElementById("target");
+                    // img.exifdata = null;
+                    EXIF.getData(img, function () {
+                        let x1 = String(EXIF.getTag(this, "GPSLongitude"));
+                        let y1 = String(EXIF.getTag(this, "GPSLatitude"));
+                        let x1Split = x1.split(',');
+                        document.getElementById("ddX").value = parseFloat(x1Split[0]) + (parseFloat(x1Split[1]) / 60) + (parseFloat(x1Split[2]) / 3600);
+                        let y1Split = y1.split(',');
+                        document.getElementById("ddY").value = parseFloat(y1Split[0]) + (parseFloat(y1Split[1]) / 60) + (parseFloat(y1Split[2]) / 3600);
+                    })
                 })
+
                 function offset() {
                     document.getElementById("oW").value = document.getElementById("target").offsetWidth;
                     document.getElementById("oH").value = document.getElementById("target").offsetHeight;

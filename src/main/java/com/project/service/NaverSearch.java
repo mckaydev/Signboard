@@ -11,9 +11,12 @@ import java.util.HashMap;
 @Service
 public class NaverSearch {
     private final UseAPI useAPI;
+    private final StringToJson stj;
 
-    public NaverSearch(UseAPI useAPI) {
+    public NaverSearch(UseAPI useAPI,
+                       StringToJson stj) {
         this.useAPI = useAPI;
+        this.stj = stj;
     }
 
     public String search(String ocrResult) {
@@ -33,32 +36,10 @@ public class NaverSearch {
         HashMap<String, Object> map = mapper.readValue(json, new TypeReference<HashMap<String, Object>>() {});
 
         String temp = (map.get("items")).toString();
-        String temp1 = temp.substring(1, temp.length() - 1);
+        temp = temp.substring(1, temp.length() - 1);
 
-        StringBuffer sf = new StringBuffer(temp1);
-        for (int i = 0; i < sf.length(); i++) {
-            if (sf.charAt(i) == '=') {
-                sf.setCharAt(i, ':');
-            }
-            if (sf.charAt(i) == '{') {
-                sf.insert(i + 1, '"');
-                i++;
-            } else if (sf.charAt(i) == ':'
-                    && (sf.charAt(i + 1) != '/') && sf.charAt(i + 2) != '/') {
-                sf.insert(i, '"');
-                sf.insert(i + 2, '"');
-                i += 2;
-            } else if (sf.charAt(i) == ',' && sf.charAt(i + 1) == ' ') {
-                sf.insert(i, '"');
-                sf.insert(i + 3, '"');
-                i += 3;
-            } else if (sf.charAt(i) == '}') {
-                sf.insert(i, '"');
-                i++;
-            }
-        }
-
-        HashMap<String, String> real = mapper.readValue(sf.toString(), new TypeReference<HashMap<String, String>>() {});
+        HashMap<String, String> real = mapper.readValue(stj.stringToJson(temp).toString(),
+                new TypeReference<HashMap<String, String>>() {});
 
         return real.get("roadAddress");
     }
