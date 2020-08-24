@@ -68,7 +68,7 @@
                 <table>
                     <tr><td><p id="category"></p></td></tr>
                     <tr><td><p id="roadAddress"></p></td></tr>
-                    <tr><td><p id="link"></td></tr>
+                    <tr><td><a id="link" target="_blank"></a></td></tr>
                 </table><br><br>
                 <form action="storeData" method="post">
                     <input style="display: none" type="text" name="imageFileName" value="${getOriginalFilename}">
@@ -97,7 +97,8 @@
 
                 document.getElementById("category").textContent = searchResult['items'][0]['category'];
                 document.getElementById("roadAddress").textContent = searchResult['items'][0]['roadAddress'];
-                document.getElementById("link").textContent = searchResult['items'][0]['link'];
+                document.getElementById("link").href = searchResult['items'][0]['link'];
+                document.getElementById("link").innerText = searchResult['items'][0]['link'];
                 document.getElementById("title").value = searchResult['items'][0]['title'];
                 document.getElementById("storeName").value = searchResult['items'][0]['title'];
                 document.getElementById("gpsAddress").value = geoLoc['addresses'][0]['x'] + " " + geoLoc['addresses'][0]['y'];
