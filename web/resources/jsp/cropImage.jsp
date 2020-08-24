@@ -20,12 +20,12 @@
             <img src="/img/${getOriginalFilename}" id="target" alt="[JcropExample]"
                  style="max-height: 80vh; width: 50vw"/>
             <form action="cropResult" id="coords" class="coords" method="post">
-                <label style="display: none">x1: <input id="x1" name="x1" type="text"></label>
-                <label style="display: none">y1: <input id="y1" name="y1" type="text"></label>
-                <label style="display: none">x2: <input id="x2" name="x2" type="text"></label>
-                <label style="display: none">y2: <input id="y2" name="y2" type="text"></label>
-                <label style="display: none">w: <input id="w" name="w" type="text"></label>
-                <label style="display: none">h: <input id="h" name="h" type="text"></label>
+                <label style="display: none">x1: <input id="x1" name="x1" type="text" required></label>
+                <label style="display: none">y1: <input id="y1" name="y1" type="text" required></label>
+                <label style="display: none">x2: <input id="x2" name="x2" type="text" required></label>
+                <label style="display: none">y2: <input id="y2" name="y2" type="text" required></label>
+                <label style="display: none">w: <input id="w" name="w" type="text" required></label>
+                <label style="display: none">h: <input id="h" name="h" type="text" required></label>
                 <label style="display: none"><input name="originalFileName" value="${getOriginalFilename}"></label>
                 <label style="display: none"><input id="oW" name="offsetWidth" ></label>
                 <label style="display: none"><input id="oH" name="offsetHeight" ></label>

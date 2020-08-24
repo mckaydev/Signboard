@@ -35,7 +35,7 @@
                 <form action="cropImage" method="post" enctype="multipart/form-data">
                     <input class="upload-name select" value="파일선택" disabled="disabled">
                     <label for="ex_filename">업로드</label>
-                    <input type="file" id="ex_filename" class="upload-hidden" name="imageFile">
+                    <input type="file" id="ex_filename" class="upload-hidden" name="imageFile" required>
                     <button type="submit" class="upload-hidden">제출</button>
                 </form> <br>
 <%--                <button class="upload-name" onclick="location.href='/find'">내 주변 맛집 찾기</button> &nbsp--%>
