@@ -111,11 +111,18 @@ public class HomeController {
 
         System.out.println("ddX: " + ddX);
         System.out.println("ddY: " + ddY);
+        Double ddx = ddX;
+
+        String dong = "";
+        if (ddx.isNaN()) {
+            System.out.println("gps empty");
+        } else {
+            String address = naverRGeocoding.rvrsGeocode(ddX, ddY);
+            dong = naverRGeocoding.exportAddress(address);
+            System.out.println(dong);
+        }
         // /cropImage 에서 받아온 DD_X, DD_Y 좌표를 통해 네이버 reverse geocoding을 진행한다.
         // 결과값에서 지번주소를 추출한다.
-        String address = naverRGeocoding.rvrsGeocode(ddX, ddY);
-        String dong = naverRGeocoding.exportAddress(address);
-        System.out.println(dong);
 
         // 가게의 정보를 네이버 검색 API로 검색하고 가게의 정보(json)을 model에 탑재
         String searchResult = naverSearch.search(dong, ocrResult);

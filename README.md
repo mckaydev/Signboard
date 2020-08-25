@@ -1,7 +1,7 @@
 # [개인 프로젝트 - 간판 검색기](http://jutabi.com)
 
 <details markdown="1">
-<summary>TODO LIST</summary>
+<summary style="font-size: 1.5rem">TODO LIST</summary>
 <div markdown="1">
 
 - (○) 다이어그램 그리기 
@@ -35,9 +35,9 @@
 - (○) 이미지 업로드하지 않고 제출 예외처리
 - (○) 간판의 영역을 지정하지 않고 제출 예외처리
 - (○) OCR 결과 없을 때 예외처리
-- (X) GPS 정보 없을 때 예외처리
-- (X) reverse geocoding 쿼리문 없을 때 예외 처리
-- (X) 검색 API 반환 값에 정보 없을 때 예외처리
+- (○) 검색 API 반환 값에 정보 없을 때 예외처리
+- (○) 'starbucks coffee'로 검색시 결과가 안나오는 현상 예외처리
+- (○) GPS 정보 없을 때 예외처리 (reverse geocoding 쿼리문 없을 때)
 - (X) 로그인에 Spring Security 적용
 - (X) 검색기록 페이징
 - ----------------추가 항목----------------
