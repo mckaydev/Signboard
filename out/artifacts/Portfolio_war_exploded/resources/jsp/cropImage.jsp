@@ -29,8 +29,8 @@
                 <label style="display: none"><input name="originalFileName" value="${getOriginalFilename}"></label>
                 <label style="display: none"><input id="oW" name="offsetWidth" ></label>
                 <label style="display: none"><input id="oH" name="offsetHeight" ></label>
-                <label>GPS X: <input id="ddX" name="ddX"></label>
-                <label>GPS Y: <input id="ddY" name="ddY"></label><br>
+                <label>GPS X: <input id="ddX" name="ddX" readonly></label>
+                <label>GPS Y: <input id="ddY" name="ddY" readonly></label><br>
                 <label style="font-size: 2rem"><input type="radio" name="whatLang" checked="checked" value="kor">한국어</label>
                 <label style="font-size: 2rem"><input type="radio" name="whatLang" value="eng">영어</label>
                 <button style="width: 50vw; box-sizing: border-box" type="submit" onclick="offset()">제출</button>
@@ -67,6 +67,9 @@
                 })
 
                 function offset() {
+                    if (document.getElementById("x1").value === "") {
+                        alert("간판의 영역을 지정 해주세요");
+                    }
                     document.getElementById("oW").value = document.getElementById("target").offsetWidth;
                     document.getElementById("oH").value = document.getElementById("target").offsetHeight;
                 }
