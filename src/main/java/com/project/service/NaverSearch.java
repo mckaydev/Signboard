@@ -19,7 +19,7 @@ public class NaverSearch {
         this.stj = stj;
     }
 
-    public String search(String ocrResult) {
+    public String search(String dong, String ocrResult) {
         String header1 = "X-Naver-Client-Id";
         String clientId = "hKzNsSuDTyAaWBoxl5HE";
 
@@ -27,20 +27,42 @@ public class NaverSearch {
         String clientSecret = "z2lUNQG3GR";
 
         String apiURL = "https://openapi.naver.com/v1/search/local.json?query=";
+        String query = dong + " " + ocrResult;
 
-        return useAPI.api(apiURL, ocrResult, header1, clientId, header2, clientSecret);
+        String searchResult = useAPI.api(apiURL, query, header1, clientId, header2, clientSecret);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            HashMap<String, Object> map = mapper.readValue(searchResult, new TypeReference<HashMap<String, Object>>() {});
+            System.out.println(map.get("items"));
+            // 검색 결과가 없다면 'items'는 "[]"를 반환한다.
+            if (map.get("items").toString().equals("[]")) {
+                // starbucks의 경우 'starbucks coffee'로 검색하면 결과가 나오지 않기 때문에 " "로 스플릿하고
+                // 'starbucks'로만 검색하게 한다.
+                String[] temp = ocrResult.split(" ");
+                query = dong + " " + temp[0];
+                searchResult = useAPI.api(apiURL, query, header1, clientId, header2, clientSecret);
+            }
+        } catch (Exception e) {
+            System.out.println("jackson err: " + e);
+        }
+
+        return searchResult;
     }
 
-    public String exportRoadAddress(String json) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap<String, Object> map = mapper.readValue(json, new TypeReference<HashMap<String, Object>>() {});
+    public String exportRoadAddress(String json) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            HashMap<String, Object> map = mapper.readValue(json, new TypeReference<HashMap<String, Object>>() {});
 
-        String temp = (map.get("items")).toString();
-        temp = temp.substring(1, temp.length() - 1);
+            String temp = (map.get("items")).toString();
+            temp = temp.substring(1, temp.length() - 1);
 
-        HashMap<String, String> real = mapper.readValue(stj.stringToJson(temp).toString(),
-                new TypeReference<HashMap<String, String>>() {});
+            HashMap<String, String> real = mapper.readValue(stj.stringToJson(temp).toString(),
+                    new TypeReference<HashMap<String, String>>() {});
 
-        return real.get("roadAddress");
+            return real.get("roadAddress");
+        } catch (Exception e) {
+            return "NotFoundErr";
+        }
     }
 }
