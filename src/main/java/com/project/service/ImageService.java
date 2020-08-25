@@ -163,6 +163,9 @@ public class ImageService {
 
         }
         System.out.println("remove special character: " + result1);
+        if (result1.toString().equals("")) {
+            System.out.println("ocr result empty");
+        }
         System.out.println("----------------------------------------------");
 
         return result1.toString();

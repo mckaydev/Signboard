@@ -66,6 +66,12 @@
                     })
                 })
 
+                window.onload = function () {
+                    if ('${result}' === 'fail') {
+                        alert("ocr 결과가 없어요. 영역을 다시 지정해 주세요.");
+                    }
+                }
+
                 function offset() {
                     if (document.getElementById("x1").value === "") {
                         alert("간판의 영역을 지정 해주세요");

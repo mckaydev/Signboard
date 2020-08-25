@@ -10,6 +10,7 @@ import com.project.service.NaverGeocoding;
 import com.project.service.NaverRvrsGeocoding;
 import com.project.service.NaverSearch;
 import com.project.srchhisto.Srchhisto;
+import com.sun.jna.WString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -86,7 +89,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/cropResult", method = RequestMethod.POST)
-    public String cropResult(Model model, HttpSession session, CropLoc cropLoc,
+    public String cropResult(Model model, HttpSession session, CropLoc cropLoc, RedirectAttributes rttr,
                              @RequestParam("originalFileName") String originalFileName,
                              @RequestParam("offsetWidth") double offsetWidth,
                              @RequestParam("offsetHeight") double offsetHeight,
@@ -96,6 +99,12 @@ public class HomeController {
 
         // 간판 사진을 OCR 하고 OCR한 정보 model에 탑재
         String ocrResult = imageService.imageCrop(originalFileName, cropLoc, session, offsetWidth, offsetHeight, whatLang);
+        //OCR 결과가 없으면 간판의 영역을 다시 지정 하도록 한다.
+        if (ocrResult.equals("")) {
+            model.addAttribute("getOriginalFilename", originalFileName);
+            model.addAttribute("result", "fail");
+            return "cropImage";
+        }
         model.addAttribute("cropImageLoc", "cropImageLoc");
         model.addAttribute("getOriginalFilename", originalFileName);
         model.addAttribute("ocrResult", ocrResult);
