@@ -67,8 +67,11 @@
                 })
 
                 window.onload = function () {
-                    if ('${result}' === 'fail') {
+                    if ('${ocrResult}' === 'fail') {
                         alert("ocr 결과가 없어요. 영역을 다시 지정해 주세요.");
+                    }
+                    if ('${apiResult}' === 'fail') {
+                        alert("검색 결과가 없어요. 영역을 다시 지정해 주세요.");
                     }
                 }
 

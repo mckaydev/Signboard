@@ -102,7 +102,7 @@ public class HomeController {
         //OCR 결과가 없으면 간판의 영역을 다시 지정 하도록 한다.
         if (ocrResult.equals("")) {
             model.addAttribute("getOriginalFilename", originalFileName);
-            model.addAttribute("result", "fail");
+            model.addAttribute("ocrResult", "fail");
             return "cropImage";
         }
         model.addAttribute("cropImageLoc", "cropImageLoc");
@@ -118,12 +118,17 @@ public class HomeController {
         System.out.println(dong);
 
         // 가게의 정보를 네이버 검색 API로 검색하고 가게의 정보(json)을 model에 탑재
-        String searchResult = naverSearch.search(dong + " " + ocrResult);
+        String searchResult = naverSearch.search(dong, ocrResult);
         System.out.println(dong + " " + ocrResult);
         model.addAttribute("searchResult", searchResult);
 
         // 검색 API에서 뽑은 정보에서 가게의 도로명 주소만을 추출한다.
         String roadAddress = naverSearch.exportRoadAddress(searchResult);
+        if (roadAddress.equals("NotFoundErr")) {
+            model.addAttribute("getOriginalFilename", originalFileName);
+            model.addAttribute("apiResult", "fail");
+            return "cropImage";
+        }
 //        System.out.println(roadAddress);
 
         // 가게의 도로명 주소를 네이버 맵 API의 geocoding에 전송하여 위도와 경도를 뽑아낸다.
