@@ -4,6 +4,7 @@ public class Srchhisto {
     private String memberId;
     private String imageFileName;
     private String gpsAddress;
+    private String roadAddress;
     private String storeName;
     private String storeMenu;
     private String storePhone;
@@ -77,5 +78,13 @@ public class Srchhisto {
 
     public void setaLineReview(String aLineReview) {
         this.aLineReview = aLineReview;
+    }
+
+    public String getRoadAddress() {
+        return roadAddress;
+    }
+
+    public void setRoadAddress(String roadAddress) {
+        this.roadAddress = roadAddress;
     }
 }

@@ -10,6 +10,7 @@
         create table ${memberId} (
             imageFileName varchar(100) primary key,
             gpsAddress varchar(40),
+            roadAddress varchar(100),
             storeName varchar(20),
             storeMenu varchar(100),
             storePhone varchar(20),

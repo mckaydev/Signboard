@@ -60,14 +60,15 @@ function createFunction() {
     infoTextArea.appendChild(infoText);
 
     let storeName = document.createElement("p");
-    let storeMenu = document.createElement("p");
-    let storePhone = document.createElement("p");
+    let roadAddress = document.createElement("p");
+    let rate = document.createElement("p");
     let aLineReview = document.createElement("p");
+    aLineReview.id = "aLineReview";
     infoText.appendChild(storeName);
     infoText.appendChild(document.createElement("br"));
-    infoText.appendChild(storeMenu);
+    infoText.appendChild(roadAddress);
     infoText.appendChild(document.createElement("br"));
-    infoText.appendChild(storePhone);
+    infoText.appendChild(rate);
     infoText.appendChild(document.createElement("br"));
     infoText.appendChild(aLineReview);
 
@@ -80,10 +81,10 @@ function createFunction() {
         delInput.value = jsonFile[i]['imageFileName'];
         bmkIs.value = jsonFile[i]['isBookmarked'];
 
-        storeName.textContent = jsonFile[i]['storeName'];
-        storeMenu.textContent = jsonFile[i]['storeMenu'];
-        storePhone.textContent = jsonFile[i]['storePhone'];
-        aLineReview.textContent = jsonFile[i]['aLineReview'];
+        storeName.textContent = "상호명: " + jsonFile[i]['storeName'];
+        roadAddress.textContent = "주소: " + jsonFile[i]['roadAddress'];
+        rate.textContent = "별점: " + jsonFile[i]['rate'] + "점";
+        aLineReview.textContent = "한줄평: " + jsonFile[i]['aLineReview'];
         if (jsonFile[i]['isBookmarked'] === 0) {
             bmkHistory.innerText = "북마크 추가";
         } else {

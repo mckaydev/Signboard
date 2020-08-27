@@ -20,6 +20,8 @@
     grid-template-areas:
             "infoImgArea"
             "infoTextArea";
+    overflow: scroll;
+    white-space: normal;
 }
 
 .infoImgArea {
@@ -34,6 +36,10 @@
     max-width: 25vw;
     max-height: 30vh;
     /*vertical-align: middle;*/
+}
+
+#aLineReview {
+    max-width: 25vw;
 }
 
 .container {
