@@ -29,8 +29,11 @@
                 <label style="display: none"><input name="originalFileName" value="${getOriginalFilename}"></label>
                 <label style="display: none"><input id="oW" name="offsetWidth" ></label>
                 <label style="display: none"><input id="oH" name="offsetHeight" ></label>
-                <label>GPS X: <input id="ddX" name="ddX" readonly></label>
-                <label>GPS Y: <input id="ddY" name="ddY" readonly></label><br>
+                <label style="display: none">GPS X: <input id="ddX" name="ddX" readonly></label>
+                <label style="display: none">GPS Y: <input id="ddY" name="ddY" readonly></label>
+                <label id="dongLabel">
+                    <input style="font-size: 1.5rem; width: 50%; text-align: center" id="dong" name="dong" maxlength="10">
+                </label><br>
                 <label style="font-size: 2rem"><input type="radio" name="whatLang" checked="checked" value="kor">한국어</label>
                 <label style="font-size: 2rem"><input type="radio" name="whatLang" value="eng">영어</label>
                 <button style="width: 50vw; box-sizing: border-box" type="submit" onclick="offset()">제출</button>
@@ -53,17 +56,6 @@
                     document.getElementById("y2").value = test.y + test.h;
                     document.getElementById("w").value = test.w;
                     document.getElementById("h").value = test.h;
-
-                    let img = document.getElementById("target");
-                    // img.exifdata = null;
-                    EXIF.getData(img, function () {
-                        let x1 = String(EXIF.getTag(this, "GPSLongitude"));
-                        let y1 = String(EXIF.getTag(this, "GPSLatitude"));
-                        let x1Split = x1.split(',');
-                        document.getElementById("ddX").value = parseFloat(x1Split[0]) + (parseFloat(x1Split[1]) / 60) + (parseFloat(x1Split[2]) / 3600);
-                        let y1Split = y1.split(',');
-                        document.getElementById("ddY").value = parseFloat(y1Split[0]) + (parseFloat(y1Split[1]) / 60) + (parseFloat(y1Split[2]) / 3600);
-                    })
                 })
 
                 window.onload = function () {
@@ -73,6 +65,21 @@
                     if ('${apiResult}' === 'fail') {
                         alert("검색 결과가 없어요. 영역을 다시 지정해 주세요.");
                     }
+                    let img = document.getElementById("target");
+                    // img.exifdata = null;
+                    EXIF.getData(img, function () {
+                        let x1 = String(EXIF.getTag(this, "GPSLongitude"));
+                        let y1 = String(EXIF.getTag(this, "GPSLatitude"));
+                        let x1Split = x1.split(',');
+                        document.getElementById("ddX").value = parseFloat(x1Split[0]) + (parseFloat(x1Split[1]) / 60) + (parseFloat(x1Split[2]) / 3600);
+                        let y1Split = y1.split(',');
+                        document.getElementById("ddY").value = parseFloat(y1Split[0]) + (parseFloat(y1Split[1]) / 60) + (parseFloat(y1Split[2]) / 3600);
+                        if(x1 === "undefined") {
+                            document.getElementById("dong").placeholder = "GPS 정보가 없어요. 행정동을 입력해 주세요.";
+                        } else {
+                            document.getElementById("dongLabel").style = "display: none";
+                        }
+                    })
                 }
 
                 function offset() {

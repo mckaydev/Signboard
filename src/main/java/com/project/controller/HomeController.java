@@ -95,6 +95,7 @@ public class HomeController {
                              @RequestParam("offsetHeight") double offsetHeight,
                              @RequestParam("ddX") double ddX,
                              @RequestParam("ddY") double ddY,
+                             @RequestParam("dong") String inputDong,
                              @RequestParam("whatLang") String whatLang) throws IOException {
 
         // 간판 사진을 OCR 하고 OCR한 정보 model에 탑재
@@ -116,6 +117,7 @@ public class HomeController {
         String dong = "";
         if (ddx.isNaN()) {
             System.out.println("gps empty");
+            dong = inputDong;
         } else {
             String address = naverRGeocoding.rvrsGeocode(ddX, ddY);
             dong = naverRGeocoding.exportAddress(address);
