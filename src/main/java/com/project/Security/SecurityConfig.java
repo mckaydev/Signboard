@@ -1,7 +1,10 @@
 package com.project.Security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,11 +18,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 // web.xml에 등록하지 않고 자바 기반의 어노테이션을 사용하여 스프링 시큐리티를 설정
 @Configuration
 @EnableWebSecurity
+@ComponentScan("com.project")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomAuthenticationProvider authenticationProvider;
 
-    public SecurityConfig(@Lazy CustomAuthenticationProvider authenticationProvider) {
+    @Autowired
+    public SecurityConfig(CustomAuthenticationProvider authenticationProvider) {
         this.authenticationProvider = authenticationProvider;
     }
 
@@ -40,17 +45,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+//                .antMatchers("/cropImage").hasRole("USER")
+//                .antMatchers("/bookmarkedSearch").hasRole("USER")
+//                .antMatchers("/priorSearch").hasRole("USER")
+                .antMatchers("/").permitAll()
                 .antMatchers("/member/**").permitAll()
-                .antMatchers("/**").permitAll()
-//                .antMatchers("/**").hasRole("USER")
-                .anyRequest().authenticated()
-                .and().csrf().disable()
+//                .antMatchers("/**").permitAll()
+                .anyRequest().hasRole("USER")
+                .and()
                 .formLogin()
-//                    .loginPage("/member/SecLogin")
-                    .permitAll()
-                    .and()
+                    .loginPage("/member/loginForm")
+                .and()
                 .logout()
-                    .permitAll();
+                .and().csrf().disable();
     }
 
     @Bean

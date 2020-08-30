@@ -48,11 +48,12 @@ public class MemberService implements IMemberService, UserDetailsService {
         Member member = dao.findById(memberId);
 
         List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
-        System.out.println(memberId + " Login");
+        System.out.println(member.getMemberId() + " Login");
         if(("admin").equals(memberId)) {
-            auth.add(new SimpleGrantedAuthority("ADMIN"));
+            auth.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         } else {
-            auth.add(new SimpleGrantedAuthority("USER"));
+            auth.add(new SimpleGrantedAuthority("ROLE_USER"));
+            System.out.println("Granted Role: USER");
         }
         return new User(member.getMemberId(), member.getMemberPw(), auth);
     }

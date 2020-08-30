@@ -1,6 +1,7 @@
 package com.project.Security;
 
 import com.project.member.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,12 +15,10 @@ import org.springframework.stereotype.Component;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private final MemberService memberService;
-    private final PasswordEncoder passwordEncoder;
 
-    public CustomAuthenticationProvider(MemberService memberService,
-                                        PasswordEncoder passwordEncoder) {
+    @Autowired
+    public CustomAuthenticationProvider(MemberService memberService) {
         this.memberService = memberService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -29,10 +28,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         UserDetails userDetails = memberService.loadUserByUsername(username);
 
-        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-            throw new BadCredentialsException("password error");
-        }
-
+//        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
+//            throw new BadCredentialsException("password error");
+//        }
+        System.out.println("Authorities: " + userDetails.getAuthorities());
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities());
         authToken.setDetails(authentication.getDetails());
