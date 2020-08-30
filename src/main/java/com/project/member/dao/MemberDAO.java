@@ -149,6 +149,12 @@ public class MemberDAO implements IMemberDAO {
     }
 
     @Override
+    public Member findById(String memberId) {
+        IMemberDAO dao = sqlSession.getMapper(IMemberDAO.class);
+        return dao.findById(memberId);
+    }
+
+    @Override
     public int memberUpdate(Member member) {
         IMemberDAO dao = sqlSession.getMapper(IMemberDAO.class);
         return dao.memberUpdate(member);

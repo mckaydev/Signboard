@@ -24,8 +24,6 @@
           <element id="library" level="project" name="Maven: commons-io:commons-io:2.5" />
           <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.5.4" />
           <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:2.0.4" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.2.6.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.2.6.RELEASE" />
           <element id="library" level="project" name="Maven: com.mchange:c3p0:0.9.5.5" />
           <element id="library" level="project" name="Maven: com.mchange:mchange-commons-java:0.2.19" />
           <element id="library" level="project" name="Maven: commons-dbcp:commons-dbcp:1.4" />
@@ -60,9 +58,15 @@
           <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.30" />
           <element id="library" level="project" name="Maven: org.slf4j:log4j-over-slf4j:1.7.30" />
           <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:4.0.1" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-config:5.2.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:5.2.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:5.2.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-acl:5.2.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-taglibs:5.2.2.RELEASE" />
         </element>
       </element>
-      <element id="javaee-facet-resources" facet="Portfolio/web/Web" />
       <element id="javaee-facet-resources" facet="Signboard/web/Web" />
     </root>
   </artifact>

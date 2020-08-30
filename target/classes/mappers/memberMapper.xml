@@ -38,6 +38,10 @@
         select * from member where memberId = #{memberId} and memberPw = #{memberPw};
     </select>
 
+    <select id="findById" parameterType="String" resultType="com.project.member.Member">
+        select * from member where memberId = #{value};
+    </select>
+
     <update id="memberUpdate" parameterType="com.project.member.Member">
         update member set memberPw = #{memberPw},  memberEmail = #{memberEmail} where memberId = #{memberId};
     </update>

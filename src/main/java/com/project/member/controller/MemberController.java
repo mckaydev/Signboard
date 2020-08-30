@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -33,6 +34,18 @@ public class MemberController {
             return "redirect:/member/joinForm";
         }
         return "joinResult";
+    }
+
+    @RequestMapping(value = "/SecLogin")
+    public String secLogin() {
+
+        return "springSecLogin";
+    }
+
+    @RequestMapping(value = "/SecLoginResult", method = RequestMethod.POST)
+    public String secLoginResult() {
+
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/loginForm")

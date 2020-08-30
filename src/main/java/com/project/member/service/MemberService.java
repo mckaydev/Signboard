@@ -5,14 +5,21 @@ import com.project.member.dao.MemberDAO;
 import com.project.srchhisto.Srchhisto;
 import com.project.srchhisto.dao.SrchhistoDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class MemberService implements IMemberService {
+public class MemberService implements IMemberService, UserDetailsService {
     private final MemberDAO dao;
     private final SrchhistoDAO srchhistoDAO;
 
@@ -34,6 +41,20 @@ public class MemberService implements IMemberService {
             System.out.println("member register fail");
         }
         return result;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
+        Member member = dao.findById(memberId);
+
+        List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
+        System.out.println(memberId + " Login");
+        if(("admin").equals(memberId)) {
+            auth.add(new SimpleGrantedAuthority("ADMIN"));
+        } else {
+            auth.add(new SimpleGrantedAuthority("USER"));
+        }
+        return new User(member.getMemberId(), member.getMemberPw(), auth);
     }
 
     @Override
