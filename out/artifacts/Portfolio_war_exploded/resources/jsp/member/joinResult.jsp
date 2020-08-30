@@ -20,7 +20,7 @@
                 Id : ${member.memberId} <br>
                 Pw : ${member.memberPw} <br>
                 Email : ${member.memberEmail} <br>
-                <button onclick="location.href='/'">메인화면</button>
+                <button onclick="location.href='../../..'">메인화면</button>
             </p>
         </div>
     </div>

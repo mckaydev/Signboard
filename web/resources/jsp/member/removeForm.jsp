@@ -15,7 +15,7 @@
 <body>
     <div class="container">
         <div class="infoBox">
-            <form action="removeResult" method="post">
+            <form action="/member/removeProcess" method="post">
                 <%--                readonly는 폼 전송시 객체 전송이 되지만 disabled는 해당 객체는 폼으로 전송되지 않는다.--%>
                     <table style="margin: auto">
                         <tr>
@@ -32,7 +32,7 @@
                         </tr>
                     </table>
                 <button type="submit">회원탈퇴</button>
-                <button type="reset"  onclick="location.href='/'">취소</button>
+                <button type="reset"  onclick="location.href='../../..'">취소</button>
             </form>
         </div>
     </div>

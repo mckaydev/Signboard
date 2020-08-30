@@ -16,14 +16,14 @@
     <script src="/resources/js/imageUploadButton.js"></script>
 </head>
 <body>
-    <c:if test="${empty member}">
-        <button class="signIn" onclick="location.href='/member/loginForm'">로그인</button>
-        <button class="signUp" onclick="location.href='/member/joinForm'">회원가입</button>
+    <c:if test="${pageContext.request.userPrincipal.name == null}">
+        <button class="signIn" onclick="location.href='/member/login'">로그인</button>
+        <button class="signUp" onclick="location.href='/member/join'">회원가입</button>
     </c:if>
-    <c:if test="${!empty member}">
-        <button class="modify" onclick="location.href='/member/modifyForm'">정보 수정</button>
+    <c:if test="${pageContext.request.userPrincipal.name != null}">
+        <button class="modify" onclick="location.href='/member/modify'">정보 수정</button>
         <button class="logout" onclick="location.href='/member/logout'">로그 아웃</button>
-        <button class="remove" onclick="location.href='/member/removeForm'">회원 탈퇴</button>
+        <button class="remove" onclick="location.href='/member/remove'">회원 탈퇴</button>
     </c:if>
 
     <div class="container">
@@ -41,16 +41,6 @@
 <%--                <button class="upload-name" onclick="location.href='/find'">내 주변 맛집 찾기</button> &nbsp--%>
                 <button class="upload-name" id="priorSearch" onclick="location.href='/priorSearch'">이전 검색 기록</button> &nbsp
                 <button class="upload-name" id="bookmarkedSearch" onclick="location.href='/bookmarkedSearch'">즐겨찾기</button>
-                <c:if test="${empty member}">
-                    <script>
-                        document.getElementById("priorSearch").onclick = function () {
-                            alert("로그인이 필요합니다.");
-                        }
-                        document.getElementById("bookmarkedSearch").onclick = function () {
-                            alert("로그인이 필요합니다.");
-                        }
-                    </script>
-                </c:if>
             </div>
         </div>
     </div>
