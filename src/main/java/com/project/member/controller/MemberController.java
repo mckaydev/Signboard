@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -22,24 +21,18 @@ public class MemberController {
         this.service = memberService;
     }
 
-    @RequestMapping(value = "/joinForm")
+    @RequestMapping(value = "/join")
     public String joinForm(Member member) {
 
-        return "joinForm";
+        return "member/joinForm";
     }
-    @RequestMapping(value = "/joinResult", method = RequestMethod.POST)
+    @RequestMapping(value = "/joinProcess", method = RequestMethod.POST)
     public String joinResult(Member member) {
         int result = service.memberRegister(member);
         if (result != 1) {
             return "redirect:/member/joinForm";
         }
-        return "joinResult";
-    }
-
-    @RequestMapping(value = "/SecLogin")
-    public String secLogin() {
-
-        return "springSecLogin";
+        return "member/joinResult";
     }
 
     @RequestMapping(value = "/SecLoginResult", method = RequestMethod.POST)
@@ -48,40 +41,40 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/loginForm")
-    public String loginForm(Member member) {
+    @RequestMapping(value = "/login")
+    public String loginForm() {
 
-        return "loginForm";
+        return "member/loginForm";
     }
-    @RequestMapping(value = "/loginResult", method = RequestMethod.POST)
-    public String loginResult(Member member, HttpSession session) {
-
-        Member member1 = service.memberSearch(member);
-        if(member1 == null) { return "redirect:/member/loginForm"; }
-        session.setAttribute("member", member1);
-
-        return "redirect:/";
-    }
+//    @RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
+//    public String loginResult(Member member, HttpSession session) {
+//
+//        Member member1 = service.memberSearch(member);
+//        if(member1 == null) { return "redirect:/member/loginForm"; }
+//        session.setAttribute("member", member1);
+//
+//        return "redirect:/";
+//    }
     @RequestMapping(value = "/logout")
     public String logout(Member member, HttpSession session) {
 
         Member member1 = (Member) session.getAttribute("member");
-        System.out.println("member logout: Id: " + member1.getMemberId());
+        System.out.println("member logout: Id: " + member1.getUsername());
         session.invalidate();
 
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/modifyForm")
+    @RequestMapping(value = "/modify")
     public ModelAndView modifyForm(HttpSession session) {
         Member member = (Member) session.getAttribute("member");
         ModelAndView mav = new ModelAndView();
         mav.addObject("member", service.memberSearch(member));
-        mav.setViewName("modifyForm");
+        mav.setViewName("member/modifyForm");
 
         return mav;
     }
-    @RequestMapping(value = "/modifyResult", method = RequestMethod.POST)
+    @RequestMapping(value = "/modifyProcess", method = RequestMethod.POST)
     public ModelAndView modifyResult(Member member, HttpSession session) {
         ModelAndView mav = new ModelAndView();
         Member member1 = service.memberModify(member);
@@ -95,17 +88,17 @@ public class MemberController {
         return mav;
     }
 
-    @RequestMapping(value = "removeForm")
+    @RequestMapping(value = "remove")
     public ModelAndView removeForm(HttpSession session) {
         ModelAndView mav = new ModelAndView();
         Member member1 = (Member) session.getAttribute("member");
 
         mav.addObject("member", member1);
-        mav.setViewName("removeForm");
+        mav.setViewName("member/removeForm");
 
         return mav;
     }
-    @RequestMapping(value = "removeResult")
+    @RequestMapping(value = "removeProcess")
     public String removeResult(Member member, HttpSession session) {
         int result = service.memberRemove(member, session);
         if(result == 0) {

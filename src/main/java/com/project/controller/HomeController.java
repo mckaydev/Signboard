@@ -204,7 +204,7 @@ public class HomeController {
     public String bookmarkHistory(HttpSession session, HttpServletRequest request, Srchhisto srchhisto) {
 
         Member member = (Member) session.getAttribute("member");
-        srchhisto.setMemberId(member.getMemberId());
+        srchhisto.setMemberId(member.getUsername());
 
         Cookie[] cookies = request.getCookies();
         String where = "priorSearch";
@@ -224,7 +224,7 @@ public class HomeController {
     public String deleteHistory(HttpSession session, HttpServletRequest request, Srchhisto srchhisto) {
 
         Member member = (Member) session.getAttribute("member");
-        srchhisto.setMemberId(member.getMemberId());
+        srchhisto.setMemberId(member.getUsername());
 
         Cookie[] cookies = request.getCookies();
         String where = "priorSearch";

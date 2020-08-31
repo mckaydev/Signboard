@@ -1,7 +1,7 @@
 package com.project.srchhisto;
 
 public class Srchhisto {
-    private String memberId;
+    private String username;
     private String imageFileName;
     private String gpsAddress;
     private String roadAddress;
@@ -45,11 +45,11 @@ public class Srchhisto {
     }
 
     public String getMemberId() {
-        return memberId;
+        return username;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setMemberId(String username) {
+        this.username = username;
     }
 
     public String getStorePhone() {

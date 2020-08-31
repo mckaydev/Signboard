@@ -28,15 +28,20 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         UserDetails userDetails = memberService.loadUserByUsername(username);
 
+        if (!password.equals(userDetails.getPassword())) {
+            throw new BadCredentialsException("password error");
+        }
 //        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
 //            throw new BadCredentialsException("password error");
 //        }
-        System.out.println("Authorities: " + userDetails.getAuthorities());
+//        System.out.println("Authorities: " + userDetails.getAuthorities());
+//        System.out.println("Password: " + password + ", " + userDetails.getPassword());
+
+        // 일반적으로 인증이 완료된 사용자 토큰은 비밀번호를 제거하여 만든다.
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities());
         authToken.setDetails(authentication.getDetails());
 
-        // 일반적으로 인증이 완료된 사용자 토큰은 비밀번호를 제거하여 만든다.
         return authToken;
     }
 

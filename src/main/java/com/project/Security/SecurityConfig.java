@@ -54,14 +54,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().hasRole("USER")
                 .and()
                 .formLogin()
-                    .loginPage("/member/loginForm")
+                    .loginPage("/member/login")
+                    .loginProcessingUrl("/member/loginProcess")
+                    .successForwardUrl("/")
+                    // 간판 업로드시 예외처리 위해 true값
+                    .defaultSuccessUrl("/", true)
+                    .permitAll()
                 .and()
                 .logout()
+                .logoutUrl("/member/logout")
+                .logoutSuccessUrl("/")
                 .and().csrf().disable();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//    }
 }

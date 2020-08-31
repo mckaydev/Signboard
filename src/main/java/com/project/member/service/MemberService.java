@@ -1,5 +1,6 @@
 package com.project.member.service;
 
+import com.project.member.LMember;
 import com.project.member.Member;
 import com.project.member.dao.MemberDAO;
 import com.project.srchhisto.Srchhisto;
@@ -7,7 +8,6 @@ import com.project.srchhisto.dao.SrchhistoDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -35,8 +35,8 @@ public class MemberService implements IMemberService, UserDetailsService {
         System.out.println(result);
         if(result == 1) {
             System.out.println("new member register: " +
-                "\nId: " + member.getMemberId() +
-                "\nEmail: " + member.getMemberEmail());
+                "\nId: " + member.getUsername() +
+                "\nEmail: " + member.getEmail());
         } else {
             System.out.println("member register fail");
         }
@@ -44,18 +44,18 @@ public class MemberService implements IMemberService, UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
-        Member member = dao.findById(memberId);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        LMember member = dao.findById(username);
 
         List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
-        System.out.println(member.getMemberId() + " Login");
-        if(("admin").equals(memberId)) {
+        if(("admin").equals(username)) {
             auth.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         } else {
             auth.add(new SimpleGrantedAuthority("ROLE_USER"));
-            System.out.println("Granted Role: USER");
+//            System.out.println("Granted Role: USER");
         }
-        return new User(member.getMemberId(), member.getMemberPw(), auth);
+        return new Member(member.getUsername(), member.getPassword(), member.getEmail(), auth,
+                member.isAccountNonExpired(), member.isAccountNonLocked(), member.isCredentialsNonExpired(), member.isEnabled());
     }
 
     @Override
@@ -65,7 +65,7 @@ public class MemberService implements IMemberService, UserDetailsService {
             System.out.println("member login fail");
         } else {
             System.out.println("member login " +
-                    "\nId: " + member.getMemberId());
+                    "\nId: " + member.getUsername());
         }
         return member1;
     }
@@ -78,8 +78,8 @@ public class MemberService implements IMemberService, UserDetailsService {
             System.out.println("member modify fail");
         } else {
             System.out.println("modified member " +
-                    "\nId: " + member.getMemberId() +
-                    "\nEmail: " + member.getMemberEmail());
+                    "\nId: " + member.getUsername() +
+                    "\nEmail: " + member.getEmail());
         }
         return member;
     }
@@ -107,7 +107,7 @@ public class MemberService implements IMemberService, UserDetailsService {
             System.out.println("member remove fail");
         } else {
             System.out.println("removed member " +
-                    "\nId: " + member.getMemberId());
+                    "\nId: " + member.getUsername());
         }
         return result;
     }

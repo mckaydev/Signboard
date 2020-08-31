@@ -107,6 +107,7 @@ package com.project.member.dao;
 //}
 
 
+import com.project.member.LMember;
 import com.project.member.Member;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,9 +150,9 @@ public class MemberDAO implements IMemberDAO {
     }
 
     @Override
-    public Member findById(String memberId) {
+    public LMember findById(String username) {
         IMemberDAO dao = sqlSession.getMapper(IMemberDAO.class);
-        return dao.findById(memberId);
+        return dao.findById(username);
     }
 
     @Override

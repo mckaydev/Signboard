@@ -88,7 +88,7 @@ public class ImageService {
         // 회원일 경우
         if(member != null) {
             // 테이블에 데이터 저장.
-            srchhisto.setMemberId(member.getMemberId());
+            srchhisto.setMemberId(member.getUsername());
             srchhisto.setIsBookmarked(0);
             dao.storeInsert(srchhisto);
         } else {
