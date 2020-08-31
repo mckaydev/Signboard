@@ -20,15 +20,15 @@
                 <table style="margin: auto">
                     <tr>
                         <td>Id :</td>
-                        <td><input type="text" name="memberId" required maxlength="10" placeholder=" 최대10자"></td>
+                        <td><input type="text" name="username" required maxlength="10" placeholder=" 최대10자"></td>
                     </tr>
                     <tr>
                         <td>Pw :</td>
-                        <td><input type="password" name="memberPw" required maxlength="10" placeholder=" 최대10자"></td>
+                        <td><input type="password" name="password" required maxlength="10" placeholder=" 최대10자"></td>
                     </tr>
                     <tr>
                         <td>Email :</td>
-                        <td><input type="email" name="memberEmail" required maxlength="20" placeholder=" 최대20자"></td>
+                        <td><input type="email" name="email" required maxlength="20" placeholder=" 최대20자"></td>
                     </tr>
                 </table>
                 <button type="submit">회원가입</button>

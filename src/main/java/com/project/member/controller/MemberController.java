@@ -1,14 +1,20 @@
 package com.project.member.controller;
 
+import com.project.member.LMember;
 import com.project.member.Member;
 import com.project.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 @Controller
 @RequestMapping(value = "/member")
@@ -22,23 +28,19 @@ public class MemberController {
     }
 
     @RequestMapping(value = "/join")
-    public String joinForm(Member member) {
+    public String joinForm() {
 
         return "member/joinForm";
     }
     @RequestMapping(value = "/joinProcess", method = RequestMethod.POST)
-    public String joinResult(Member member) {
-        int result = service.memberRegister(member);
+    public String joinResult(@RequestParam("username") String username,
+                             @RequestParam("password") String password,
+                             @RequestParam("email") String email) {
+        int result = service.memberRegister(username, password, email);
         if (result != 1) {
             return "redirect:/member/joinForm";
         }
         return "member/joinResult";
-    }
-
-    @RequestMapping(value = "/SecLoginResult", method = RequestMethod.POST)
-    public String secLoginResult() {
-
-        return "redirect:/";
     }
 
     @RequestMapping(value = "/login")
@@ -46,6 +48,7 @@ public class MemberController {
 
         return "member/loginForm";
     }
+
 //    @RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
 //    public String loginResult(Member member, HttpSession session) {
 //
@@ -55,37 +58,44 @@ public class MemberController {
 //
 //        return "redirect:/";
 //    }
-    @RequestMapping(value = "/logout")
-    public String logout(Member member, HttpSession session) {
-
-        Member member1 = (Member) session.getAttribute("member");
-        System.out.println("member logout: Id: " + member1.getUsername());
-        session.invalidate();
-
-        return "redirect:/";
-    }
+//
+//    @RequestMapping(value = "/logout")
+//    public String logout(Member member, HttpSession session) {
+//
+//        Member member1 = (Member) session.getAttribute("member");
+//        System.out.println("member logout: Id: " + member1.getUsername());
+//        session.invalidate();
+//
+//        return "redirect:/";
+//    }
 
     @RequestMapping(value = "/modify")
-    public ModelAndView modifyForm(HttpSession session) {
-        Member member = (Member) session.getAttribute("member");
+    public ModelAndView modifyForm(HttpSession session, Authentication authentication) {
+        Member member = service.loadUserByUsername(authentication.getName());
+        // 사용자에게 Member정보를 전달할 때 비밀번호 지우고 전달.
+        member.eraseCredentials();
+        System.out.println(member.toString());
         ModelAndView mav = new ModelAndView();
-        mav.addObject("member", service.memberSearch(member));
+        mav.addObject("member", member);
         mav.setViewName("member/modifyForm");
 
         return mav;
     }
     @RequestMapping(value = "/modifyProcess", method = RequestMethod.POST)
-    public ModelAndView modifyResult(Member member, HttpSession session) {
-        ModelAndView mav = new ModelAndView();
-        Member member1 = service.memberModify(member);
-        if(member1 == null) {
-            mav.setViewName("redirect:/member/modifyForm");
-        } else {
-            session.setAttribute("member", member1);
-            mav.setViewName("redirect:/");
-        }
+    public String modifyResult(@RequestParam("password") String password,
+                                     @RequestParam("email") String email,
+                                     Authentication authentication) {
 
-        return mav;
+        Member member = service.loadUserByUsername(authentication.getName());
+        member.modify(password, email);
+        service.memberModify(member);
+
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                member,null, member.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+//            session.setAttribute("member", member);
+
+        return "redirect:/";
     }
 
     @RequestMapping(value = "remove")

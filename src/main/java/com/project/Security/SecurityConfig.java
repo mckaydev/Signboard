@@ -56,7 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .loginPage("/member/login")
                     .loginProcessingUrl("/member/loginProcess")
-                    .successForwardUrl("/")
                     // 간판 업로드시 예외처리 위해 true값
                     .defaultSuccessUrl("/", true)
                     .permitAll()

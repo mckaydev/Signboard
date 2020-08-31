@@ -2,45 +2,43 @@ package com.project.member;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.Assert;
 
 import java.io.Serializable;
 import java.util.*;
-import java.util.function.Function;
-
-import static org.springframework.security.core.userdetails.User.builder;
-import static org.springframework.security.core.userdetails.User.withUsername;
 
 public class Member implements UserDetails {
     private final String username;
     private String password;
-    private final String email;
+    private String email;
+    private final String stringAuthorities;
     private final Set<GrantedAuthority> authorities;
     private final boolean accountNonExpired;
     private final boolean accountNonLocked;
     private final boolean credentialsNonExpired;
     private final boolean enabled;
 
-    public Member(String username, String password, String email,
-                  Collection<? extends GrantedAuthority> authorities) {
+    public Member(String username, String password, String email, String authorities) {
         this(username, password, email, authorities,
                 true, true, true, true);
     }
 
     public Member(String username, String password, String email,
-                  Collection<? extends GrantedAuthority> authorities,
+                  String stringAuthorities,
                   boolean accountNonExpired, boolean accountNonLocked,
                   boolean credentialsNonExpired, boolean enabled) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.authorities = Collections.unmodifiableSet(sortAuthorities(authorities));
+        this.stringAuthorities = stringAuthorities;
+        String st = stringAuthorities.substring(1, stringAuthorities.length() - 1);
+        Set<GrantedAuthority> roles = new HashSet<GrantedAuthority>();
+        for (String role : st.split(", ")) {
+            roles.add(new SimpleGrantedAuthority(role));
+        }
+        authorities = roles;
         this.accountNonExpired = accountNonExpired;
         this.accountNonLocked = accountNonLocked;
         this.credentialsNonExpired = credentialsNonExpired;
@@ -49,7 +47,17 @@ public class Member implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         return authorities;
+    }
+
+    public String getStringAuthorities() {
+        return stringAuthorities;
+    }
+
+    public void modify(String password, String email) {
+        this.password = password;
+        this.email = email;
     }
 
     public String getEmail() {
@@ -87,7 +95,8 @@ public class Member implements UserDetails {
     }
 
     public void eraseCredentials() {
-        password = null;
+
+        this.password = null;
     }
 
     private static SortedSet<GrantedAuthority> sortAuthorities(
@@ -144,7 +153,7 @@ public class Member implements UserDetails {
             sb.append("Granted Authorities: ");
 
             boolean first = true;
-            for (GrantedAuthority auth : authorities) {
+            for (GrantedAuthority auth : getAuthorities()) {
                 if (!first) {
                     sb.append(",");
                 }

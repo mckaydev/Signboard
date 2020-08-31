@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MemberService implements IMemberService, UserDetailsService {
@@ -30,7 +32,15 @@ public class MemberService implements IMemberService, UserDetailsService {
     }
 
     @Override
-    public int memberRegister(Member member) {
+    public int memberRegister(String username, String password, String email) {
+        Set<GrantedAuthority> roles = new HashSet<GrantedAuthority>();
+        roles.add(new SimpleGrantedAuthority("ROLE_USER"));
+        if (username.equals("admin")) {
+            roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
+        Member member = new Member(username, password, email, roles.toString(),
+                true, true, true, true);
+
         int result = dao.memberCreate(member);
         System.out.println(result);
         if(result == 1) {
@@ -44,18 +54,18 @@ public class MemberService implements IMemberService, UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        LMember member = dao.findById(username);
+    public Member loadUserByUsername(String username) throws UsernameNotFoundException {
+        Member member = dao.findById(username);
 
-        List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
-        if(("admin").equals(username)) {
-            auth.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        } else {
-            auth.add(new SimpleGrantedAuthority("ROLE_USER"));
-//            System.out.println("Granted Role: USER");
-        }
-        return new Member(member.getUsername(), member.getPassword(), member.getEmail(), auth,
-                member.isAccountNonExpired(), member.isAccountNonLocked(), member.isCredentialsNonExpired(), member.isEnabled());
+//        List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
+//        auth.add(new SimpleGrantedAuthority("ROLE_USER"));
+//        if(("admin").equals(username)) {
+//            auth.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+//        }
+        return new Member(member.getUsername(), member.getPassword(),
+                member.getEmail(), member.getAuthorities().toString(),
+                member.isAccountNonExpired(), member.isAccountNonLocked(),
+                member.isCredentialsNonExpired(), member.isEnabled());
     }
 
     @Override

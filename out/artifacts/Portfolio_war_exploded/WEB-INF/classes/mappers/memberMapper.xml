@@ -30,7 +30,8 @@
     </sql>
 
     <insert id="memberCreate" parameterType="com.project.member.Member">
-        insert ignore into member (username, password, email) values (#{username}, #{password}, #{email});
+        insert ignore into member (username, password, email, authorities, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled)
+        values (#{username}, #{password}, #{email}, #{stringAuthorities}, #{accountNonExpired}, #{accountNonLocked}, #{credentialsNonExpired}, #{enabled});
     </insert>
 
     <select id="memberRead" parameterType="com.project.member.Member" resultType="com.project.member.Member">
@@ -38,12 +39,12 @@
         select * from member where username = #{username} and password = #{password};
     </select>
 
-    <select id="findById" parameterType="String" resultType="com.project.member.LMember">
+    <select id="findById" parameterType="String" resultType="com.project.member.Member">
         select * from member where username = #{value};
     </select>
 
     <update id="memberUpdate" parameterType="com.project.member.Member">
-        update member set password = #{password},  email = #{email} where username = #{username};
+        update member set password = #{password}, email = #{email} where username = #{username};
     </update>
 
     <delete id="memberDelete" parameterType="com.project.member.Member">

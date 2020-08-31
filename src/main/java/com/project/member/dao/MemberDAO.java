@@ -150,7 +150,7 @@ public class MemberDAO implements IMemberDAO {
     }
 
     @Override
-    public LMember findById(String username) {
+    public Member findById(String username) {
         IMemberDAO dao = sqlSession.getMapper(IMemberDAO.class);
         return dao.findById(username);
     }
