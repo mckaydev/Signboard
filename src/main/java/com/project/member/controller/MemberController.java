@@ -99,22 +99,30 @@ public class MemberController {
     }
 
     @RequestMapping(value = "remove")
-    public ModelAndView removeForm(HttpSession session) {
+    public ModelAndView removeForm(Authentication authentication) {
         ModelAndView mav = new ModelAndView();
-        Member member1 = (Member) session.getAttribute("member");
+//        Member member1 = (Member) session.getAttribute("member");
+        Member member = service.loadUserByUsername(authentication.getName());
+        member.eraseCredentials();
 
-        mav.addObject("member", member1);
+        mav.addObject("member", member);
         mav.setViewName("member/removeForm");
 
         return mav;
     }
     @RequestMapping(value = "removeProcess")
-    public String removeResult(Member member, HttpSession session) {
+    public String removeResult(@RequestParam("password") String password,
+                               @RequestParam("email") String email,
+                               HttpSession session,
+                               Authentication authentication) {
+        Member member = service.loadUserByUsername(authentication.getName());
+        member.modify(password, email);
         int result = service.memberRemove(member, session);
         if(result == 0) {
             return "redirect:/member/removeForm";
         }
-        session.invalidate();
+//        session.invalidate();
+        SecurityContextHolder.clearContext();
         return "redirect:/";
     }
 }

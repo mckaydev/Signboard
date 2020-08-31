@@ -20,15 +20,15 @@
                     <table style="margin: auto">
                         <tr>
                             <td>Id :</td>
-                            <td><input type="text" name="memberId" readonly value=${member.memberId}></td>
+                            <td><input type="text" name="username" readonly value=${member.username}></td>
                         </tr>
                         <tr>
                             <td>Pw :</td>
-                            <td><input type="password" name="memberPw" required maxlength="10" placeholder=" 최대10자"></td>
+                            <td><input type="password" name="password" required maxlength="10" placeholder=" 최대10자"></td>
                         </tr>
                         <tr>
                             <td>Email :</td>
-                            <td><input type="email" name="memberEmail" readonly maxlength="20" value=${member.memberEmail}></td>
+                            <td><input type="email" name="email" readonly maxlength="20" value=${member.email}></td>
                         </tr>
                     </table>
                 <button type="submit">회원탈퇴</button>
