@@ -201,9 +201,9 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/bookmarkHistory", method = RequestMethod.POST)
-    public String bookmarkHistory(HttpSession session, HttpServletRequest request, Srchhisto srchhisto) {
+    public String bookmarkHistory(Authentication authentication, HttpServletRequest request, Srchhisto srchhisto) {
 
-        Member member = (Member) session.getAttribute("member");
+        Member member = memberService.loadUserByUsername(authentication.getName());
         srchhisto.setUsername(member.getUsername());
 
         Cookie[] cookies = request.getCookies();
@@ -221,9 +221,11 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/deleteHistory", method = RequestMethod.POST)
-    public String deleteHistory(HttpSession session, HttpServletRequest request, Srchhisto srchhisto) {
+    public String deleteHistory(Authentication authentication,
+                                HttpSession session,
+                                HttpServletRequest request, Srchhisto srchhisto) {
 
-        Member member = (Member) session.getAttribute("member");
+        Member member = memberService.loadUserByUsername(authentication.getName());
         srchhisto.setUsername(member.getUsername());
 
         Cookie[] cookies = request.getCookies();
