@@ -3,14 +3,15 @@ package com.project.Security;
 import com.project.member.Member;
 import com.project.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import javax.security.auth.login.AccountLockedException;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -29,8 +30,23 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         Member userDetails = memberService.loadUserByUsername(username);
 
-        if (!password.equals(userDetails.getPassword())) {
-            throw new BadCredentialsException("password error");
+        if (userDetails == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        else if (!password.equals(userDetails.getPassword())) {
+            throw new BadCredentialsException(password);
+        }
+        else if (!userDetails.isAccountNonExpired()) {
+            throw new AccountExpiredException(username);
+        }
+        else if (!userDetails.isAccountNonLocked()) {
+            throw new LockedException(username);
+        }
+        else if (!userDetails.isCredentialsNonExpired()) {
+            throw new CredentialsExpiredException(username);
+        }
+        else if (!userDetails.isEnabled()) {
+            throw new DisabledException(username);
         }
 //        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
 //            throw new BadCredentialsException("password error");

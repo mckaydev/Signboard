@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +24,6 @@ public class MemberController {
 
     @Autowired
     public MemberController(MemberService memberService) {
-
         this.service = memberService;
     }
 
@@ -35,11 +35,15 @@ public class MemberController {
     @RequestMapping(value = "/joinProcess", method = RequestMethod.POST)
     public String joinResult(@RequestParam("username") String username,
                              @RequestParam("password") String password,
-                             @RequestParam("email") String email) {
+                             @RequestParam("email") String email,
+                             Model model) {
         int result = service.memberRegister(username, password, email);
-        if (result != 1) {
-            return "redirect:/member/joinForm";
+        if (result == 0) {
+            return "redirect:/member/join";
         }
+        model.addAttribute("username", username);
+        model.addAttribute("password", password);
+        model.addAttribute("email", email);
         return "member/joinResult";
     }
 
@@ -119,7 +123,7 @@ public class MemberController {
         member.modify(password, email);
         int result = service.memberRemove(member, session);
         if(result == 0) {
-            return "redirect:/member/removeForm";
+            return "redirect:/member/remove";
         }
 //        session.invalidate();
         SecurityContextHolder.clearContext();

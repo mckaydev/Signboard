@@ -17,10 +17,11 @@
         <div class="infoBox">
             <p>
                 가입하신 정보입니다. <br>
-                Id : ${member.memberId} <br>
-                Pw : ${member.memberPw} <br>
-                Email : ${member.memberEmail} <br>
-                <button onclick="location.href='../../..'">메인화면</button>
+                Id : ${username} <br>
+                Pw : ${password} <br>
+                Email : ${email} <br>
+                <button onclick="location.href='/member/login'">로그인</button>
+                <button onclick="location.href='/'">메인화면</button>
             </p>
         </div>
     </div>

@@ -55,17 +55,16 @@ public class MemberService implements IMemberService, UserDetailsService {
 
     @Override
     public Member loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = dao.findById(username);
-
 //        List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
 //        auth.add(new SimpleGrantedAuthority("ROLE_USER"));
 //        if(("admin").equals(username)) {
 //            auth.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 //        }
-        return new Member(member.getUsername(), member.getPassword(),
-                member.getEmail(), member.getAuthorities().toString(),
-                member.isAccountNonExpired(), member.isAccountNonLocked(),
-                member.isCredentialsNonExpired(), member.isEnabled());
+//        return new Member(member.getUsername(), member.getPassword(),
+//                member.getEmail(), member.getAuthorities().toString(),
+//                member.isAccountNonExpired(), member.isAccountNonLocked(),
+//                member.isCredentialsNonExpired(), member.isEnabled());
+        return dao.findById(username);
     }
 
     @Override
