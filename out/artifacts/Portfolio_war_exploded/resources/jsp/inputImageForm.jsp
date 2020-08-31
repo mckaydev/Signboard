@@ -41,6 +41,16 @@
 <%--                <button class="upload-name" onclick="location.href='/find'">내 주변 맛집 찾기</button> &nbsp--%>
                 <button class="upload-name" id="priorSearch" onclick="location.href='/priorSearch'">이전 검색 기록</button> &nbsp
                 <button class="upload-name" id="bookmarkedSearch" onclick="location.href='/bookmarkedSearch'">즐겨찾기</button>
+                <c:if test="${pageContext.request.userPrincipal.name == null}">
+                    <script>
+                        document.getElementById("priorSearch").onclick = function () {
+                            alert("로그인이 필요합니다.");
+                        }
+                        document.getElementById("bookmarkedSearch").onclick = function () {
+                            alert("로그인이 필요합니다.");
+                        }
+                    </script>
+                </c:if>
             </div>
         </div>
     </div>

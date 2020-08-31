@@ -44,11 +44,11 @@ public class Srchhisto {
         this.isBookmarked = isBookmarked;
     }
 
-    public String getMemberId() {
+    public String getUsername() {
         return username;
     }
 
-    public void setMemberId(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 

@@ -1,17 +1,17 @@
 package com.project.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.CropLoc;
 import com.project.member.Member;
+import com.project.member.service.MemberService;
 import com.project.service.ImageService;
 import com.project.service.NaverGeocoding;
 import com.project.service.NaverRvrsGeocoding;
 import com.project.service.NaverSearch;
 import com.project.srchhisto.Srchhisto;
-import com.sun.jna.WString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,23 +19,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class HomeController {
     private final ImageService imageService;
+    private final MemberService memberService;
     private final NaverSearch naverSearch;
     private final NaverGeocoding naverGeocoding;
     private final NaverRvrsGeocoding naverRGeocoding;
@@ -44,10 +39,12 @@ public class HomeController {
     // @controller 위에 @RequiredArgsConstructor 를 이용하여 아래의 코드도 생략 가능하다.(22~25)
     @Autowired
     public HomeController(ImageService imageService,
+                          MemberService memberService,
                           NaverSearch naverSearch,
                           NaverGeocoding naverGeocoding,
                           NaverRvrsGeocoding naverRGeocoding) {
         this.imageService = imageService;
+        this.memberService = memberService;
         this.naverSearch = naverSearch;
         this.naverGeocoding = naverGeocoding;
         this.naverRGeocoding = naverRGeocoding;
@@ -89,7 +86,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/cropResult", method = RequestMethod.POST)
-    public String cropResult(Model model, HttpSession session, CropLoc cropLoc, RedirectAttributes rttr,
+    public String cropResult(Model model, HttpSession session, CropLoc cropLoc,
                              @RequestParam("originalFileName") String originalFileName,
                              @RequestParam("offsetWidth") double offsetWidth,
                              @RequestParam("offsetHeight") double offsetHeight,
@@ -149,14 +146,15 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/storeData", method = RequestMethod.POST)
-    public String storeData(HttpSession session, Srchhisto srchhisto) {
-        imageService.saveImageToTable(session, srchhisto);
+    public String storeData(HttpSession session, Authentication authentication, Srchhisto srchhisto) {
+        imageService.saveImageToTable(session, authentication, srchhisto);
 
         return "redirect:/";
     }
 
-    public ModelAndView makeJson(HttpSession session, ModelAndView mav, List<Srchhisto> list) throws JsonProcessingException {
-        Member member = (Member) session.getAttribute("member");
+    public ModelAndView makeJson(Authentication authentication,
+                                 ModelAndView mav, List<Srchhisto> list) throws JsonProcessingException {
+        Member member = memberService.loadUserByUsername(authentication.getName());
         if (member != null) {
             String shListJson = new ObjectMapper().writeValueAsString(list);
             mav.addObject("shListJson", shListJson);
@@ -171,31 +169,33 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/bookmarkedSearch", method = RequestMethod.GET)
-    public ModelAndView bookmarkedSearch(HttpSession session, HttpServletResponse response) throws JsonProcessingException {
+    public ModelAndView bookmarkedSearch(Authentication authentication,
+                                         HttpServletResponse response) throws JsonProcessingException {
         ModelAndView mav = new ModelAndView();
-        List<Srchhisto> list = imageService.viewBookmarked(session);
+        List<Srchhisto> list = imageService.viewBookmarked(authentication);
 
         Cookie cookie = new Cookie("where", "bookmarkedSearch");
         cookie.setPath("/");
         response.addCookie(cookie);
 
         mav.setViewName("priorSearch");
-        mav = makeJson(session, mav, list);
+        mav = makeJson(authentication, mav, list);
 
         return mav;
     }
 
     @RequestMapping(value = "/priorSearch", method = RequestMethod.GET)
-    public ModelAndView priorSearch(HttpSession session,  HttpServletResponse response) throws JsonProcessingException {
+    public ModelAndView priorSearch(Authentication authentication,
+                                    HttpServletResponse response) throws JsonProcessingException {
         ModelAndView mav = new ModelAndView();
-        List<Srchhisto> list = imageService.viewPrior(session);
+        List<Srchhisto> list = imageService.viewPrior(authentication);
 
         Cookie cookie = new Cookie("where", "priorSearch");
         cookie.setPath("/");
         response.addCookie(cookie);
 
         mav.setViewName("priorSearch");
-        mav = makeJson(session, mav, list);
+        mav = makeJson(authentication, mav, list);
 
         return mav;
     }
@@ -204,7 +204,7 @@ public class HomeController {
     public String bookmarkHistory(HttpSession session, HttpServletRequest request, Srchhisto srchhisto) {
 
         Member member = (Member) session.getAttribute("member");
-        srchhisto.setMemberId(member.getUsername());
+        srchhisto.setUsername(member.getUsername());
 
         Cookie[] cookies = request.getCookies();
         String where = "priorSearch";
@@ -224,7 +224,7 @@ public class HomeController {
     public String deleteHistory(HttpSession session, HttpServletRequest request, Srchhisto srchhisto) {
 
         Member member = (Member) session.getAttribute("member");
-        srchhisto.setMemberId(member.getUsername());
+        srchhisto.setUsername(member.getUsername());
 
         Cookie[] cookies = request.getCookies();
         String where = "priorSearch";

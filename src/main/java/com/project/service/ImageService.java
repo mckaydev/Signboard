@@ -2,11 +2,13 @@ package com.project.service;
 
 import com.project.CropLoc;
 import com.project.member.Member;
+import com.project.member.service.MemberService;
 import com.project.srchhisto.Srchhisto;
 import com.project.srchhisto.dao.SrchhistoDAO;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,10 +23,12 @@ import java.util.Objects;
 @Service
 public class ImageService {
     private final SrchhistoDAO dao;
+    private final MemberService memberService;
 
     @Autowired
-    public ImageService(SrchhistoDAO srchhistoDAO) {
+    public ImageService(SrchhistoDAO srchhistoDAO, MemberService memberService) {
         this.dao = srchhistoDAO;
+        this.memberService = memberService;
     }
 
 
@@ -54,16 +58,16 @@ public class ImageService {
         return dao.storeDelete(srchhisto);
     }
 
-    public List<Srchhisto> viewBookmarked(HttpSession session) {
-        Member member = (Member) session.getAttribute("member");
+    public List<Srchhisto> viewBookmarked(Authentication authentication) {
+        Member member = memberService.loadUserByUsername(authentication.getName());
         if (member != null) {
             return dao.bookmarkedStoreSelect(member);
         }
         return null;
     }
 
-    public List<Srchhisto> viewPrior(HttpSession session) {
-        Member member = (Member) session.getAttribute("member");
+    public List<Srchhisto> viewPrior(Authentication authentication) {
+        Member member = memberService.loadUserByUsername(authentication.getName());
         if (member != null) {
             List<Srchhisto> list = dao.storeSelect(member);
             for (Srchhisto srchhisto : list) {
@@ -79,16 +83,17 @@ public class ImageService {
         return null;
     }
 
-    public void saveImageToTable(HttpSession session, Srchhisto srchhisto) {
+    public void saveImageToTable(HttpSession session,
+                                 Authentication authentication, Srchhisto srchhisto) {
         // 여기서부터 테이블에 데이터 저장.
         // srchhisto 스키마에 member.memberId
         // memberId는 세션에서 getAttribute("member")
         // 상호명, 메뉴, 전화번호 테이블에 저장
-        Member member = (Member) session.getAttribute("member");
+        Member member = memberService.loadUserByUsername(authentication.getName());
         // 회원일 경우
         if(member != null) {
             // 테이블에 데이터 저장.
-            srchhisto.setMemberId(member.getUsername());
+            srchhisto.setUsername(member.getUsername());
             srchhisto.setIsBookmarked(0);
             dao.storeInsert(srchhisto);
         } else {
