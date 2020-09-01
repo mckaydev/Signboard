@@ -29,7 +29,8 @@
     <div class="container">
         <div class="infoBox">
             <p>
-                간판의 사진을 업로드 해주세요.
+                간판의 사진을 업로드 해주세요. &nbsp;
+                <button class="exampleInput" onclick="location.href='/example'">예제 이미지 입력</button>
             </p> <br>
             <div class="fileBox upload">
                 <form action="cropImage" method="post" enctype="multipart/form-data">

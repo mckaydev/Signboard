@@ -39,13 +39,14 @@
 - (○) 'starbucks coffee'로 검색시 결과가 안나오는 현상 예외처리
 - (○) GPS 정보 없을 때 예외처리 (reverse geocoding 쿼리문 없을 때)
 - (○) 사진에 GPS 정보가 없다면 행정동을 입력하는 input태그 생성, 처리
-- (X) 로그인에 Spring Security 적용
+- (○) 로그인에 Spring Security 적용
+- (○) 예제 이미지 선택 가능
 - (X) 검색기록 페이징
 - ----------------추가 항목----------------
 - (○) 포트폴리오 블로그 생성
 - (○) 개인프로젝트 설명 페이지 작성
 - (X) 실사용자 전용 설명 (Web Page or Video)
-- (X) 이력서 pdf version
+- (○) 이력서 pdf version
 - (f) 북마크, 즐겨찾기 스크롤 위치 저장
 - (X) 하드코딩된 db로그인 정보 암호화
 - (X) 댓글 기능
@@ -98,6 +99,7 @@
 - WAS는 **tomcat9**을 이용합니다.
 - 자바는 **OpenJDK 1.8**을 사용합니다.
 - **Spring 프레임워크 MVC**를 사용합니다.
+- **Spring Security 프레임워크**를 사용합니다.
 - 이미지 ROI(region of interest)지정에는 **https://jcrop.com/** 을 사용합니다.
 - **tess4j**를 이용하여 간판을 OCR합니다.
 - 이미지 EXIF 정보는 **exif-js**를 이용하여 추출합니다. **https://github.com/exif-js/exif-js**

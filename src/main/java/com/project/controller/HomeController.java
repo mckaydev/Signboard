@@ -75,6 +75,22 @@ public class HomeController {
         return "inputImageForm";
     }
 
+    @RequestMapping(value = "/example")
+    public String examplePage() {
+
+        return "exampleInput";
+    }
+
+    @RequestMapping(value = "cropExample", method = RequestMethod.POST)
+    public String cropExample(Model model, @RequestParam("exampleImg") String exampleImg) {
+        if (exampleImg.equals("1")) {
+            model.addAttribute("getOriginalFilename", "example/" + "은진식당 gps.jpg");
+        } else {
+            model.addAttribute("getOriginalFilename", "example/" + "스타벅스 북촌로점 gps.jpg");
+        }
+        return "cropImage";
+    }
+
     @RequestMapping(value = "/cropImage", method = RequestMethod.POST)
     public String cropImage(Model model, HttpSession session,
                             @RequestParam("imageFile") MultipartFile imageFile) throws IOException {

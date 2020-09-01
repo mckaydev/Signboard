@@ -69,6 +69,11 @@ html, body {
 .modify {
     right: 240px;
 }
+
+.exampleInput {
+    background-color: coral;
+    color: white;
+}
 /*.signUp:hover, .signIn:hover, .modify:hover, .logout:hover, .remove:hover{*/
 /*    color: #ffffff;*/
 /*    background-color: darkcyan;*/

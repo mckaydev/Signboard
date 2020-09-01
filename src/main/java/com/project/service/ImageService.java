@@ -43,7 +43,9 @@ public class ImageService {
         String imgPath = session.getServletContext().getRealPath("/") +
                 "/resources/img/" +srchhisto.getImageFileName();
         File file = new File(imgPath);
-        if(file.exists()) {
+
+        String fileName = srchhisto.getImageFileName().substring(0, 8);
+        if(file.exists() && !fileName.equals("example/")) {
             if(file.delete()) {
                 System.out.println("삭제 이미지:" + srchhisto.getImageFileName());
             } else {
@@ -89,14 +91,13 @@ public class ImageService {
         // srchhisto 스키마에 member.memberId
         // memberId는 세션에서 getAttribute("member")
         // 상호명, 메뉴, 전화번호 테이블에 저장
-        Member member = memberService.loadUserByUsername(authentication.getName());
-        // 회원일 경우
-        if(member != null) {
-            // 테이블에 데이터 저장.
+        try {
+            Member member = memberService.loadUserByUsername(authentication.getName());
+
             srchhisto.setUsername(member.getUsername());
             srchhisto.setIsBookmarked(0);
             dao.storeInsert(srchhisto);
-        } else {
+        } catch (NullPointerException e) {
             imageFileDel(srchhisto, session);
         }
     }
@@ -119,6 +120,7 @@ public class ImageService {
     public String imageCrop(String originalFileName, CropLoc cropLoc, HttpSession session,
                             double offsetWidth, double offsetHeight, String whatLang) throws IOException {
         String imgPath = session.getServletContext().getRealPath("/") + "/resources/img/" + originalFileName;
+        System.out.println("path: " + imgPath);
         String ocrPath = session.getServletContext().getRealPath("/") + "/WEB-INF/classes/tessdata";
         File file = new File(imgPath);
         BufferedImage bufferedImage = ImageIO.read(file);

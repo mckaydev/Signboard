@@ -36,10 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
+                .antMatchers("/resources/**")
                 .antMatchers("/resources/js/**")
                 .antMatchers("/resources/css/**")
                 .antMatchers("/resources/img/**")
-                .antMatchers("/resources/**");
+                .antMatchers("/img/**");
     }
 
     @Override
@@ -48,7 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/cropImage").hasRole("USER")
 //                .antMatchers("/bookmarkedSearch").hasRole("USER")
 //                .antMatchers("/priorSearch").hasRole("USER")
-                .antMatchers("/").permitAll()
+                .antMatchers("/", "/example", "/cropExample",
+                        "/cropImage", "/cropResult", "/storeData").permitAll()
                 .antMatchers("/member/**").permitAll()
 //                .antMatchers("/**").permitAll()
                 .anyRequest().hasRole("USER")
