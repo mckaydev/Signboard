@@ -51,13 +51,13 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/map", method = RequestMethod.GET)
-    public String mapAPITest(Model model) {
+    public String mapAPITest() {
 
         return "mapAPITest";
     }
 
     @RequestMapping(value = "/exif", method = RequestMethod.GET)
-    public String exifTest(Model model) {
+    public String exifTest() {
 
         return "exifTest";
     }
@@ -85,8 +85,12 @@ public class HomeController {
     public String cropExample(Model model, @RequestParam("exampleImg") String exampleImg) {
         if (exampleImg.equals("1")) {
             model.addAttribute("getOriginalFilename", "example/" + "은진식당 gps.jpg");
-        } else {
+        } else if (exampleImg.equals("2")) {
             model.addAttribute("getOriginalFilename", "example/" + "스타벅스 북촌로점 gps.jpg");
+        } else if (exampleImg.equals("3")) {
+            model.addAttribute("getOriginalFilename", "example/" + "은진식당.jpg");
+        } else if (exampleImg.equals("4")) {
+            model.addAttribute("getOriginalFilename", "example/" + "스타벅스 북촌로점.jpg");
         }
         return "cropImage";
     }
