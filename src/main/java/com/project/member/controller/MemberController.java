@@ -42,7 +42,6 @@ public class MemberController {
             return "redirect:/member/join";
         }
         model.addAttribute("username", username);
-        model.addAttribute("password", password);
         model.addAttribute("email", email);
         return "member/joinResult";
     }
@@ -116,11 +115,10 @@ public class MemberController {
     }
     @RequestMapping(value = "removeProcess")
     public String removeResult(@RequestParam("password") String password,
-                               @RequestParam("email") String email,
                                HttpSession session,
                                Authentication authentication) {
         Member member = service.loadUserByUsername(authentication.getName());
-        member.modify(password, email);
+        member.modify(password, member.getEmail());
         int result = service.memberRemove(member, session);
         if(result == 0) {
             return "redirect:/member/remove";

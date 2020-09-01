@@ -18,7 +18,6 @@
             <p>
                 가입하신 정보입니다. <br>
                 Id : ${username} <br>
-                Pw : ${password} <br>
                 Email : ${email} <br>
                 <button onclick="location.href='/member/login'">로그인</button>
                 <button onclick="location.href='/'">메인화면</button>
