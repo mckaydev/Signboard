@@ -67,18 +67,18 @@
     <tbody>
     <tr>
         <td>AWS EC2 </td> <td>t2.micro</td>
-        <td>maven </td> <td></td>
+        <td>tomcat </td> <td>9.0.31</td>
         <td>tess4j </td> <td>4.5.1</td>
     </tr>
     <tr>
-        <td>tomcat </td> <td>9.0.31</td>
         <td>OpenJDK </td> <td>1.8.0_221</td>
         <td>Jackson </td> <td>2.11.0</td>
+        <td>Spring MVC </td> <td>5.2.3</td>
     </tr>
     <tr>
-        <td>Spring </td> <td>5.2.3</td>
         <td>MySQL </td> <td>8.0.20</td>
         <td>Mybatis </td> <td>3.5.4</td>
+        <td>Spring Security </td> <td>5.2.2</td>
     </tr>
     <tr>
         <td>commons-fileupload </td> <td>1.4</td>
@@ -111,8 +111,9 @@
 
 ## 기능 1: 간판 검색
 1. 사용자는 간판의 사진을 업로드합니다.
-2. 업로드한 사진에서 OCR 성능을 높이기 위해 **간판의 영역(ROI)를 지정**합니다.
-3. javascript에서 업로드한 사진의 EXIF정보중 gps 정보(위도, 경도)를 추출합니다.
+2. 업로드한 사진에서 OCR 성능을 높이기 위해 사용자는 **간판의 영역(ROI)를 지정**합니다.
+3. javascript에서 사용자가 업로드한 사진의 EXIF정보 중 gps 정보(위도, 경도)를 추출합니다.
+    1. 사진에 GPS정보가 없다면 사용자에게 행정동을 입력하게 합니다.
 4. DMS로 반환된 좌표를 **DD좌표로 변경**합니다.
 5. 사용자가 ROI를 지정한 사진과 gps 좌표(ddX, ddY)를 포함하여 서버에 요청합니다.
 6. 서버는 사용자가 전송한 ROI의 좌표값과 gps 좌표를 수신합니다.
@@ -140,34 +141,54 @@
 </thread>
 <tbody>
     <tr>
-        <td>PK</td><td>memberId</td>
+        <td>PK</td><td>username</td><td>varchar(10)</td>
     </tr>
     <tr>
-        <td></td><td>memberPw</td>
+        <td></td><td>password</td><td>varchar(10)</td>
     </tr>
     <tr>
-        <td></td><td>memberEmail</td>
+        <td></td><td>email</td><td>varchar(20)</td>
+    </tr>
+    <tr>
+        <td></td><td>authorities</td><td>varchar(50)</td>
+    </tr>
+    <tr>
+        <td></td><td>accountNonExpired</td><td>boolean</td>
+    </tr>
+    <tr>
+        <td></td><td>accountNonLocked</td><td>boolean</td>
+    </tr>
+    <tr>
+        <td></td><td>credentialsNonExpired</td><td>boolean</td>
+    </tr>
+    <tr>
+        <td></td><td>enabled</td><td>boolean</td>
     </tr>
 </tbody>
 </table>
 
+#### **스프링 시큐리티 프레임워크**를 이용합니다.
+
 #### 로그인
-- 'member'라는 이름으로 세션에 로그인 정보를 저장합니다.
+- 스프링 시큐리티를 이용하여 사용자의 로그인을 진행합니다.
 - 로그인시 '이전 검색 기록' 과 '즐겨찾기' 메뉴 이용이 가능합니다.
-- 회원 사용자는 간판 검색시 간판사진과 가게 정보가 DB에 기록됩니다.
+- 회원 사용자는 간판 검색시 간판사진과 가게 정보, 별점과 한줄평이 DB에 기록됩니다.
     - 기록된 정보들을 '이전 검색 기록' 메뉴에서 확인할 수 있으며, 원하는 정보만을 즐겨찾기에
     추가하여 '즐겨찾기' 메뉴에서 따로 확인할 수 있습니다.
 #### 회원 가입
-- 'member' 테이블의 'memberId'가 기본키인 것을 이용하여 중복을 관리합니다.
+- 'member' 테이블의 'username'이 기본키인 것을 이용하여 중복을 관리합니다.
 - 중복되는 Id가 아니라면 사용자가 입력한 데이터를 'member' 테이블에 저장합니다.
     - 만약 Id가 중복된다면 회원가입 페이지를 리로딩합니다.
+- 회원가입시 사용자의 계정은 "USER" authority 권한을 부여받습니다.
+- 스프링 시큐리티 세션에서 사용할 accountNonExpired, accountNonLocked, 
+credentialsNonExpired, enabled 속성들에 "true"를 기본값으로 부여받습니다.
 #### 로그 아웃
-- 요청한 사용자의 'memberId'를 이용하여 세션에서 로그인 정보를 지웁니다.
+- 스프링 시큐리티의 logout 기능을 이용하여 진행합니다.
 #### 정보 수정
-- 사용자가 변경할 이메일과 비밀번호를 입력하면 'memeberId'를 통해서 데이터베이스 내의
+- 사용자가 변경할 이메일과 비밀번호를 입력하면 'username'를 통해서 데이터베이스 내의
 사용자 정보를 수정합니다.
 #### 회원 탈퇴
-1. 사용자의 'memberId'를 이용하여 'srchhisto' 스키마의 'memberId'테이블에 접근합니다.
+1. 사용자의 'username'를 이용하여 'srchhisto' 스키마의 'username'테이블에 접근합니다.
 2. 검색 기록 테이블에서 사진의 위치를 반환받아 전부 삭제합니다.
 3. 'srchhisto' 스키마의 'memberId'테이블을 삭제합니다.
 4. 'signboard'테이블의 'member'테이블에서 사용자의 정보를 삭제합니다.
@@ -185,21 +206,32 @@ ex) 회원 Id가 'test1234' 일 때, 테이블명은 'test1234'
         </thead>
         <tbody>
         <tr>
-            <td>PK</td><td>imageFileName</td></tr>
+            <td>PK</td><td>imageFileName</td><td>varchar(100)</td>
+        </tr>
         <tr>
-            <td></td><td>gpsAddress</td></tr>
+            <td></td><td>gpsAddress</td><td>varchar(40)</td>
+        </tr>
         <tr>
-            <td></td><td>storeName</td></tr>
+            <td></td><td>roadAddress</td><td>varchar(100)</td>
+        </tr>
         <tr>
-            <td></td><td>storeMenu</td></tr>
+            <td></td><td>storeName</td><td>varchar(20)</td>
+        </tr>
         <tr>
-            <td></td><td>storePhone</td></tr>
+            <td></td><td>storeMenu</td><td>varchar(100)</td>
+        </tr>
         <tr>
-            <td></td><td>rate</td></tr>
+            <td></td><td>storePhone</td><td>varchar(20)</td>
+        </tr>
         <tr>
-            <td></td><td>aLineReview</td></tr>
+            <td></td><td>rate</td><td>varchar(1)</td>
+        </tr>
         <tr>
-            <td></td><td>isBookmarked</td></tr>
+            <td></td><td>aLineReview</td><td>varchar(200)</td>
+        </tr>
+        <tr>
+            <td></td><td>isBookmarked</td><td>booliean</td>
+        </tr>
         </tbody>
     </table>
     
@@ -212,9 +244,9 @@ ex) 회원 Id가 'test1234' 일 때, 테이블명은 'test1234'
 - '기록 삭제'버튼을 누르면 'imageFileName' 속성값을 통해 서버의 로컬 저장소에 저장되어 있는
 사진 파일을 삭제합니다. 그리고 테이블에서 해당하는 데이터를 삭제합니다.
 ## 기능 4: '즐겨찾기'
-- 'srchhisto' 스키마의 'memberId' 테이블 내의 데이터들 중 'isBookmarked' 속성 값이 1인
+- 'srchhisto' 스키마의 'username' 테이블 내의 데이터들 중 'isBookmarked' 속성 값이 1인
 데이터들만을 보여줍니다.
-- '북마크 삭제' 버튼과 '기록 삭제' 버튼이 각각의 객체마다 존재합니다.
+- '북마크 삭제' 버튼과 '기록 삭제' 버튼이 각각의 기록마다 존재합니다.
 
 ## + 이전 검색 기록과 즐겨찾기
 - '이전 검색 기록' 과 '즐겨찾기' 는 동일한 jsp 뷰 파일로 반환합니다. (priorSearch.jsp)
@@ -224,4 +256,4 @@ ex) 회원 Id가 'test1234' 일 때, 테이블명은 'test1234'
     새로운 뷰를 반환할 때 전에 접속했던 기능으로 반환해줍니다.
 1. 스프링 컨트롤러에서 SQL Mapper인 Mybatis를 통해 DB에서 검색기록을 받는데 JSON으로 변환합니다.
 2. JSON 파일을 .jsp로 넘겨주고 .jsp에서는 자바스크립트를 통해 들어오는 JSON파일의 길이(데이터의 갯수)
-에 따라 '.insertBefore'을 사용하여 검색기록을 화면에 출력합니다.
+에 따라 '.insertBefore'을 사용하여 검색기록을 화면에 동적 생성합니다.
