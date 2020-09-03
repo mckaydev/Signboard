@@ -6,21 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import javax.security.auth.login.AccountLockedException;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CustomAuthenticationProvider(MemberService memberService) {
+    public CustomAuthenticationProvider(MemberService memberService,
+                                        PasswordEncoder passwordEncoder) {
         this.memberService = memberService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -33,8 +34,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         if (userDetails == null) {
             throw new UsernameNotFoundException(username);
         }
-        else if (!password.equals(userDetails.getPassword())) {
-            throw new BadCredentialsException(password);
+//        else if (!password.equals(userDetails.getPassword())) {
+//            throw new BadCredentialsException(password);
+//        }
+        else if (!passwordEncoder.matches(password, userDetails.getPassword())) {
+            throw new BadCredentialsException("password error");
         }
         else if (!userDetails.isAccountNonExpired()) {
             throw new AccountExpiredException(username);
@@ -48,9 +52,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         else if (!userDetails.isEnabled()) {
             throw new DisabledException(username);
         }
-//        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-//            throw new BadCredentialsException("password error");
-//        }
 //        System.out.println("Authorities: " + userDetails.getAuthorities());
 //        System.out.println("Password: " + password + ", " + userDetails.getPassword());
 

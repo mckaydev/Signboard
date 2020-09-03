@@ -90,11 +90,10 @@ public class MemberController {
                                      Authentication authentication) {
 
         Member member = service.loadUserByUsername(authentication.getName());
-        member.modify(password, email);
-        service.memberModify(member);
+        Member newM = service.memberModify(member, password, email);
 
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                member,null, member.getAuthorities());
+                newM,null, newM.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authToken);
 //            session.setAttribute("member", member);
 
@@ -118,8 +117,8 @@ public class MemberController {
                                HttpSession session,
                                Authentication authentication) {
         Member member = service.loadUserByUsername(authentication.getName());
-        member.modify(password, member.getEmail());
-        int result = service.memberRemove(member, session);
+
+        int result = service.memberRemove(member, session, password);
         if(result == 0) {
             return "redirect:/member/remove";
         }

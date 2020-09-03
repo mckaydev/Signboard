@@ -1,6 +1,5 @@
 package com.project.member.service;
 
-import com.project.member.LMember;
 import com.project.member.Member;
 import com.project.member.dao.MemberDAO;
 import com.project.srchhisto.Srchhisto;
@@ -8,14 +7,13 @@ import com.project.srchhisto.dao.SrchhistoDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,11 +22,13 @@ import java.util.Set;
 public class MemberService implements IMemberService, UserDetailsService {
     private final MemberDAO dao;
     private final SrchhistoDAO srchhistoDAO;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public MemberService(MemberDAO memberDAO, SrchhistoDAO srchhistoDAO) {
+    public MemberService(MemberDAO memberDAO, SrchhistoDAO srchhistoDAO, PasswordEncoder passwordEncoder) {
         this.dao = memberDAO;
         this.srchhistoDAO = srchhistoDAO;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -38,7 +38,9 @@ public class MemberService implements IMemberService, UserDetailsService {
         if (username.equals("admin")) {
             roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
-        Member member = new Member(username, password, email, roles.toString(),
+        String encodePassword = passwordEncoder.encode(password);
+
+        Member member = new Member(username, encodePassword, email, roles.toString(),
                 true, true, true, true);
 
         int result = dao.memberCreate(member);
@@ -80,7 +82,10 @@ public class MemberService implements IMemberService, UserDetailsService {
     }
 
     @Override
-    public Member memberModify(Member member) {
+    public Member memberModify(Member member, String password, String email) {
+        String encodePassword = passwordEncoder.encode(password);
+        member.modify(encodePassword, email);
+
         int result = dao.memberUpdate(member);
         System.out.println(result);
         if(result == 0) {
@@ -94,7 +99,10 @@ public class MemberService implements IMemberService, UserDetailsService {
     }
 
     @Override
-    public int memberRemove(Member member, HttpSession session) {
+    public int memberRemove(Member member, HttpSession session, String password) {
+        if (!passwordEncoder.matches(password, member.getPassword())) {
+            return 0;
+        }
         List<Srchhisto> list = srchhistoDAO.storeSelect(member);
         String imgPath;
         for (Srchhisto srchhisto : list) {

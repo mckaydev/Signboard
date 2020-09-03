@@ -1,18 +1,15 @@
 package com.project.Security;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 // web.xml에 등록하지 않고 자바 기반의 어노테이션을 사용하여 스프링 시큐리티를 설정
@@ -66,10 +63,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/member/logout")
                 .logoutSuccessUrl("/")
                 .and().csrf().disable();
+//        http.sessionManagement()
+//                // 세션이 끊겼을 때 이동할 페이지
+//                .invalidSessionUrl("/member/login")
+//                // 최대 허용 가능 중복 세션 개수
+//                .maximumSessions(1)
+//                // 중복 로그인이 일어 났을 경우 이동할 페이지
+//                .expiredUrl("/member/login");
     }
 
 //    @Bean
 //    public PasswordEncoder passwordEncoder() {
-//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//        return new BCryptPasswordEncoder();
 //    }
 }
