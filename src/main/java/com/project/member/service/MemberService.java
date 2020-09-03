@@ -109,7 +109,8 @@ public class MemberService implements IMemberService, UserDetailsService {
             imgPath = session.getServletContext().getRealPath("/") +
                     "/resources/img/" +srchhisto.getImageFileName();
             File file = new File(imgPath);
-            if(file.exists()) {
+            String fileName = srchhisto.getImageFileName().substring(0, 8);
+            if(file.exists() && !fileName.equals("example/")) {
                 if(file.delete()) {
                     System.out.println("삭제 이미지:" + srchhisto.getImageFileName());
                 } else {

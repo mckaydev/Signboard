@@ -17,7 +17,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public CustomAuthenticationProvider(MemberService memberService,
                                         PasswordEncoder passwordEncoder) {
         this.memberService = memberService;

@@ -23,8 +23,6 @@ import javax.sql.DataSource;
 @EnableWebMvc
 @ComponentScan("com.project")
 public class WebConfig implements WebMvcConfigurer {
-    private CommonsMultipartResolver multipartResolver;
-    public DriverManagerDataSource dataSource;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
