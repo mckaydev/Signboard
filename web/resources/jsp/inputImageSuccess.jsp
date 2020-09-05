@@ -78,6 +78,7 @@
                     <input style="display: none" type="text" name="storeMenu" value="menu test data">
                     <input style="display: none" type="text" name="storePhone" value="02-1234-5678">
                     <table>
+                        <c:if test="${pageContext.request.userPrincipal.name != null}">
                         <tr>
                             <td>별점: <label><input type="radio" name="rate" value="1">1점</label>
                                 <label><input type="radio" name="rate" value="2">2점</label>
@@ -87,7 +88,9 @@
                         </tr>
                         <tr>
                             <td><input type="text" id="aLineReview" name="aLineReview"
-                                       maxlength="200" placeholder="한줄평을 써주세요. (최대 200자)"></td></tr>
+                                       maxlength="200" placeholder="한줄평을 써주세요. (최대 200자)"></td>
+                        </tr>
+                        </c:if>
                         <tr>
                             <td><button type="submit" class="reInputButton">메인화면(기록 저장)</button></td></tr>
                     </table>
