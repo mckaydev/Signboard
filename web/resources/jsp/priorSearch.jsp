@@ -25,12 +25,16 @@
     <button class="remove" onclick="location.href='/member/remove'">회원 탈퇴</button>
 </c:if>
 <div class="container" id="container">
+<%--    <button style="position: fixed" onclick="createFunction()">Hit</button>--%>
+<%--    <ul class="pageList" id="pageList">--%>
+<%--    </ul>--%>
     <script>
         let jsonFile = ${shListJson};
-        createFunction();
+        let contentPerPage = 2;
+        let currentPage = 0;
+        createFunction(currentPage);
+        pageButton()
     </script>
-<%--    <button style="position: fixed" onclick="createFunction()">Hit</button>--%>
-    <div style="display: none" id="text"></div>
     <button class="mainButton" id="mainButton" onclick="location.href='/'">메인화면</button>
 </div>
 </body>

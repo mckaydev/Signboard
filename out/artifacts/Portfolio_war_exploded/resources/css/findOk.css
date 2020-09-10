@@ -30,6 +30,7 @@
 .infoTextArea {
     grid-area: infoTextArea;
     margin-top: 5vh;
+    text-align: center;
 }
 
 .infoImg {
@@ -38,7 +39,7 @@
     /*vertical-align: middle;*/
 }
 
-#aLineReview {
+p {
     max-width: 25vw;
 }
 
@@ -48,6 +49,19 @@
     flex-wrap: wrap;
     justify-content: center;
     font-size: 1.5rem;
+}
+
+.pageList {
+    list-style-type: none;
+    position: fixed;
+    top: 1vh;
+}
+
+.pageList li {
+    float: left;
+    background-color: #a6c0fe;
+    padding: 10px;
+    margin-right: 1px;
 }
 
 .mainButton {

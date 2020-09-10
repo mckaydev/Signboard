@@ -1,4 +1,4 @@
-function createFunction() {
+function createFunction(cPage) {
     let infoBox = document.createElement("div");
     infoBox.className = "infoBox";
 
@@ -74,8 +74,11 @@ function createFunction() {
 
     let test = document.getElementById("container").firstChild;
 
-    for(let i = 0; i < jsonFile.length; i++) {
-        infoBox.id = "infoBox" + i;
+    let minContent = cPage * contentPerPage;
+    let maxContent = minContent + contentPerPage;
+
+    for(let i = minContent, j = 0; i < maxContent && i < jsonFile.length; i++, j++) {
+        infoBox.id = "infoBox" + j;
         infoImg.src = "/img/" + jsonFile[i]['imageFileName'];
         bmkInput.value = jsonFile[i]['imageFileName'];
         delInput.value = jsonFile[i]['imageFileName'];
@@ -93,4 +96,91 @@ function createFunction() {
 
         document.getElementById("container").insertBefore(infoBox.cloneNode(true), test);
     }
+
+    // let pageUl = document.getElementById("pageList");
+    //
+    // for (let i = minPage; i <= maxPage; i++) {
+    //     let page = document.createElement("button")
+    //     page.innerText = String(i);
+    //     page.style = "width: 15px";
+    //     // page.addEventListener("click", paging);
+    //     page.onclick = function() { paging(i) };
+    //     pageUl.appendChild(page);
+    // }
+}
+
+function pageButton() {
+    let pagePerPages = 5;
+    let totalPage = Math.floor((jsonFile.length - 1) / contentPerPage)
+    let minPage = Math.floor(currentPage / pagePerPages) * pagePerPages;
+    let maxPage = (minPage + 4) > totalPage ? totalPage : minPage + 4;
+
+    console.log('minPage: ' + minPage);
+    console.log('maxPage: ' + maxPage);
+    console.log('totalPage: ' + totalPage);
+
+    let ul = document.createElement("ul");
+    ul.id = "pageList";
+    ul.className = "pageList";
+    document.getElementById("container").appendChild(ul);
+
+    let pageUl = document.getElementById("pageList");
+    if (minPage > 0) {
+        let page = document.createElement("button")
+        page.innerText = "<";
+        page.style = "width: 15px";
+        page.onclick = function() { prevPage() };
+        pageUl.appendChild(page);
+    }
+
+    for (let i = minPage; i <= maxPage; i++) {
+        let page = document.createElement("button")
+        page.innerText = String(i + 1);
+        page.style = "width: 15px";
+        if (i === currentPage) {
+            page.style = "width: 15px; background-color: white;";
+        }
+        page.onclick = function() { paging(i) };
+        pageUl.appendChild(page);
+    }
+
+    if (maxPage < totalPage) {
+        let page = document.createElement("button")
+        page.innerText = ">";
+        page.style = "width: 15px";
+        page.onclick = function() { nextPage() };
+        pageUl.appendChild(page);
+    }
+}
+
+function prevPage() {
+    currentPage--;
+    document.getElementById("pageList").remove();
+    pageButton();
+    paging(currentPage);
+}
+
+function nextPage() {
+    currentPage++;
+    document.getElementById("pageList").remove();
+    pageButton();
+    paging(currentPage);
+}
+
+function paging(cPage) {
+    currentPage = cPage;
+    for (let i = 0; i < contentPerPage; i++) {
+        // if (infoBox.id !== null) {
+        // }
+        try {
+            let infoBox = document.getElementById("infoBox" + i);
+            infoBox.remove();
+        } catch (typeError) {
+            console.log(typeError);
+        }
+    }
+    createFunction(cPage);
+    document.getElementById("pageList").remove();
+    pageButton();
+    console.log('currentPage: ' + currentPage);
 }
