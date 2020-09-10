@@ -30,7 +30,8 @@
 <%--    </ul>--%>
     <script>
         let jsonFile = ${shListJson};
-        let contentPerPage = 2;
+        let contentPerPage = 1;
+        let pagePerPages = 5;
         let currentPage = 0;
         createFunction(currentPage);
         pageButton()

@@ -96,21 +96,9 @@ function createFunction(cPage) {
 
         document.getElementById("container").insertBefore(infoBox.cloneNode(true), test);
     }
-
-    // let pageUl = document.getElementById("pageList");
-    //
-    // for (let i = minPage; i <= maxPage; i++) {
-    //     let page = document.createElement("button")
-    //     page.innerText = String(i);
-    //     page.style = "width: 15px";
-    //     // page.addEventListener("click", paging);
-    //     page.onclick = function() { paging(i) };
-    //     pageUl.appendChild(page);
-    // }
 }
 
 function pageButton() {
-    let pagePerPages = 5;
     let totalPage = Math.floor((jsonFile.length - 1) / contentPerPage)
     let minPage = Math.floor(currentPage / pagePerPages) * pagePerPages;
     let maxPage = (minPage + 4) > totalPage ? totalPage : minPage + 4;
@@ -128,7 +116,7 @@ function pageButton() {
     if (minPage > 0) {
         let page = document.createElement("button")
         page.innerText = "<";
-        page.style = "width: 15px";
+        page.style = "width: 15px; margin-right: 5px;";
         page.onclick = function() { prevPage() };
         pageUl.appendChild(page);
     }
@@ -136,9 +124,9 @@ function pageButton() {
     for (let i = minPage; i <= maxPage; i++) {
         let page = document.createElement("button")
         page.innerText = String(i + 1);
-        page.style = "width: 15px";
+        page.style = "width: 25px";
         if (i === currentPage) {
-            page.style = "width: 15px; background-color: white;";
+            page.style = "width: 25px; background-color: white;";
         }
         page.onclick = function() { paging(i) };
         pageUl.appendChild(page);
@@ -147,21 +135,21 @@ function pageButton() {
     if (maxPage < totalPage) {
         let page = document.createElement("button")
         page.innerText = ">";
-        page.style = "width: 15px";
+        page.style = "width: 15px; margin-left: 5px;";
         page.onclick = function() { nextPage() };
         pageUl.appendChild(page);
     }
 }
 
 function prevPage() {
-    currentPage--;
+    currentPage = (Math.floor(currentPage / pagePerPages) - 1) * pagePerPages;
     document.getElementById("pageList").remove();
     pageButton();
     paging(currentPage);
 }
 
 function nextPage() {
-    currentPage++;
+    currentPage = (Math.floor(currentPage / pagePerPages) + 1) * pagePerPages;
     document.getElementById("pageList").remove();
     pageButton();
     paging(currentPage);
@@ -170,8 +158,6 @@ function nextPage() {
 function paging(cPage) {
     currentPage = cPage;
     for (let i = 0; i < contentPerPage; i++) {
-        // if (infoBox.id !== null) {
-        // }
         try {
             let infoBox = document.getElementById("infoBox" + i);
             infoBox.remove();
