@@ -185,6 +185,7 @@ public class HomeController {
             return mav;
         }
         mav.addObject("listSize", list.size());
+        mav.addObject("curPage", 0);
         return mav;
     }
 
@@ -221,7 +222,11 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/bookmarkHistory", method = RequestMethod.POST)
-    public String bookmarkHistory(Authentication authentication, HttpServletRequest request, Srchhisto srchhisto) {
+    public String bookmarkHistory(Authentication authentication,
+                                  HttpServletRequest request,
+                                  Srchhisto srchhisto,
+                                  Model model,
+                                  @RequestParam("curPage") int curPage) {
 
         Member member = memberService.loadUserByUsername(authentication.getName());
         srchhisto.setUsername(member.getUsername());
@@ -237,13 +242,18 @@ public class HomeController {
         int temp = srchhisto.getIsBookmarked();
         System.out.println(temp);
         int result = imageService.storeBookmark(srchhisto);
+        System.out.println(curPage);
+        model.addAttribute("curPage", curPage);
         return "redirect:/" + where;
     }
 
     @RequestMapping(value = "/deleteHistory", method = RequestMethod.POST)
     public String deleteHistory(Authentication authentication,
                                 HttpSession session,
-                                HttpServletRequest request, Srchhisto srchhisto) {
+                                HttpServletRequest request,
+                                Srchhisto srchhisto,
+                                Model model,
+                                @RequestParam("curPage") int curPage) {
 
         Member member = memberService.loadUserByUsername(authentication.getName());
         srchhisto.setUsername(member.getUsername());
@@ -257,6 +267,7 @@ public class HomeController {
         }
 
         int result = imageService.storeDelete(srchhisto, session);
+        model.addAttribute("curPage", curPage);
         return "redirect:/" + where;
     }
 }

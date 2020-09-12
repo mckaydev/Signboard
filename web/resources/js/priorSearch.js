@@ -24,6 +24,11 @@ function createFunction(cPage) {
     bmkHistory.type = "submit";
     // bmkHistory.innerText = "bookmark";
 
+    let curPage = document.createElement("input");
+    curPage.style = "display: none";
+    curPage.name = "curPage";
+    // curPage.type = "text";
+
     let delForm = document.createElement("form")
     delForm.action = "deleteHistory";
     delForm.method = "post";
@@ -45,9 +50,11 @@ function createFunction(cPage) {
 
     bmkForm.appendChild(bmkInput);
     bmkForm.appendChild(bmkIs);
+    bmkForm.appendChild(curPage);
     bmkForm.appendChild(bmkHistory);
 
     delForm.appendChild(delInput);
+    delForm.appendChild(curPage);
     delForm.appendChild(delHistory);
 
     infoBox.appendChild(bmkForm);
@@ -82,6 +89,8 @@ function createFunction(cPage) {
         infoImg.src = "/img/" + jsonFile[i]['imageFileName'];
         bmkInput.value = jsonFile[i]['imageFileName'];
         delInput.value = jsonFile[i]['imageFileName'];
+        curPage.value = currentPage;
+        console.log(curPage.value);
         bmkIs.value = jsonFile[i]['isBookmarked'];
 
         storeName.textContent = "상호명: " + jsonFile[i]['storeName'];
