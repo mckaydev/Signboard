@@ -185,13 +185,13 @@ public class HomeController {
             return mav;
         }
         mav.addObject("listSize", list.size());
-        mav.addObject("curPage", 0);
         return mav;
     }
 
     @RequestMapping(value = "/bookmarkedSearch", method = RequestMethod.GET)
     public ModelAndView bookmarkedSearch(Authentication authentication,
-                                         HttpServletResponse response) throws JsonProcessingException {
+                                         HttpServletResponse response,
+                                         @RequestParam("curPage") int curPage) throws JsonProcessingException {
         ModelAndView mav = new ModelAndView();
         List<Srchhisto> list = imageService.viewBookmarked(authentication);
 
@@ -202,12 +202,14 @@ public class HomeController {
         mav.setViewName("priorSearch");
         mav = makeJson(authentication, mav, list);
 
+        mav.addObject("curPage", curPage);
         return mav;
     }
 
     @RequestMapping(value = "/priorSearch", method = RequestMethod.GET)
     public ModelAndView priorSearch(Authentication authentication,
-                                    HttpServletResponse response) throws JsonProcessingException {
+                                    HttpServletResponse response,
+                                    @RequestParam("curPage") int curPage) throws JsonProcessingException {
         ModelAndView mav = new ModelAndView();
         List<Srchhisto> list = imageService.viewPrior(authentication);
 
@@ -218,6 +220,7 @@ public class HomeController {
         mav.setViewName("priorSearch");
         mav = makeJson(authentication, mav, list);
 
+        mav.addObject("curPage", curPage);
         return mav;
     }
 

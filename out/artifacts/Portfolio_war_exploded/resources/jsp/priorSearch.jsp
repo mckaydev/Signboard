@@ -32,7 +32,7 @@
         let jsonFile = ${shListJson};
         let contentPerPage = 2;
         let pagePerPages = 5;
-        let currentPage = 0;
+        let currentPage = ${curPage};
         let curPage = ${curPage};
         console.log(curPage);
         // if (curPage === null) {
