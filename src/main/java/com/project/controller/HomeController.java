@@ -191,7 +191,9 @@ public class HomeController {
     @RequestMapping(value = "/bookmarkedSearch", method = RequestMethod.GET)
     public ModelAndView bookmarkedSearch(Authentication authentication,
                                          HttpServletResponse response,
-                                         @RequestParam("curPage") int curPage) throws JsonProcessingException {
+                                         @RequestParam(value = "curPage",
+                                         required = false,
+                                         defaultValue = "0") int curPage) throws JsonProcessingException {
         ModelAndView mav = new ModelAndView();
         List<Srchhisto> list = imageService.viewBookmarked(authentication);
 
@@ -209,7 +211,9 @@ public class HomeController {
     @RequestMapping(value = "/priorSearch", method = RequestMethod.GET)
     public ModelAndView priorSearch(Authentication authentication,
                                     HttpServletResponse response,
-                                    @RequestParam("curPage") int curPage) throws JsonProcessingException {
+                                    @RequestParam(value = "curPage",
+                                            required = false,
+                                            defaultValue = "0") int curPage) throws JsonProcessingException {
         ModelAndView mav = new ModelAndView();
         List<Srchhisto> list = imageService.viewPrior(authentication);
 

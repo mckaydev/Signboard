@@ -24,6 +24,10 @@ function createFunction(cPage) {
     bmkHistory.type = "submit";
     // bmkHistory.innerText = "bookmark";
 
+    let curPage1 = document.createElement("input");
+    curPage1.style = "display: none";
+    curPage1.name = "curPage";
+
     let curPage = document.createElement("input");
     curPage.style = "display: none";
     curPage.name = "curPage";
@@ -50,7 +54,7 @@ function createFunction(cPage) {
 
     bmkForm.appendChild(bmkInput);
     bmkForm.appendChild(bmkIs);
-    bmkForm.appendChild(curPage);
+    bmkForm.appendChild(curPage1);
     bmkForm.appendChild(bmkHistory);
 
     delForm.appendChild(delInput);
@@ -81,8 +85,18 @@ function createFunction(cPage) {
 
     let test = document.getElementById("container").firstChild;
 
+    console.log('before cPage: ' + cPage);
+    console.log('jsonFile.length: ' + jsonFile.length);
+    if (cPage * contentPerPage >= jsonFile.length) {
+        cPage = Math.floor(jsonFile.length / contentPerPage) - 1;
+        currentPage = cPage;
+        console.log('cPage--');
+    }
+    console.log('after cPage: ' + cPage);
+
     let minContent = cPage * contentPerPage;
     let maxContent = minContent + contentPerPage;
+    console.log('maxContent: ' + maxContent);
 
     for(let i = minContent, j = 0; i < maxContent && i < jsonFile.length; i++, j++) {
         infoBox.id = "infoBox" + j;
@@ -90,7 +104,8 @@ function createFunction(cPage) {
         bmkInput.value = jsonFile[i]['imageFileName'];
         delInput.value = jsonFile[i]['imageFileName'];
         curPage.value = currentPage;
-        console.log(curPage.value);
+        curPage1.value = currentPage;
+        console.log('curPageBox: ' + curPage.value);
         bmkIs.value = jsonFile[i]['isBookmarked'];
 
         storeName.textContent = "상호명: " + jsonFile[i]['storeName'];

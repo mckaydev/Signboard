@@ -33,13 +33,6 @@
         let contentPerPage = 2;
         let pagePerPages = 5;
         let currentPage = ${curPage};
-        let curPage = ${curPage};
-        console.log(curPage);
-        // if (curPage === null) {
-        //     console.log('null');
-        // } else {
-        //     console.log('not null');
-        // }
         createFunction(currentPage);
         pageButton();
     </script>
