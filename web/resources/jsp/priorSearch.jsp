@@ -30,11 +30,12 @@
 <%--    </ul>--%>
     <script>
         let jsonFile = ${shListJson};
+        let listSize = ${listSize};
         let contentPerPage = 2;
         let pagePerPages = 5;
         let currentPage = ${curPage};
         createFunction(currentPage);
-        pageButton();
+        listPageButton();
     </script>
     <button class="mainButton" id="mainButton" onclick="location.href='/'">메인화면</button>
 </div>

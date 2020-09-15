@@ -125,7 +125,7 @@ function createFunction(cPage) {
 function pageButton() {
     let totalPage = Math.floor((jsonFile.length - 1) / contentPerPage)
     let minPage = Math.floor(currentPage / pagePerPages) * pagePerPages;
-    let maxPage = (minPage + 4) > totalPage ? totalPage : minPage + 4;
+    let maxPage = (minPage + (pagePerPages - 1)) > totalPage ? totalPage : minPage + (pagePerPages - 1);
 
     console.log('minPage: ' + minPage);
     console.log('maxPage: ' + maxPage);
@@ -165,6 +165,58 @@ function pageButton() {
     }
 }
 
+function listPageButton() {
+    let totalPage = Math.floor((listSize - 1) / contentPerPage)
+    let minPage = Math.floor(currentPage / pagePerPages) * pagePerPages;
+    let maxPage = (minPage + (pagePerPages - 1)) > totalPage ? totalPage : minPage + (pagePerPages - 1);
+
+    console.log('pathname: ' + location.pathname);
+    // pagingForm.method = "get";
+
+    let ul = document.createElement("ul");
+    ul.id = "pageList";
+    ul.className = "pageList";
+
+    if (minPage > 0) {
+        let page = document.createElement("button")
+        page.innerText = "<";
+        page.style = "width: 15px; margin-right: 5px;";
+        page.onclick = function() { listPrevPage() };
+        ul.appendChild(page);
+    }
+
+    for (let i = minPage; i <= maxPage; i++) {
+        let page = document.createElement("button")
+        page.innerText = String(i + 1 + 'p');
+        page.style = "width: 25px";
+        if (i === currentPage) {
+            page.style = "width: 25px; background-color: white;";
+        }
+        page.onclick = function() { listPaging(i) };
+
+        ul.appendChild(page);
+
+        // let a = document.createElement("a");
+        // a.href = location.pathname + '?curPage=' + i;
+        // a.innerText = String(i);
+        // ul.appendChild(a);
+    }
+
+    if (maxPage < totalPage) {
+        let page = document.createElement("button")
+        page.innerText = ">";
+        page.style = "width: 15px; margin-left: 5px;";
+        page.onclick = function() { listNextPage() };
+        ul.appendChild(page);
+    }
+
+    document.getElementById("container").appendChild(ul);
+}
+
+function sqlPageButton() {
+
+}
+
 function prevPage() {
     currentPage = (Math.floor(currentPage / pagePerPages) - 1) * pagePerPages;
     document.getElementById("pageList").remove();
@@ -177,6 +229,20 @@ function nextPage() {
     document.getElementById("pageList").remove();
     pageButton();
     paging(currentPage);
+}
+
+function listPrevPage() {
+    currentPage = (Math.floor(currentPage / pagePerPages) - 1) * pagePerPages;
+    document.getElementById("pageList").remove();
+    listPageButton();
+    listPaging(currentPage);
+}
+
+function listNextPage() {
+    currentPage = (Math.floor(currentPage / pagePerPages) + 1) * pagePerPages;
+    document.getElementById("pageList").remove();
+    listPageButton();
+    listPaging(currentPage);
 }
 
 function paging(cPage) {
@@ -193,4 +259,16 @@ function paging(cPage) {
     document.getElementById("pageList").remove();
     pageButton();
     console.log('currentPage: ' + currentPage);
+}
+
+function listPaging(cPage) {
+    currentPage = cPage;
+    console.log(currentPage);
+    console.log('pathname: ' + location.pathname);
+    console.log(location.pathname + '?curPage=' + currentPage);
+    location.href = location.pathname + '?curPage=' + currentPage;
+}
+
+function sqlPaging() {
+
 }

@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -192,10 +193,12 @@ public class HomeController {
     public ModelAndView bookmarkedSearch(Authentication authentication,
                                          HttpServletResponse response,
                                          @RequestParam(value = "curPage",
-                                         required = false,
-                                         defaultValue = "0") int curPage) throws JsonProcessingException {
+                                                 required = false,
+                                                 defaultValue = "0") int curPage) throws JsonProcessingException {
         ModelAndView mav = new ModelAndView();
         List<Srchhisto> list = imageService.viewBookmarked(authentication);
+        List<Srchhisto> pagingList = new ArrayList<>(list.subList(0, 1));
+        System.out.println(pagingList);
 
         Cookie cookie = new Cookie("where", "bookmarkedSearch");
         cookie.setPath("/");
