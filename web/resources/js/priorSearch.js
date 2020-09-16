@@ -1,4 +1,4 @@
-function createFunction(cPage) {
+function createFunction(cPage, what) {
     let infoBox = document.createElement("div");
     infoBox.className = "infoBox";
 
@@ -87,14 +87,21 @@ function createFunction(cPage) {
 
     console.log('before cPage: ' + cPage);
     console.log('jsonFile.length: ' + jsonFile.length);
-    if (cPage * contentPerPage >= jsonFile.length) {
-        cPage = Math.floor(jsonFile.length / contentPerPage) - 1;
+    console.log('listSize: ' + listSize);
+    // 자바스크립트로 페이징을 구현할 때 overflow 처리 (ex) 7페이지가 max인데 8이상 접근)
+    if (cPage * contentPerPage >= listSize) {
+        // 제일 마지막 페이지로
+        cPage = Math.floor(listSize / contentPerPage) - 1;
         currentPage = cPage;
-        console.log('cPage--');
+        console.log('current Page overflow');
     }
     console.log('after cPage: ' + cPage);
 
     let minContent = cPage * contentPerPage;
+    if (what === 'list') {
+        console.log('list paging');
+        minContent = 0;
+    }
     let maxContent = minContent + contentPerPage;
     console.log('maxContent: ' + maxContent);
 
@@ -231,20 +238,6 @@ function nextPage() {
     paging(currentPage);
 }
 
-function listPrevPage() {
-    currentPage = (Math.floor(currentPage / pagePerPages) - 1) * pagePerPages;
-    document.getElementById("pageList").remove();
-    listPageButton();
-    listPaging(currentPage);
-}
-
-function listNextPage() {
-    currentPage = (Math.floor(currentPage / pagePerPages) + 1) * pagePerPages;
-    document.getElementById("pageList").remove();
-    listPageButton();
-    listPaging(currentPage);
-}
-
 function paging(cPage) {
     currentPage = cPage;
     for (let i = 0; i < contentPerPage; i++) {
@@ -259,6 +252,20 @@ function paging(cPage) {
     document.getElementById("pageList").remove();
     pageButton();
     console.log('currentPage: ' + currentPage);
+}
+
+function listPrevPage() {
+    currentPage = (Math.floor(currentPage / pagePerPages) - 1) * pagePerPages;
+    document.getElementById("pageList").remove();
+    listPageButton();
+    listPaging(currentPage);
+}
+
+function listNextPage() {
+    currentPage = (Math.floor(currentPage / pagePerPages) + 1) * pagePerPages;
+    document.getElementById("pageList").remove();
+    listPageButton();
+    listPaging(currentPage);
 }
 
 function listPaging(cPage) {
