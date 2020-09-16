@@ -226,10 +226,6 @@ function listPageButton() {
     document.getElementById("container").appendChild(ul);
 }
 
-function sqlPageButton() {
-
-}
-
 function prevPage() {
     currentPage = (Math.floor(currentPage / pagePerPages) - 1) * pagePerPages;
     document.getElementById("pageList").remove();
@@ -280,8 +276,4 @@ function listPaging(cPage) {
     console.log('pathname: ' + location.pathname);
     console.log(location.pathname + '?curPage=' + currentPage);
     location.href = location.pathname + '?curPage=' + currentPage;
-}
-
-function sqlPaging() {
-
 }
