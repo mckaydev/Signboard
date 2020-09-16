@@ -199,7 +199,11 @@ public class HomeController {
 
         // sublist를 이용하여 paging을 구현할 때
         int startIndexOfData = curPage * 2;
-        List<Srchhisto> pagingList = new ArrayList<>(list.subList(startIndexOfData, startIndexOfData + 2));
+//        int endIndexOfData = list.size() > startIndexOfData + 2 ?
+//                startIndexOfData + 2 :
+//                list.size();
+        int endIndexOfData = Math.min(list.size(), startIndexOfData + 2);
+        List<Srchhisto> pagingList = new ArrayList<>(list.subList(startIndexOfData, endIndexOfData));
         System.out.println("sublist: " + pagingList);
 
         Cookie cookie = new Cookie("where", "bookmarkedSearch");
@@ -230,7 +234,11 @@ public class HomeController {
 
         // sublist를 이용하여 paging을 구현할 때
         int startIndexOfData = curPage * 2;
-        List<Srchhisto> pagingList = new ArrayList<>(list.subList(startIndexOfData, startIndexOfData + 2));
+//        int endIndexOfData = list.size() > startIndexOfData + 2 ?
+//                startIndexOfData + 2 :
+//                list.size();
+        int endIndexOfData = Math.min(list.size(), startIndexOfData + 2);
+        List<Srchhisto> pagingList = new ArrayList<>(list.subList(startIndexOfData, endIndexOfData));
         System.out.println("sublist: " + pagingList);
 
         Cookie cookie = new Cookie("where", "priorSearch");
