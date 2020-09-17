@@ -62,16 +62,6 @@ public class ImageService {
 
     public int getListSize(Authentication authentication) {
         Member member = memberService.loadUserByUsername(authentication.getName());
-        System.out.println("--------------------------USE LIMIT---------------------------");
-        List<Srchhisto> list = dao.selectHistory("test", 0, 3);
-        for (Srchhisto srchhisto : list) {
-            System.out.print(srchhisto.getImageFileName() + " | ");
-            System.out.print(srchhisto.getStoreName() + " | ");
-            System.out.print(srchhisto.getStoreMenu() + " | ");
-            System.out.print(srchhisto.getStorePhone() + " | ");
-            System.out.println(srchhisto.getIsBookmarked());
-        }
-        System.out.println("--------------------------------------------------------------");
 
         return dao.getListSize(member);
     }
@@ -90,19 +80,48 @@ public class ImageService {
         return null;
     }
 
-    public List<Srchhisto> viewPrior(Authentication authentication) {
+    public List<Srchhisto> viewBookmarked(Authentication authentication, int startIndex, int contentPerPage) {
         Member member = memberService.loadUserByUsername(authentication.getName());
         if (member != null) {
-            List<Srchhisto> list = dao.storeSelect(member);
+            System.out.println("--------------------------USE LIMIT---------------------------");
+            List<Srchhisto> list = dao.selectBookmark(member.getUsername(), startIndex, contentPerPage);
             for (Srchhisto srchhisto : list) {
-                System.out.println("------");
                 System.out.print(srchhisto.getImageFileName() + " | ");
                 System.out.print(srchhisto.getStoreName() + " | ");
                 System.out.print(srchhisto.getStoreMenu() + " | ");
                 System.out.print(srchhisto.getStorePhone() + " | ");
                 System.out.println(srchhisto.getIsBookmarked());
             }
+            System.out.println("--------------------------------------------------------------");
             return list;
+//            return dao.selectBookmark(member.getUsername(), startIndex, contentPerPage);
+        }
+        return null;
+    }
+
+    public List<Srchhisto> viewPrior(Authentication authentication) {
+        Member member = memberService.loadUserByUsername(authentication.getName());
+        if (member != null) {
+            return dao.storeSelect(member);
+        }
+        return null;
+    }
+
+    public List<Srchhisto> viewPrior(Authentication authentication, int startIndex, int contentPerPage) {
+        Member member = memberService.loadUserByUsername(authentication.getName());
+        if (member != null) {
+            System.out.println("--------------------------USE LIMIT---------------------------");
+            List<Srchhisto> list = dao.selectHistory(member.getUsername(), startIndex, contentPerPage);
+            for (Srchhisto srchhisto : list) {
+                System.out.print(srchhisto.getImageFileName() + " | ");
+                System.out.print(srchhisto.getStoreName() + " | ");
+                System.out.print(srchhisto.getStoreMenu() + " | ");
+                System.out.print(srchhisto.getStorePhone() + " | ");
+                System.out.println(srchhisto.getIsBookmarked());
+            }
+            System.out.println("--------------------------------------------------------------");
+            return list;
+//            return dao.selectHistory(member.getUsername(), startIndex, contentPerPage);
         }
         return null;
     }

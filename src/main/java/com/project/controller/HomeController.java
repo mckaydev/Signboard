@@ -215,7 +215,10 @@ public class HomeController {
         // 3-----------------------------------------------
         // COUNT, LIMIT 절을 이용한 paging
         int listLength = imageService.getBookmarkedSize(authentication);
-        System.out.println("bookmarked history length: " + listLength);
+        System.out.println("search history length: " + listLength);
+        List<Srchhisto> listUseLimit = imageService.viewBookmarked(authentication, startIndexOfData, 2);
+//        List<Srchhisto> listUseLimit = imageService.viewBookmarked(authentication, startIndexOfData,
+//                endIndexOfData - startIndexOfData);
         // ------------------------------------------------
 
         Cookie cookie = new Cookie("where", "bookmarkedSearch");
@@ -231,7 +234,13 @@ public class HomeController {
 
         // 2-----------------------------------------------
         // sublist를 이용하여 paging을 구현할 때
-        mav = makeJson(authentication, mav, pagingList);
+//        mav = makeJson(authentication, mav, pagingList);
+        // ------------------------------------------------
+
+
+        // 3-----------------------------------------------
+        // sql LIMIT 절을 이용하여 paging을 구현할 때
+        mav = makeJson(authentication, mav, listUseLimit);
         // ------------------------------------------------
 
         mav.addObject("listSize", list.size());
@@ -268,6 +277,9 @@ public class HomeController {
         // COUNT, LIMIT 절을 이용한 paging
         int listLength = imageService.getListSize(authentication);
         System.out.println("search history length: " + listLength);
+        List<Srchhisto> listUseLimit = imageService.viewPrior(authentication, startIndexOfData, 2);
+//        List<Srchhisto> listUseLimit = imageService.viewPrior(authentication, startIndexOfData,
+//                endIndexOfData - startIndexOfData);
         // ------------------------------------------------
 
         Cookie cookie = new Cookie("where", "priorSearch");
@@ -283,7 +295,12 @@ public class HomeController {
 
         // 2-----------------------------------------------
         // sublist를 이용하여 paging을 구현할 때
-        mav = makeJson(authentication, mav, pagingList);
+//        mav = makeJson(authentication, mav, pagingList);
+        // ------------------------------------------------
+
+        // 3-----------------------------------------------
+        // sql LIMIT 절을 이용하여 paging을 구현할 때
+        mav = makeJson(authentication, mav, listUseLimit);
         // ------------------------------------------------
 
         mav.addObject("listSize", list.size());

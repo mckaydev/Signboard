@@ -47,6 +47,13 @@ public class SrchhistoDAO implements ISrchhistoDAO{
     }
 
     @Override
+    public List<Srchhisto> selectBookmark(String username, int startIndex, int contentPerPage) {
+        ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
+
+        return dao.selectBookmark(username, startIndex, contentPerPage);
+    }
+
+    @Override
     public List<Srchhisto> storeSelect(Member member) {
         ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
 

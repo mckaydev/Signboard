@@ -13,6 +13,9 @@ public interface ISrchhistoDAO {
     List<Srchhisto> selectHistory(@Param("username") String username,
                                   @Param("startIndex") int startIndex,
                                   @Param("contentPerPage") int contentPerPage);
+    List<Srchhisto> selectBookmark(@Param("username") String username,
+                                  @Param("startIndex") int startIndex,
+                                  @Param("contentPerPage") int contentPerPage);
     List<Srchhisto> storeSelect(Member member);
     List<Srchhisto> bookmarkedStoreSelect(Member member);
     int storeBookmark(Srchhisto srchhisto);

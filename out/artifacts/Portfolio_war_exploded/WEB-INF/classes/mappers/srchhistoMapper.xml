@@ -26,6 +26,11 @@
         select * from ${username} limit ${startIndex}, ${contentPerPage};
     </select>
 
+    <select id="selectBookmark" parameterType="Map" resultType="com.project.srchhisto.Srchhisto">
+        use srchhisto;
+        select * from ${username} where isBookmarked = '1' limit ${startIndex}, ${contentPerPage};
+    </select>
+
     <select id="storeSelect" parameterType="com.project.member.Member" resultType="com.project.srchhisto.Srchhisto">
         use srchhisto;
         select * from ${username};
