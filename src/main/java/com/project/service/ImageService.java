@@ -1,5 +1,7 @@
 package com.project.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.CropLoc;
 import com.project.member.Member;
 import com.project.member.service.MemberService;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
@@ -72,10 +75,25 @@ public class ImageService {
         return dao.getBookmarkedSize(member);
     }
 
+    public ModelAndView makeJson(Authentication authentication,
+                                 ModelAndView mav, List<Srchhisto> list) throws JsonProcessingException {
+        Member member = memberService.loadUserByUsername(authentication.getName());
+        if (member != null) {
+            String shListJson = new ObjectMapper().writeValueAsString(list);
+            mav.addObject("shListJson", shListJson);
+            System.out.println(shListJson);
+        } else {
+            // 로그인 해주세요 alert
+            mav.setViewName("redirect:/");
+            return mav;
+        }
+        return mav;
+    }
+
     public List<Srchhisto> viewBookmarked(Authentication authentication) {
         Member member = memberService.loadUserByUsername(authentication.getName());
         if (member != null) {
-            return dao.bookmarkedStoreSelect(member);
+            return dao.selectBookmarkedHistory(member);
         }
         return null;
     }
@@ -83,16 +101,7 @@ public class ImageService {
     public List<Srchhisto> viewBookmarked(Authentication authentication, int startIndex, int contentPerPage) {
         Member member = memberService.loadUserByUsername(authentication.getName());
         if (member != null) {
-            System.out.println("--------------------------USE LIMIT---------------------------");
-            List<Srchhisto> list = dao.selectBookmark(member.getUsername(), startIndex, contentPerPage);
-            for (Srchhisto srchhisto : list) {
-                System.out.print(srchhisto.getImageFileName() + " | ");
-                System.out.print(srchhisto.getStoreName() + " | ");
-                System.out.print(srchhisto.getStoreMenu() + " | ");
-                System.out.print(srchhisto.getStorePhone() + " | ");
-                System.out.println(srchhisto.getIsBookmarked());
-            }
-            System.out.println("--------------------------------------------------------------");
+            List<Srchhisto> list = dao.selectBookmarkedHistoryLimit(member.getUsername(), startIndex, contentPerPage);
             return list;
 //            return dao.selectBookmark(member.getUsername(), startIndex, contentPerPage);
         }
@@ -102,7 +111,7 @@ public class ImageService {
     public List<Srchhisto> viewPrior(Authentication authentication) {
         Member member = memberService.loadUserByUsername(authentication.getName());
         if (member != null) {
-            return dao.storeSelect(member);
+            return dao.selectHistory(member);
         }
         return null;
     }
@@ -110,16 +119,7 @@ public class ImageService {
     public List<Srchhisto> viewPrior(Authentication authentication, int startIndex, int contentPerPage) {
         Member member = memberService.loadUserByUsername(authentication.getName());
         if (member != null) {
-            System.out.println("--------------------------USE LIMIT---------------------------");
-            List<Srchhisto> list = dao.selectHistory(member.getUsername(), startIndex, contentPerPage);
-            for (Srchhisto srchhisto : list) {
-                System.out.print(srchhisto.getImageFileName() + " | ");
-                System.out.print(srchhisto.getStoreName() + " | ");
-                System.out.print(srchhisto.getStoreMenu() + " | ");
-                System.out.print(srchhisto.getStorePhone() + " | ");
-                System.out.println(srchhisto.getIsBookmarked());
-            }
-            System.out.println("--------------------------------------------------------------");
+            List<Srchhisto> list = dao.selectHistoryLimit(member.getUsername(), startIndex, contentPerPage);
             return list;
 //            return dao.selectHistory(member.getUsername(), startIndex, contentPerPage);
         }

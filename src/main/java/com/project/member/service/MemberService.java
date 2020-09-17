@@ -103,7 +103,7 @@ public class MemberService implements IMemberService, UserDetailsService {
         if (!passwordEncoder.matches(password, member.getPassword())) {
             return 0;
         }
-        List<Srchhisto> list = srchhistoDAO.storeSelect(member);
+        List<Srchhisto> list = srchhistoDAO.selectHistory(member);
         String imgPath;
         for (Srchhisto srchhisto : list) {
             imgPath = session.getServletContext().getRealPath("/") +

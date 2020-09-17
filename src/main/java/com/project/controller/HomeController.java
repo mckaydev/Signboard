@@ -196,20 +196,30 @@ public class HomeController {
                                                  defaultValue = "0") int curPage) throws JsonProcessingException {
         ModelAndView mav = new ModelAndView();
 
+        Cookie cookie = new Cookie("where", "bookmarkedSearch");
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
+        mav.setViewName("priorSearch");
+        int startIndexOfData = curPage * 2;
+
         // 1-----------------------------------------------
         // js에 데이터를 전부 넘겨주고 paging을 js에서 작업할 때
-        List<Srchhisto> list = imageService.viewBookmarked(authentication);
+//        List<Srchhisto> list = imageService.viewBookmarked(authentication);
+//        mav = makeJson(authentication, mav, list);
+//        mav.addObject("listSize", list.size());
         // ------------------------------------------------
 
         // 2-----------------------------------------------
-        // sublist를 이용하여 paging을 구현할 때 (추가 구문)
-        int startIndexOfData = curPage * 2;
+        // sublist를 이용하여 paging을 구현할 때 (1의 추가 구문)
 //        int endIndexOfData = list.size() > startIndexOfData + 2 ?
 //                startIndexOfData + 2 :
 //                list.size();
-        int endIndexOfData = Math.min(list.size(), startIndexOfData + 2);
-        List<Srchhisto> pagingList = new ArrayList<>(list.subList(startIndexOfData, endIndexOfData));
-        System.out.println("sublist: " + pagingList);
+//        int endIndexOfData = Math.min(list.size(), startIndexOfData + 2);
+//        List<Srchhisto> pagingList = new ArrayList<>(list.subList(startIndexOfData, endIndexOfData));
+//        System.out.println("sublist: " + pagingList);
+//        mav = makeJson(authentication, mav, pagingList);
+//        mav.addObject("listSize", list.size());
         // ------------------------------------------------
 
         // 3-----------------------------------------------
@@ -219,31 +229,10 @@ public class HomeController {
         List<Srchhisto> listUseLimit = imageService.viewBookmarked(authentication, startIndexOfData, 2);
 //        List<Srchhisto> listUseLimit = imageService.viewBookmarked(authentication, startIndexOfData,
 //                endIndexOfData - startIndexOfData);
-        // ------------------------------------------------
-
-        Cookie cookie = new Cookie("where", "bookmarkedSearch");
-        cookie.setPath("/");
-        response.addCookie(cookie);
-
-        mav.setViewName("priorSearch");
-
-        // 1-----------------------------------------------
-        // js에 데이터를 전부 넘겨주고 paging을 js에서 작업할 때
-//        mav = makeJson(authentication, mav, list);
-        // ------------------------------------------------
-
-        // 2-----------------------------------------------
-        // sublist를 이용하여 paging을 구현할 때
-//        mav = makeJson(authentication, mav, pagingList);
-        // ------------------------------------------------
-
-
-        // 3-----------------------------------------------
-        // sql LIMIT 절을 이용하여 paging을 구현할 때
         mav = makeJson(authentication, mav, listUseLimit);
+        mav.addObject("listSize", listLength);
         // ------------------------------------------------
 
-        mav.addObject("listSize", list.size());
         mav.addObject("curPage", curPage);
 
         return mav;
@@ -257,20 +246,30 @@ public class HomeController {
                                             defaultValue = "0") int curPage) throws JsonProcessingException {
         ModelAndView mav = new ModelAndView();
 
+        Cookie cookie = new Cookie("where", "priorSearch");
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
+        mav.setViewName("priorSearch");
+        int startIndexOfData = curPage * 2;
+
         // 1-----------------------------------------------
         // js에 데이터를 전부 넘겨주고 paging을 js에서 작업할 때
-        List<Srchhisto> list = imageService.viewPrior(authentication);
+//        List<Srchhisto> list = imageService.viewPrior(authentication);
+//        mav = makeJson(authentication, mav, list);
+//        mav.addObject("listSize", list.size());
         // ------------------------------------------------
 
         // 2-----------------------------------------------
-        // sublist를 이용하여 paging을 구현할 때 (추가 구문)
-        int startIndexOfData = curPage * 2;
+        // sublist를 이용하여 paging을 구현할 때 (1의 추가 구문)
 //        int endIndexOfData = list.size() > startIndexOfData + 2 ?
 //                startIndexOfData + 2 :
 //                list.size();
-        int endIndexOfData = Math.min(list.size(), startIndexOfData + 2);
-        List<Srchhisto> pagingList = new ArrayList<>(list.subList(startIndexOfData, endIndexOfData));
-        System.out.println("sublist: " + pagingList);
+//        int endIndexOfData = Math.min(list.size(), startIndexOfData + 2);
+//        List<Srchhisto> pagingList = new ArrayList<>(list.subList(startIndexOfData, endIndexOfData));
+//        System.out.println("sublist: " + pagingList);
+//        mav = makeJson(authentication, mav, pagingList);
+//        mav.addObject("listSize", list.size());
         // ------------------------------------------------
 
         // 3-----------------------------------------------
@@ -280,30 +279,10 @@ public class HomeController {
         List<Srchhisto> listUseLimit = imageService.viewPrior(authentication, startIndexOfData, 2);
 //        List<Srchhisto> listUseLimit = imageService.viewPrior(authentication, startIndexOfData,
 //                endIndexOfData - startIndexOfData);
-        // ------------------------------------------------
-
-        Cookie cookie = new Cookie("where", "priorSearch");
-        cookie.setPath("/");
-        response.addCookie(cookie);
-
-        mav.setViewName("priorSearch");
-
-        // 1-----------------------------------------------
-        // js에 데이터를 전부 넘겨주고 paging을 js에서 작업할 때
-//        mav = makeJson(authentication, mav, list);
-        // ------------------------------------------------
-
-        // 2-----------------------------------------------
-        // sublist를 이용하여 paging을 구현할 때
-//        mav = makeJson(authentication, mav, pagingList);
-        // ------------------------------------------------
-
-        // 3-----------------------------------------------
-        // sql LIMIT 절을 이용하여 paging을 구현할 때
         mav = makeJson(authentication, mav, listUseLimit);
+        mav.addObject("listSize", listLength);
         // ------------------------------------------------
 
-        mav.addObject("listSize", list.size());
         mav.addObject("curPage", curPage);
 
         return mav;

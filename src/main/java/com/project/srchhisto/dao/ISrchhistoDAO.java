@@ -10,14 +10,14 @@ public interface ISrchhistoDAO {
     int storeInsert(Srchhisto srchhisto);
     int getListSize(Member member);
     int getBookmarkedSize(Member member);
-    List<Srchhisto> selectHistory(@Param("username") String username,
+    List<Srchhisto> selectHistoryLimit(@Param("username") String username,
                                   @Param("startIndex") int startIndex,
                                   @Param("contentPerPage") int contentPerPage);
-    List<Srchhisto> selectBookmark(@Param("username") String username,
+    List<Srchhisto> selectBookmarkedHistoryLimit(@Param("username") String username,
                                   @Param("startIndex") int startIndex,
                                   @Param("contentPerPage") int contentPerPage);
-    List<Srchhisto> storeSelect(Member member);
-    List<Srchhisto> bookmarkedStoreSelect(Member member);
+    List<Srchhisto> selectHistory(Member member);
+    List<Srchhisto> selectBookmarkedHistory(Member member);
     int storeBookmark(Srchhisto srchhisto);
     int storeUnBookmark(Srchhisto srchhisto);
     int storeDelete(Srchhisto srchhisto);

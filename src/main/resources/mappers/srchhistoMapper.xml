@@ -21,22 +21,22 @@
         select count(*) from ${username} where isBookmarked = '1';
     </select>
 
-    <select id="selectHistory" parameterType="Map" resultType="com.project.srchhisto.Srchhisto">
+    <select id="selectHistoryLimit" parameterType="Map" resultType="com.project.srchhisto.Srchhisto">
         use srchhisto;
         select * from ${username} limit ${startIndex}, ${contentPerPage};
     </select>
 
-    <select id="selectBookmark" parameterType="Map" resultType="com.project.srchhisto.Srchhisto">
+    <select id="selectBookmarkedHistoryLimit" parameterType="Map" resultType="com.project.srchhisto.Srchhisto">
         use srchhisto;
         select * from ${username} where isBookmarked = '1' limit ${startIndex}, ${contentPerPage};
     </select>
 
-    <select id="storeSelect" parameterType="com.project.member.Member" resultType="com.project.srchhisto.Srchhisto">
+    <select id="selectHistory" parameterType="com.project.member.Member" resultType="com.project.srchhisto.Srchhisto">
         use srchhisto;
         select * from ${username};
     </select>
 
-    <select id="bookmarkedStoreSelect" parameterType="com.project.member.Member" resultType="com.project.srchhisto.Srchhisto">
+    <select id="selectBookmarkedHistory" parameterType="com.project.member.Member" resultType="com.project.srchhisto.Srchhisto">
         use srchhisto;
         select * from ${username} where isBookmarked = '1';
     </select>

@@ -40,31 +40,31 @@ public class SrchhistoDAO implements ISrchhistoDAO{
     }
 
     @Override
-    public List<Srchhisto> selectHistory(String username, int startIndex, int contentPerPage) {
+    public List<Srchhisto> selectHistoryLimit(String username, int startIndex, int contentPerPage) {
         ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
 
-        return dao.selectHistory(username, startIndex, contentPerPage);
+        return dao.selectHistoryLimit(username, startIndex, contentPerPage);
     }
 
     @Override
-    public List<Srchhisto> selectBookmark(String username, int startIndex, int contentPerPage) {
+    public List<Srchhisto> selectBookmarkedHistoryLimit(String username, int startIndex, int contentPerPage) {
         ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
 
-        return dao.selectBookmark(username, startIndex, contentPerPage);
+        return dao.selectBookmarkedHistoryLimit(username, startIndex, contentPerPage);
     }
 
     @Override
-    public List<Srchhisto> storeSelect(Member member) {
+    public List<Srchhisto> selectHistory(Member member) {
         ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
 
-        return dao.storeSelect(member);
+        return dao.selectHistory(member);
     }
 
     @Override
-    public List<Srchhisto> bookmarkedStoreSelect(Member member) {
+    public List<Srchhisto> selectBookmarkedHistory(Member member) {
         ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
 
-        return dao.bookmarkedStoreSelect(member);
+        return dao.selectBookmarkedHistory(member);
     }
 
     @Override
