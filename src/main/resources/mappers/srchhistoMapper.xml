@@ -11,6 +11,21 @@
         values (#{imageFileName}, #{gpsAddress}, #{roadAddress}, #{storeName}, #{storePhone}, #{storeMenu}, #{rate}, #{aLineReview}, #{isBookmarked});
     </insert>
 
+    <select id="getListSize" parameterType="com.project.member.Member" resultType="Integer">
+        use srchhisto;
+        select count(*) from ${username};
+    </select>
+
+    <select id="getBookmarkedSize" parameterType="com.project.member.Member" resultType="Integer">
+        use srchhisto;
+        select count(*) from ${username} where isBookmarked = '1';
+    </select>
+
+    <select id="selectHistory" parameterType="Map" resultType="com.project.srchhisto.Srchhisto">
+        use srchhisto;
+        select * from ${username} limit ${startIndex}, ${contentPerPage};
+    </select>
+
     <select id="storeSelect" parameterType="com.project.member.Member" resultType="com.project.srchhisto.Srchhisto">
         use srchhisto;
         select * from ${username};

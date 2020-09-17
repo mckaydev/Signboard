@@ -212,6 +212,12 @@ public class HomeController {
         System.out.println("sublist: " + pagingList);
         // ------------------------------------------------
 
+        // 3-----------------------------------------------
+        // COUNT, LIMIT 절을 이용한 paging
+        int listLength = imageService.getBookmarkedSize(authentication);
+        System.out.println("bookmarked history length: " + listLength);
+        // ------------------------------------------------
+
         Cookie cookie = new Cookie("where", "bookmarkedSearch");
         cookie.setPath("/");
         response.addCookie(cookie);
@@ -256,6 +262,12 @@ public class HomeController {
         int endIndexOfData = Math.min(list.size(), startIndexOfData + 2);
         List<Srchhisto> pagingList = new ArrayList<>(list.subList(startIndexOfData, endIndexOfData));
         System.out.println("sublist: " + pagingList);
+        // ------------------------------------------------
+
+        // 3-----------------------------------------------
+        // COUNT, LIMIT 절을 이용한 paging
+        int listLength = imageService.getListSize(authentication);
+        System.out.println("search history length: " + listLength);
         // ------------------------------------------------
 
         Cookie cookie = new Cookie("where", "priorSearch");

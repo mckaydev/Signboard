@@ -60,6 +60,28 @@ public class ImageService {
         return dao.storeDelete(srchhisto);
     }
 
+    public int getListSize(Authentication authentication) {
+        Member member = memberService.loadUserByUsername(authentication.getName());
+        System.out.println("--------------------------USE LIMIT---------------------------");
+        List<Srchhisto> list = dao.selectHistory("test", 0, 3);
+        for (Srchhisto srchhisto : list) {
+            System.out.print(srchhisto.getImageFileName() + " | ");
+            System.out.print(srchhisto.getStoreName() + " | ");
+            System.out.print(srchhisto.getStoreMenu() + " | ");
+            System.out.print(srchhisto.getStorePhone() + " | ");
+            System.out.println(srchhisto.getIsBookmarked());
+        }
+        System.out.println("--------------------------------------------------------------");
+
+        return dao.getListSize(member);
+    }
+
+    public int getBookmarkedSize(Authentication authentication) {
+        Member member = memberService.loadUserByUsername(authentication.getName());
+
+        return dao.getBookmarkedSize(member);
+    }
+
     public List<Srchhisto> viewBookmarked(Authentication authentication) {
         Member member = memberService.loadUserByUsername(authentication.getName());
         if (member != null) {

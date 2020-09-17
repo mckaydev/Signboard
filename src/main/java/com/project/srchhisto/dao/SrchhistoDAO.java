@@ -26,6 +26,27 @@ public class SrchhistoDAO implements ISrchhistoDAO{
     }
 
     @Override
+    public int getListSize(Member member) {
+        ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
+
+        return dao.getListSize(member);
+    }
+
+    @Override
+    public int getBookmarkedSize(Member member) {
+        ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
+
+        return dao.getBookmarkedSize(member);
+    }
+
+    @Override
+    public List<Srchhisto> selectHistory(String username, int startIndex, int contentPerPage) {
+        ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
+
+        return dao.selectHistory(username, startIndex, contentPerPage);
+    }
+
+    @Override
     public List<Srchhisto> storeSelect(Member member) {
         ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
 
