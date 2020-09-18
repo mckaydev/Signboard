@@ -75,21 +75,6 @@ public class ImageService {
         return dao.getBookmarkedSize(member);
     }
 
-    public ModelAndView makeJson(Authentication authentication,
-                                 ModelAndView mav, List<Srchhisto> list) throws JsonProcessingException {
-        Member member = memberService.loadUserByUsername(authentication.getName());
-        if (member != null) {
-            String shListJson = new ObjectMapper().writeValueAsString(list);
-            mav.addObject("shListJson", shListJson);
-            System.out.println(shListJson);
-        } else {
-            // 로그인 해주세요 alert
-            mav.setViewName("redirect:/");
-            return mav;
-        }
-        return mav;
-    }
-
     public List<Srchhisto> viewBookmarked(Authentication authentication) {
         Member member = memberService.loadUserByUsername(authentication.getName());
         if (member != null) {
