@@ -34,7 +34,6 @@ public class ImageService {
         this.memberService = memberService;
     }
 
-
     public int storeBookmark(Srchhisto srchhisto) {
         if (srchhisto.getIsBookmarked() == 0) {
             return dao.storeBookmark(srchhisto);
