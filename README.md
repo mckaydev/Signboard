@@ -45,7 +45,7 @@
 - (○) 검색기록 페이징
     - (○) javascript paging
     - (○) Server side / ArrayList paging
-    - (X) Server side / DB paging (use LIMIT)
+    - (○) Server side / DB paging (use COUNT, LIMIT)
 - ----------------추가 항목----------------
 - (○) 포트폴리오 블로그 생성
 - (○) 개인프로젝트 설명 페이지 작성
