@@ -85,9 +85,9 @@ public class ImageService {
     public List<Srchhisto> viewBookmarked(Authentication authentication, int startIndex, int contentPerPage) {
         Member member = memberService.loadUserByUsername(authentication.getName());
         if (member != null) {
-            List<Srchhisto> list = dao.selectBookmarkedHistoryLimit(member.getUsername(), startIndex, contentPerPage);
-            return list;
-//            return dao.selectBookmark(member.getUsername(), startIndex, contentPerPage);
+//            List<Srchhisto> list = dao.selectBookmarkedHistoryLimit(member.getUsername(), startIndex, contentPerPage);
+//            return list;
+            return dao.selectBookmarkedHistoryLimit(member.getUsername(), startIndex, contentPerPage);
         }
         return null;
     }
@@ -103,9 +103,9 @@ public class ImageService {
     public List<Srchhisto> viewPrior(Authentication authentication, int startIndex, int contentPerPage) {
         Member member = memberService.loadUserByUsername(authentication.getName());
         if (member != null) {
-            List<Srchhisto> list = dao.selectHistoryLimit(member.getUsername(), startIndex, contentPerPage);
-            return list;
-//            return dao.selectHistory(member.getUsername(), startIndex, contentPerPage);
+//            List<Srchhisto> list = dao.selectHistoryLimit(member.getUsername(), startIndex, contentPerPage);
+//            return list;
+            return dao.selectHistoryLimit(member.getUsername(), startIndex, contentPerPage);
         }
         return null;
     }

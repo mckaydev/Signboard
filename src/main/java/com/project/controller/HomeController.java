@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -130,10 +129,10 @@ public class HomeController {
 
         System.out.println("ddX: " + ddX);
         System.out.println("ddY: " + ddY);
-        Double ddx = ddX;
+        double ddx = ddX;
 
         String dong = "";
-        if (ddx.isNaN()) {
+        if (Double.isNaN(ddx)) {
             System.out.println("gps empty");
             dong = inputDong;
         } else {
