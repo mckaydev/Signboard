@@ -46,7 +46,7 @@
     - (○) javascript paging
     - (○) Server side / ArrayList paging
     - (○) Server side / DB paging (use COUNT, LIMIT)
-- (X) 하드코딩된 db로그인 정보 암호화
+- (○) 하드코딩된 db로그인 정보 암호화
 - ----------------추가 항목----------------
 - (○) 포트폴리오 블로그 생성
 - (○) 개인프로젝트 설명 페이지 작성

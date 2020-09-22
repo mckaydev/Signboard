@@ -2,13 +2,23 @@ package com.project.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.HashMap;
 
 @Service
+@PropertySource("classpath:properties/naverAPI.properties")
 public class NaverRvrsGeocoding {
+
+    @Value("${api.X-NCP-APIGW-API-KEY-ID}")
+    private String clientId;
+
+    @Value("${api.X-NCP-APIGW-API-KEY}")
+    private String clientSecret;
+
     private final UseAPI useAPI;
     private final StringToJson stj;
 
@@ -20,10 +30,8 @@ public class NaverRvrsGeocoding {
 
     public String rvrsGeocode(double ddX, double ddY) {
         String header1 = "X-NCP-APIGW-API-KEY-ID";
-        String clientId = "ai9wkb82y8";
 
         String header2 = "X-NCP-APIGW-API-KEY";
-        String clientSecret = "OVTmuLyNlXfKimFrcGdu5h5eGqCWp90U8PIaGsDL";
 
         String apiURL = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?output=json&&orders=addr&coords=";
         String query = String.valueOf(ddX) + "," + String.valueOf(ddY);

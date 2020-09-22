@@ -1,9 +1,19 @@
 package com.project.service;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 @Service
+@PropertySource("classpath:properties/naverAPI.properties")
 public class NaverGeocoding {
+
+    @Value("${api.X-NCP-APIGW-API-KEY-ID}")
+    private String clientId;
+
+    @Value("${api.X-NCP-APIGW-API-KEY}")
+    private String clientSecret;
+
     private final UseAPI useAPI;
 
     public NaverGeocoding(UseAPI useAPI) {
@@ -12,10 +22,8 @@ public class NaverGeocoding {
 
     public String geocode(String address) {
         String header1 = "X-NCP-APIGW-API-KEY-ID";
-        String clientId = "ai9wkb82y8";
 
         String header2 = "X-NCP-APIGW-API-KEY";
-        String clientSecret = "OVTmuLyNlXfKimFrcGdu5h5eGqCWp90U8PIaGsDL";
 
         String apiURL = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=";
 

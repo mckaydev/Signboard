@@ -3,13 +3,23 @@ package com.project.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.HashMap;
 
 @Service
+@PropertySource("classpath:properties/naverAPI.properties")
 public class NaverSearch {
+
+    @Value("${api.X-Naver-Client-Id}")
+    private String clientId;
+
+    @Value("${api.X-Naver-Client-Secret}")
+    private String clientSecret;
+
     private final UseAPI useAPI;
     private final StringToJson stj;
 
@@ -21,10 +31,8 @@ public class NaverSearch {
 
     public String search(String dong, String ocrResult) {
         String header1 = "X-Naver-Client-Id";
-        String clientId = "hKzNsSuDTyAaWBoxl5HE";
 
         String header2 = "X-Naver-Client-Secret";
-        String clientSecret = "z2lUNQG3GR";
 
         String apiURL = "https://openapi.naver.com/v1/search/local.json?query=";
         String query = dong + " " + ocrResult;
