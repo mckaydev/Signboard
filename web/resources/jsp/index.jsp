@@ -13,6 +13,7 @@
   <body>
     <form method="get">
       ${message} <br>
+      <p>hello</p>
       <input type="button" value="사진 검색 페이지" name="image" onclick="location.href='/'">
     </form>
   </body>

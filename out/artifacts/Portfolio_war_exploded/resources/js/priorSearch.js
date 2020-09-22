@@ -164,6 +164,7 @@ function pageButton() {
         page.style = "width: 25px";
         if (i === currentPage) {
             page.style = "width: 25px; background-color: white;";
+            page.disabled;
         }
         page.onclick = function() { paging(i) };
         pageUl.appendChild(page);
@@ -184,7 +185,6 @@ function listPageButton() {
     let maxPage = (minPage + (pagePerPages - 1)) > totalPage ? totalPage : minPage + (pagePerPages - 1);
 
     console.log('pathname: ' + location.pathname);
-    // pagingForm.method = "get";
 
     let ul = document.createElement("ul");
     ul.id = "pageList";
@@ -204,8 +204,10 @@ function listPageButton() {
         page.style = "width: 25px";
         if (i === currentPage) {
             page.style = "width: 25px; background-color: white;";
+            page.disabled = true;
+        } else {
+            page.onclick = function() { listPaging(i) };
         }
-        page.onclick = function() { listPaging(i) };
 
         ul.appendChild(page);
 

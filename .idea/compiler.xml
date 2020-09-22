@@ -8,7 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Signboard" />
-        <module name="Portfolio" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8" />
