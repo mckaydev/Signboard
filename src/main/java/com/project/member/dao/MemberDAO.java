@@ -107,7 +107,6 @@ package com.project.member.dao;
 //}
 
 
-import com.project.member.LMember;
 import com.project.member.Member;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;

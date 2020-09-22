@@ -1,6 +1,5 @@
 package com.project.member.service;
 
-import com.project.member.LMember;
 import com.project.member.Member;
 
 import javax.servlet.http.HttpSession;

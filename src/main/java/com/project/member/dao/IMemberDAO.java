@@ -1,6 +1,5 @@
 package com.project.member.dao;
 
-import com.project.member.LMember;
 import com.project.member.Member;
 
 public interface IMemberDAO {

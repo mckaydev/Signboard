@@ -1,6 +1,5 @@
 package com.project.member.controller;
 
-import com.project.member.LMember;
 import com.project.member.Member;
 import com.project.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
