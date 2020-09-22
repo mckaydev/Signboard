@@ -3,9 +3,11 @@ package com.project.Web;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -22,7 +24,20 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.project")
+@PropertySource("classpath:properties/jdbc.properties")
 public class WebConfig implements WebMvcConfigurer {
+
+    @Value("${jdbc.driverClassName}")
+    private String driverClassName;
+
+    @Value("${jdbc.url}")
+    private String url;
+
+    @Value("${jdbc.username}")
+    private String username;
+
+    @Value("${jdbc.password}")
+    private String password;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -50,10 +65,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean(name = "datasource")
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/signboard?allowMultiQueries=true&serverTimezone=Asia/Seoul");
-        dataSource.setUsername("jutabi");
-        dataSource.setPassword("test1234");
+
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
 
         return dataSource;
     }
