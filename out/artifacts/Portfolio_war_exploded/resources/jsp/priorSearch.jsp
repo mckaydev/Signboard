@@ -38,6 +38,13 @@
         createFunction(currentPage, what);
         listPageButton();
     </script>
+    <c:if test="${pageContext.request.userPrincipal.name == 'test'}">
+        <div class="testDataInfo">
+            <p>
+                페이징 테스트용 데이터는 삭제하더라도 로그인시 재생성됩니다.
+            </p>
+        </div>
+    </c:if>
     <button class="mainButton" id="mainButton" onclick="location.href='/'">메인화면</button>
 </div>
 </body>
