@@ -16,7 +16,8 @@
             storePhone varchar(20),
             rate varchar(1),
             aLineReview varchar(200),
-            isBookmarked boolean default 0
+            isBookmarked boolean default 0,
+            time timestamp
         ) default character set utf8 collate utf8_general_ci;
     </insert>
 

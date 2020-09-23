@@ -7,25 +7,25 @@
 
     <insert id="storeInsert" parameterType="com.project.srchhisto.Srchhisto">
         use srchhisto;
-        insert ignore into ${username} (imageFileName, gpsAddress, roadAddress, storeName, storePhone, storeMenu, rate, aLineReview, isBookmarked)
-        values (#{imageFileName}, #{gpsAddress}, #{roadAddress}, #{storeName}, #{storePhone}, #{storeMenu}, #{rate}, #{aLineReview}, #{isBookmarked});
+        insert ignore into ${username} (imageFileName, gpsAddress, roadAddress, storeName, storePhone, storeMenu, rate, aLineReview, isBookmarked, time)
+        values (#{imageFileName}, #{gpsAddress}, #{roadAddress}, #{storeName}, #{storePhone}, #{storeMenu}, #{rate}, #{aLineReview}, #{isBookmarked}, CURRENT_TIMESTAMP);
     </insert>
 
     <insert id="testDataInsert">
         use srchhisto;
-        insert ignore into test (imageFileName, gpsAddress, roadAddress, storeName, storePhone, storeMenu, rate, aLineReview, isBookmarked)
-        values ('example/pagingTest/paging (01).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
-               ('example/pagingTest/paging (02).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
-               ('example/pagingTest/paging (03).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
-               ('example/pagingTest/paging (04).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
-               ('example/pagingTest/paging (05).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
-               ('example/pagingTest/paging (06).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
-               ('example/pagingTest/paging (07).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
-               ('example/pagingTest/paging (08).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
-               ('example/pagingTest/paging (09).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
-               ('example/pagingTest/paging (10).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
-               ('example/pagingTest/paging (11).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
-               ('example/pagingTest/paging (12).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0');
+        insert ignore into test (imageFileName, gpsAddress, roadAddress, storeName, storePhone, storeMenu, rate, aLineReview, isBookmarked, time)
+        values ('example/pagingTest/paging (01).jpg', 'null', 'testAddress', '01', '02-1234-1234', 'test', '5', 'test01 review', '0', CURRENT_TIMESTAMP),
+               ('example/pagingTest/paging (02).jpg', 'null', 'testAddress', '02', '02-1234-1234', 'test', '5', 'test02 review', '0', CURRENT_TIMESTAMP),
+               ('example/pagingTest/paging (03).jpg', 'null', 'testAddress', '03', '02-1234-1234', 'test', '5', 'test03 review', '0', CURRENT_TIMESTAMP),
+               ('example/pagingTest/paging (04).jpg', 'null', 'testAddress', '04', '02-1234-1234', 'test', '5', 'test04 review', '0', CURRENT_TIMESTAMP),
+               ('example/pagingTest/paging (05).jpg', 'null', 'testAddress', '05', '02-1234-1234', 'test', '5', 'test05 review', '0', CURRENT_TIMESTAMP),
+               ('example/pagingTest/paging (06).jpg', 'null', 'testAddress', '06', '02-1234-1234', 'test', '5', 'test06 review', '0', CURRENT_TIMESTAMP),
+               ('example/pagingTest/paging (07).jpg', 'null', 'testAddress', '07', '02-1234-1234', 'test', '5', 'test07 review', '0', CURRENT_TIMESTAMP),
+               ('example/pagingTest/paging (08).jpg', 'null', 'testAddress', '08', '02-1234-1234', 'test', '5', 'test08 review', '0', CURRENT_TIMESTAMP),
+               ('example/pagingTest/paging (09).jpg', 'null', 'testAddress', '09', '02-1234-1234', 'test', '5', 'test09 review', '0', CURRENT_TIMESTAMP),
+               ('example/pagingTest/paging (10).jpg', 'null', 'testAddress', '10', '02-1234-1234', 'test', '5', 'test10 review', '0', CURRENT_TIMESTAMP),
+               ('example/pagingTest/paging (11).jpg', 'null', 'testAddress', '11', '02-1234-1234', 'test', '5', 'test11 review', '0', CURRENT_TIMESTAMP),
+               ('example/pagingTest/paging (12).jpg', 'null', 'testAddress', '12', '02-1234-1234', 'test', '5', 'test12 review', '0', CURRENT_TIMESTAMP);
     </insert>
 
     <select id="getListSize" parameterType="com.project.member.Member" resultType="Integer">
@@ -40,22 +40,22 @@
 
     <select id="selectHistoryLimit" parameterType="Map" resultType="com.project.srchhisto.Srchhisto">
         use srchhisto;
-        select * from ${username} limit ${startIndex}, ${contentPerPage};
+        select * from ${username} order by time desc limit ${startIndex}, ${contentPerPage};
     </select>
 
     <select id="selectBookmarkedHistoryLimit" parameterType="Map" resultType="com.project.srchhisto.Srchhisto">
         use srchhisto;
-        select * from ${username} where isBookmarked = '1' limit ${startIndex}, ${contentPerPage};
+        select * from ${username} where isBookmarked = '1' order by time desc limit ${startIndex}, ${contentPerPage};
     </select>
 
     <select id="selectHistory" parameterType="com.project.member.Member" resultType="com.project.srchhisto.Srchhisto">
         use srchhisto;
-        select * from ${username};
+        select * from ${username} order by time desc;
     </select>
 
     <select id="selectBookmarkedHistory" parameterType="com.project.member.Member" resultType="com.project.srchhisto.Srchhisto">
         use srchhisto;
-        select * from ${username} where isBookmarked = '1';
+        select * from ${username} where isBookmarked = '1' order by time desc;
     </select>
 
     <update id="storeBookmark" parameterType="com.project.srchhisto.Srchhisto">
