@@ -11,6 +11,23 @@
         values (#{imageFileName}, #{gpsAddress}, #{roadAddress}, #{storeName}, #{storePhone}, #{storeMenu}, #{rate}, #{aLineReview}, #{isBookmarked});
     </insert>
 
+    <insert id="testDataInsert">
+        use srchhisto;
+        insert ignore into test (imageFileName, gpsAddress, roadAddress, storeName, storePhone, storeMenu, rate, aLineReview, isBookmarked)
+        values ('example/pagingTest/paging (01).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
+               ('example/pagingTest/paging (02).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
+               ('example/pagingTest/paging (03).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
+               ('example/pagingTest/paging (04).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
+               ('example/pagingTest/paging (05).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
+               ('example/pagingTest/paging (06).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
+               ('example/pagingTest/paging (07).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
+               ('example/pagingTest/paging (08).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
+               ('example/pagingTest/paging (09).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
+               ('example/pagingTest/paging (10).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
+               ('example/pagingTest/paging (11).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0'),
+               ('example/pagingTest/paging (12).jpg', 'null', 'testAddress', '1', '02-1234-1234', 'test', '5', 'test1 review', '0');
+    </insert>
+
     <select id="getListSize" parameterType="com.project.member.Member" resultType="Integer">
         use srchhisto;
         select count(*) from ${username};

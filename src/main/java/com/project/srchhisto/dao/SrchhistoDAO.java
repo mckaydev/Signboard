@@ -26,6 +26,13 @@ public class SrchhistoDAO implements ISrchhistoDAO{
     }
 
     @Override
+    public int testDataInsert() {
+        ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
+
+        return dao.testDataInsert();
+    }
+
+    @Override
     public int getListSize(Member member) {
         ISrchhistoDAO dao = sqlSession.getMapper(ISrchhistoDAO.class);
 

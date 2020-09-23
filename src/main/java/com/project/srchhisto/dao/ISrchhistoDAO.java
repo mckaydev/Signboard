@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ISrchhistoDAO {
     int storeInsert(Srchhisto srchhisto);
+    int testDataInsert();
     int getListSize(Member member);
     int getBookmarkedSize(Member member);
     List<Srchhisto> selectHistoryLimit(@Param("username") String username,

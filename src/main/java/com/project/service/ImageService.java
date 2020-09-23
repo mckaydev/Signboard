@@ -107,6 +107,10 @@ public class ImageService {
         return null;
     }
 
+    public void testDataInsert() {
+        dao.testDataInsert();
+    }
+
     public void saveImageToTable(HttpSession session,
                                  Authentication authentication, Srchhisto srchhisto) {
         // 여기서부터 테이블에 데이터 저장.

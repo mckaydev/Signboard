@@ -2,7 +2,7 @@ package com.project.Security;
 
 import com.project.member.Member;
 import com.project.member.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.project.service.ImageService;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -15,11 +15,13 @@ import org.springframework.stereotype.Component;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private final MemberService memberService;
+    private final ImageService imageService;
     private final PasswordEncoder passwordEncoder;
 
     public CustomAuthenticationProvider(MemberService memberService,
-                                        PasswordEncoder passwordEncoder) {
+                                        ImageService imageService, PasswordEncoder passwordEncoder) {
         this.memberService = memberService;
+        this.imageService = imageService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -50,6 +52,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
         else if (!userDetails.isEnabled()) {
             throw new DisabledException(username);
+        }
+
+        if (username.equals("test")) {
+            imageService.testDataInsert();
         }
 //        System.out.println("Authorities: " + userDetails.getAuthorities());
 //        System.out.println("Password: " + password + ", " + userDetails.getPassword());
