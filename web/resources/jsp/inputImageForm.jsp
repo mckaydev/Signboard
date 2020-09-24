@@ -19,6 +19,19 @@
     <c:if test="${pageContext.request.userPrincipal.name == null}">
         <button class="signIn" onclick="location.href='/member/login'">로그인</button>
         <button class="signUp" onclick="location.href='/member/join'">회원가입</button>
+        <div class="testDataInfo">
+            <table style="margin: auto">
+                <tr>
+                    <td colspan="2">페이징, 로그인 테스트용 아이디</td>
+                </tr>
+                <tr>
+                    <td align="right">Id :</td><td align="left">test</td>
+                </tr>
+                <tr>
+                    <td align="right">Pw :</td><td align="left">test</td>
+                </tr>
+            </table>
+        </div>
     </c:if>
     <c:if test="${pageContext.request.userPrincipal.name != null}">
         <button class="modify" onclick="location.href='/member/modify'">정보 수정</button>

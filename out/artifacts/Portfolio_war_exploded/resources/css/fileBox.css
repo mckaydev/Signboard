@@ -56,3 +56,16 @@
     background-color: #B9B999;
     border-color: #B2B222;
 }
+
+.testDataInfo {
+    position: absolute;
+    top:70%; left:50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.testDataInfo td {
+    color: white;
+    font-size: 2rem;
+}
