@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import com.sun.management.OperatingSystemMXBean;
+import java.lang.management.ManagementFactory;
 import java.util.List;
 
 @Controller
@@ -115,6 +117,31 @@ public class HomeController {
                              @RequestParam("dong") String inputDong,
                              @RequestParam("whatLang") String whatLang) throws IOException {
 
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+        OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
+
+        while(true) {
+            if (osBean.getSystemCpuLoad() <= 0) {
+                continue;
+            }
+
+            System.out.println("cpuUsage: " + String.format("%.2f", osBean.getSystemCpuLoad() * 100));
+            if ((osBean.getSystemCpuLoad() * 100) < 50) {
+                break;
+            }
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         // 간판 사진을 OCR 하고 OCR한 정보 model에 탑재
         String ocrResult = imageService.imageCrop(originalFileName, cropLoc, session, offsetWidth, offsetHeight, whatLang);
         //OCR 결과가 없으면 간판의 영역을 다시 지정 하도록 한다.
@@ -127,25 +154,24 @@ public class HomeController {
         model.addAttribute("getOriginalFilename", originalFileName);
         model.addAttribute("ocrResult", ocrResult);
 
-        System.out.println("ddX: " + ddX);
-        System.out.println("ddY: " + ddY);
-        double ddx = ddX;
+//        System.out.println("ddX: " + ddX);
+//        System.out.println("ddY: " + ddY);
 
-        String dong = "";
-        if (Double.isNaN(ddx)) {
-            System.out.println("gps empty");
+        String dong;
+        if (Double.isNaN(ddX)) {
+//            System.out.println("gps empty");
             dong = inputDong;
         } else {
             String address = naverRGeocoding.rvrsGeocode(ddX, ddY);
             dong = naverRGeocoding.exportAddress(address);
-            System.out.println(dong);
+//            System.out.println(dong);
         }
         // /cropImage 에서 받아온 DD_X, DD_Y 좌표를 통해 네이버 reverse geocoding을 진행한다.
         // 결과값에서 지번주소를 추출한다.
 
         // 가게의 정보를 네이버 검색 API로 검색하고 가게의 정보(json)을 model에 탑재
         String searchResult = naverSearch.search(dong, ocrResult);
-        System.out.println(dong + " " + ocrResult);
+//        System.out.println(dong + " " + ocrResult);
         model.addAttribute("searchResult", searchResult);
 
         // 검색 API에서 뽑은 정보에서 가게의 도로명 주소만을 추출한다.
@@ -159,7 +185,7 @@ public class HomeController {
 
         // 가게의 도로명 주소를 네이버 맵 API의 geocoding에 전송하여 위도와 경도를 뽑아낸다.
         String geoLoc = naverGeocoding.geocode(roadAddress);
-        System.out.println(geoLoc);
+//        System.out.println(geoLoc);
         model.addAttribute("geoLoc", geoLoc);
 
         return "inputImageSuccess";

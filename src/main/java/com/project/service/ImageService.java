@@ -178,7 +178,7 @@ public class ImageService {
             System.err.println(e.getMessage());
         }
 
-        StringBuffer result1 = new StringBuffer();
+        StringBuilder result1 = new StringBuilder();
 
         for(int i = 0; i < Objects.requireNonNull(result).length(); i ++) {
             if(result.charAt(i) >= 'A' && result.charAt(i) <= 'Z') {
