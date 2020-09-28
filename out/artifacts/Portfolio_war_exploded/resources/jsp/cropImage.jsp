@@ -34,8 +34,8 @@
                 <label id="dongLabel">
                     <input style="font-size: 1.5rem; width: 50%; text-align: center" id="dong" name="dong" maxlength="10">
                 </label><br>
-                <label style="font-size: 2rem"><input type="radio" name="whatLang" checked="checked" value="kor">한국어</label>
-                <label style="font-size: 2rem"><input type="radio" name="whatLang" value="eng">영어</label>
+<%--                <label style="font-size: 2rem"><input type="radio" name="whatLang" checked="checked" value="kor">한국어</label>--%>
+<%--                <label style="font-size: 2rem"><input type="radio" name="whatLang" value="eng">영어</label>--%>
                 <button style="width: 50vw; box-sizing: border-box" type="submit" onclick="offset()">제출</button>
             </form>
             <script>

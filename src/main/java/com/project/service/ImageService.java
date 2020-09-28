@@ -166,14 +166,19 @@ public class ImageService {
         return bufferedImage.getSubimage((int)x1, (int)y1, (int)w, (int)h);
     }
 
-    public String OCR(HttpSession session, BufferedImage imgFile, String whatLang) throws TesseractException {
+    public String OCR(HttpSession session, BufferedImage imgFile) {
         String ocrPath = session.getServletContext().getRealPath("/") + "WEB-INF/classes/tessdata";
 
         tesseract.setDatapath(ocrPath);
-        tesseract.setLanguage(whatLang);
+        tesseract.setLanguage("Hangul");
         tesseract.setTessVariable("user_defined_dpi", "300");
 
-        String result = tesseract.doOCR(imgFile);
+        String result = null;
+        try {
+            result = tesseract.doOCR(imgFile);
+        } catch (TesseractException e) {
+            System.err.println(e.getMessage());
+        }
         System.out.println("result: " + result);
 
         StringBuilder result1 = new StringBuilder();

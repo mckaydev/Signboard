@@ -10,7 +10,6 @@ import com.project.service.NaverGeocoding;
 import com.project.service.NaverRvrsGeocoding;
 import com.project.service.NaverSearch;
 import com.project.srchhisto.Srchhisto;
-import net.sourceforge.tess4j.TesseractException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -137,7 +136,7 @@ public class HomeController {
                              @RequestParam("ddX") double ddX,
                              @RequestParam("ddY") double ddY,
                              @RequestParam("dong") String inputDong,
-                             @RequestParam("whatLang") String whatLang) throws IOException, TesseractException {
+                             @RequestParam(value = "whatLang", required = false) String whatLang) throws IOException {
 
 //        try {
 //            Thread.sleep(500);
@@ -147,7 +146,7 @@ public class HomeController {
         BufferedImage cropedImg = imageService.imageCrop(originalFileName, cropLoc, session, offsetWidth, offsetHeight);
 
         // 간판 사진을 OCR 하고 OCR한 정보 model에 탑재
-        String ocrResult = imageService.OCR(session, cropedImg, whatLang);
+        String ocrResult = imageService.OCR(session, cropedImg);
 //        String ocrResult = "올리브영";
 
         //OCR 결과가 없으면 간판의 영역을 다시 지정 하도록 한다.
