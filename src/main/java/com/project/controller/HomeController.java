@@ -10,6 +10,7 @@ import com.project.service.NaverGeocoding;
 import com.project.service.NaverRvrsGeocoding;
 import com.project.service.NaverSearch;
 import com.project.srchhisto.Srchhisto;
+import net.sourceforge.tess4j.TesseractException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import com.sun.management.OperatingSystemMXBean;
 import java.lang.management.ManagementFactory;
@@ -107,24 +109,8 @@ public class HomeController {
         return "cropImage";
     }
 
-    @RequestMapping(value = "/cropResult", method = RequestMethod.POST)
-    public String cropResult(Model model, HttpSession session, CropLoc cropLoc,
-                             @RequestParam("originalFileName") String originalFileName,
-                             @RequestParam("offsetWidth") double offsetWidth,
-                             @RequestParam("offsetHeight") double offsetHeight,
-                             @RequestParam("ddX") double ddX,
-                             @RequestParam("ddY") double ddY,
-                             @RequestParam("dong") String inputDong,
-                             @RequestParam("whatLang") String whatLang) throws IOException {
-
-//        try {
-//            Thread.sleep(500);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
+    public void cpuManage() {
         OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
-
         while(true) {
             if (osBean.getSystemCpuLoad() <= 0) {
                 continue;
@@ -141,9 +127,29 @@ public class HomeController {
                 e.printStackTrace();
             }
         }
+    }
+
+    @RequestMapping(value = "/cropResult", method = RequestMethod.POST)
+    public String cropResult(Model model, HttpSession session, CropLoc cropLoc,
+                             @RequestParam("originalFileName") String originalFileName,
+                             @RequestParam("offsetWidth") double offsetWidth,
+                             @RequestParam("offsetHeight") double offsetHeight,
+                             @RequestParam("ddX") double ddX,
+                             @RequestParam("ddY") double ddY,
+                             @RequestParam("dong") String inputDong,
+                             @RequestParam("whatLang") String whatLang) throws IOException, TesseractException {
+
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        BufferedImage cropedImg = imageService.imageCrop(originalFileName, cropLoc, session, offsetWidth, offsetHeight);
 
         // 간판 사진을 OCR 하고 OCR한 정보 model에 탑재
-        String ocrResult = imageService.imageCrop(originalFileName, cropLoc, session, offsetWidth, offsetHeight, whatLang);
+        String ocrResult = imageService.OCR(session, cropedImg, whatLang);
+//        String ocrResult = "올리브영";
+
         //OCR 결과가 없으면 간판의 영역을 다시 지정 하도록 한다.
         if (ocrResult.equals("")) {
             model.addAttribute("getOriginalFilename", originalFileName);
@@ -219,6 +225,7 @@ public class HomeController {
                                          @RequestParam(value = "curPage",
                                                  required = false,
                                                  defaultValue = "0") int curPage) throws JsonProcessingException {
+        cpuManage();
         ModelAndView mav = new ModelAndView();
 
         Cookie cookie = new Cookie("where", "bookmarkedSearch");
@@ -269,6 +276,7 @@ public class HomeController {
                                     @RequestParam(value = "curPage",
                                             required = false,
                                             defaultValue = "0") int curPage) throws JsonProcessingException {
+        cpuManage();
         ModelAndView mav = new ModelAndView();
 
         Cookie cookie = new Cookie("where", "priorSearch");

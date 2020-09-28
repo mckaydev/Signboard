@@ -14,21 +14,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class ImageService {
     private final SrchhistoDAO dao;
     private final MemberService memberService;
+    private final Tesseract tesseract;
 
     @Autowired
-    public ImageService(SrchhistoDAO srchhistoDAO, MemberService memberService) {
+    public ImageService(SrchhistoDAO srchhistoDAO, MemberService memberService, Tesseract tesseract) {
         this.dao = srchhistoDAO;
         this.memberService = memberService;
+        this.tesseract = tesseract;
     }
 
     public int storeBookmark(Srchhisto srchhisto) {
@@ -143,11 +145,10 @@ public class ImageService {
         imageFile.transferTo(file);
     }
 
-    public String imageCrop(String originalFileName, CropLoc cropLoc, HttpSession session,
-                            double offsetWidth, double offsetHeight, String whatLang) throws IOException {
-        String imgPath = session.getServletContext().getRealPath("/") + "/resources/img/" + originalFileName;
+    public BufferedImage imageCrop(String originalFileName, CropLoc cropLoc, HttpSession session,
+                            double offsetWidth, double offsetHeight) throws IOException {
+        String imgPath = session.getServletContext().getRealPath("/") + "resources/img/" + originalFileName;
         System.out.println("path: " + imgPath);
-        String ocrPath = session.getServletContext().getRealPath("/") + "/WEB-INF/classes/tessdata";
         File file = new File(imgPath);
         BufferedImage bufferedImage = ImageIO.read(file);
 
@@ -159,28 +160,25 @@ public class ImageService {
         double w = cropLoc.getW() * (bufferedImage.getWidth() / offsetWidth);
         double h = cropLoc.getH() * (bufferedImage.getHeight() / offsetHeight);
 
-        BufferedImage cropImage = bufferedImage.getSubimage((int)x1, (int)y1, (int)w, (int)h);
+//        Rectangle rectangle = new Rectangle((int)x1, (int)y1, (int)w, (int)h);
+//        return rectangle;
 
-        return OCR(cropImage, ocrPath, whatLang);
+        return bufferedImage.getSubimage((int)x1, (int)y1, (int)w, (int)h);
     }
 
-    public String OCR(BufferedImage imgFile, String ocrPath, String whatLang) {
-        String result = null;
-        Tesseract tesseract = new Tesseract();
+    public String OCR(HttpSession session, BufferedImage imgFile, String whatLang) throws TesseractException {
+        String ocrPath = session.getServletContext().getRealPath("/") + "WEB-INF/classes/tessdata";
+
         tesseract.setDatapath(ocrPath);
         tesseract.setLanguage(whatLang);
+        tesseract.setTessVariable("user_defined_dpi", "300");
 
-        System.out.println("----------------------------------------------");
-        try {
-            result = tesseract.doOCR(imgFile);
-            System.out.println("result: " + result);
-        } catch (TesseractException e) {
-            System.err.println(e.getMessage());
-        }
+        String result = tesseract.doOCR(imgFile);
+        System.out.println("result: " + result);
 
         StringBuilder result1 = new StringBuilder();
 
-        for(int i = 0; i < Objects.requireNonNull(result).length(); i ++) {
+        for(int i = 0; i < result.length(); i ++) {
             if(result.charAt(i) >= 'A' && result.charAt(i) <= 'Z') {
                 result1.append(result.charAt(i));
             }
@@ -195,6 +193,8 @@ public class ImageService {
             }
 
         }
+
+        System.out.println("----------------------------------------------");
         System.out.println("remove special character: " + result1);
         if (result1.toString().equals("")) {
             System.out.println("ocr result empty");

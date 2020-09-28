@@ -1,5 +1,6 @@
 package com.project.Web;
 
+import net.sourceforge.tess4j.Tesseract;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -89,6 +90,12 @@ public class WebConfig implements WebMvcConfigurer {
     public SqlSessionTemplate sqlSession() throws Exception {
 
         return new SqlSessionTemplate(sqlSessionFactory());
+    }
+
+    @Bean(name = "tesseract")
+    public Tesseract tesseract() {
+
+        return new Tesseract();
     }
 
     @Bean
