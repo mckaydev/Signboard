@@ -86,20 +86,23 @@ function createFunction(cPage, what) {
     let test = document.getElementById("container").firstChild;
 
     if (jsonFile.length === 0 && listSize !== 0) {
-        currentPage--;
+        currentPage = Math.floor(listSize / contentPerPage) - 1;
         location.href = location.pathname + '?curPage=' + currentPage;
+    }
+    if (jsonFile.length === 0 && listSize === 0 && currentPage > 0) {
+        location.href = location.pathname + '?curPage=' + 0;
     }
 
     console.log('before cPage: ' + cPage);
     console.log('jsonFile.length: ' + jsonFile.length);
     console.log('listSize: ' + listSize);
     // 자바스크립트로 페이징을 구현할 때 overflow 처리 (ex) 7페이지가 max인데 8이상 접근)
-    if (cPage * contentPerPage >= listSize && listSize !== 0) {
-        // 제일 마지막 페이지로
-        cPage = Math.floor(listSize / contentPerPage) - 1;
-        currentPage = cPage;
-        console.log('current Page overflow');
-    }
+    // if (cPage * contentPerPage >= listSize && listSize !== 0) {
+    //     // 제일 마지막 페이지로
+    //     cPage = Math.floor(listSize / contentPerPage) - 1;
+    //     currentPage = cPage;
+    //     console.log('current Page overflow');
+    // }
     console.log('after cPage: ' + cPage);
 
     let minContent = cPage * contentPerPage;

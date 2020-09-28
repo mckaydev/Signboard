@@ -227,6 +227,11 @@ public class HomeController {
         cpuManage();
         ModelAndView mav = new ModelAndView();
 
+        if (curPage < 0) {
+            mav.setViewName("redirect:/bookmarkedSearch");
+            return mav;
+        }
+
         Cookie cookie = new Cookie("where", "bookmarkedSearch");
         cookie.setPath("/");
         response.addCookie(cookie);
@@ -277,6 +282,11 @@ public class HomeController {
                                             defaultValue = "0") int curPage) throws JsonProcessingException {
         cpuManage();
         ModelAndView mav = new ModelAndView();
+
+        if (curPage < 0) {
+            mav.setViewName("redirect:/priorSearch");
+            return mav;
+        }
 
         Cookie cookie = new Cookie("where", "priorSearch");
         cookie.setPath("/");
