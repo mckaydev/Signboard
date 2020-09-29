@@ -85,13 +85,13 @@ function createFunction(cPage, what) {
 
     let test = document.getElementById("container").firstChild;
 
-    if (jsonFile.length === 0 && listSize !== 0) {
-        currentPage = Math.floor(listSize / contentPerPage) - 1;
-        location.href = location.pathname + '?curPage=' + currentPage;
-    }
-    if (jsonFile.length === 0 && listSize === 0 && currentPage > 0) {
-        location.href = location.pathname + '?curPage=' + 0;
-    }
+    // if (jsonFile.length === 0 && listSize !== 0) {
+    //     currentPage = Math.floor(listSize / contentPerPage) - 1;
+    //     location.href = location.pathname + '?curPage=' + currentPage;
+    // }
+    // if (jsonFile.length === 0 && listSize === 0 && currentPage > 0) {
+    //     location.href = location.pathname + '?curPage=' + 0;
+    // }
 
     console.log('before cPage: ' + cPage);
     console.log('jsonFile.length: ' + jsonFile.length);

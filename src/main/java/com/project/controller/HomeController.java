@@ -227,11 +227,6 @@ public class HomeController {
         cpuManage();
         ModelAndView mav = new ModelAndView();
 
-        if (curPage < 0) {
-            mav.setViewName("redirect:/bookmarkedSearch");
-            return mav;
-        }
-
         Cookie cookie = new Cookie("where", "bookmarkedSearch");
         cookie.setPath("/");
         response.addCookie(cookie);
@@ -261,6 +256,14 @@ public class HomeController {
         // 3-----------------------------------------------
         // COUNT, LIMIT 절을 이용한 paging
         int listLength = imageService.getBookmarkedSize(authentication);
+
+        if (curPage < 0) {
+            mav.setViewName("redirect:/bookmarkedSearch");
+            return mav;
+        } else if (curPage >= Math.ceil(listLength / 2)) {
+            mav.setViewName("redirect:/bookmarkedSearch?curPage=" + ((listLength / 2) - 1));
+            return mav;
+        }
         System.out.println("search history length: " + listLength);
         List<Srchhisto> listUseLimit = imageService.viewBookmarked(authentication, startIndexOfData, 2);
 //        List<Srchhisto> listUseLimit = imageService.viewBookmarked(authentication, startIndexOfData,
@@ -317,6 +320,14 @@ public class HomeController {
         // 3-----------------------------------------------
         // COUNT, LIMIT 절을 이용한 paging
         int listLength = imageService.getListSize(authentication);
+
+        if (curPage < 0) {
+            mav.setViewName("redirect:/priorSearch");
+            return mav;
+        } else if (curPage >= Math.ceil(listLength / 2)) {
+            mav.setViewName("redirect:/priorSearch?curPage=" + ((listLength / 2) - 1));
+            return mav;
+        }
         System.out.println("search history length: " + listLength);
         List<Srchhisto> listUseLimit = imageService.viewPrior(authentication, startIndexOfData, 2);
 //        List<Srchhisto> listUseLimit = imageService.viewPrior(authentication, startIndexOfData,
