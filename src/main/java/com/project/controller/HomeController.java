@@ -218,25 +218,11 @@ public class HomeController {
         return mav;
     }
 
-    @RequestMapping(value = "/bookmarkedSearch", method = RequestMethod.GET)
-    public ModelAndView bookmarkedSearch(Authentication authentication,
-                                         HttpServletResponse response,
-                                         @RequestParam(value = "curPage",
-                                                 required = false,
-                                                 defaultValue = "0") int curPage) throws JsonProcessingException {
-        cpuManage();
-        ModelAndView mav = new ModelAndView();
-
-        Cookie cookie = new Cookie("where", "bookmarkedSearch");
-        cookie.setPath("/");
-        response.addCookie(cookie);
-
-        mav.setViewName("priorSearch");
-        int startIndexOfData = curPage * 2;
-
+    public void HistorySearch() {
         // 1-----------------------------------------------
         // js에 데이터를 전부 넘겨주고 paging을 js에서 작업할 때
 //        List<Srchhisto> list = imageService.viewBookmarked(authentication);
+//        List<Srchhisto> list = imageService.viewPrior(authentication);
 //        mav = makeJson(authentication, mav, list);
 //        mav.addObject("listSize", list.size());
         // ------------------------------------------------
@@ -252,6 +238,23 @@ public class HomeController {
 //        mav = makeJson(authentication, mav, pagingList);
 //        mav.addObject("listSize", list.size());
         // ------------------------------------------------
+    }
+
+    @RequestMapping(value = "/bookmarkedSearch", method = RequestMethod.GET)
+    public ModelAndView bookmarkedSearch(Authentication authentication,
+                                         HttpServletResponse response,
+                                         @RequestParam(value = "curPage",
+                                                 required = false,
+                                                 defaultValue = "0") int curPage) throws JsonProcessingException {
+        cpuManage();
+        ModelAndView mav = new ModelAndView();
+
+        Cookie cookie = new Cookie("where", "bookmarkedSearch");
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
+        mav.setViewName("priorSearch");
+        int startIndexOfData = curPage * 2;
 
         // 3-----------------------------------------------
         // COUNT, LIMIT 절을 이용한 paging
@@ -297,25 +300,6 @@ public class HomeController {
 
         mav.setViewName("priorSearch");
         int startIndexOfData = curPage * 2;
-
-        // 1-----------------------------------------------
-        // js에 데이터를 전부 넘겨주고 paging을 js에서 작업할 때
-//        List<Srchhisto> list = imageService.viewPrior(authentication);
-//        mav = makeJson(authentication, mav, list);
-//        mav.addObject("listSize", list.size());
-        // ------------------------------------------------
-
-        // 2-----------------------------------------------
-        // sublist를 이용하여 paging을 구현할 때 (1의 추가 구문)
-//        int endIndexOfData = list.size() > startIndexOfData + 2 ?
-//                startIndexOfData + 2 :
-//                list.size();
-//        int endIndexOfData = Math.min(list.size(), startIndexOfData + 2);
-//        List<Srchhisto> pagingList = new ArrayList<>(list.subList(startIndexOfData, endIndexOfData));
-//        System.out.println("sublist: " + pagingList);
-//        mav = makeJson(authentication, mav, pagingList);
-//        mav.addObject("listSize", list.size());
-        // ------------------------------------------------
 
         // 3-----------------------------------------------
         // COUNT, LIMIT 절을 이용한 paging
