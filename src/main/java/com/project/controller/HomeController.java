@@ -218,7 +218,24 @@ public class HomeController {
         return mav;
     }
 
-    public void HistorySearch() {
+    public ModelAndView HistorySearch(HttpServletResponse response,
+                                      Authentication authentication,
+                                      int curPage, Boolean isPriorSearch) throws JsonProcessingException {
+        cpuManage();
+        ModelAndView mav = new ModelAndView();
+
+        Cookie cookie;
+        if (isPriorSearch == false) {
+            cookie = new Cookie("where", "bookmarkedSearch");
+        } else {
+            cookie = new Cookie("where", "priorSearch");
+        }
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
+        mav.setViewName("priorSearch");
+        int startIndexOfData = curPage * 2;
+
         // 1-----------------------------------------------
         // js에 데이터를 전부 넘겨주고 paging을 js에서 작업할 때
 //        List<Srchhisto> list = imageService.viewBookmarked(authentication);
@@ -238,6 +255,48 @@ public class HomeController {
 //        mav = makeJson(authentication, mav, pagingList);
 //        mav.addObject("listSize", list.size());
         // ------------------------------------------------
+
+        // 3-----------------------------------------------
+        // COUNT, LIMIT 절을 이용한 paging
+        int listLength;
+        if (isPriorSearch == false) {
+            listLength = imageService.getBookmarkedSize(authentication);
+        } else {
+            listLength = imageService.getListSize(authentication);
+        }
+        System.out.println("search history length: " + listLength);
+        System.out.println("ceil: " + Math.ceil((double) listLength /(double) 2));
+
+        if (curPage < 0) {
+            if (isPriorSearch == false) {
+                mav.setViewName("redirect:/bookmarkedSearch");
+            } else {
+                mav.setViewName("redirect:/priorSearch");
+            }
+            return mav;
+        } else if (curPage != 0 && curPage >= Math.ceil((double) listLength /(double) 2)) {
+            if (isPriorSearch == false) {
+                mav.setViewName("redirect:/bookmarkedSearch?curPage=" + ((listLength / 2) - 1));
+            } else {
+                mav.setViewName("redirect:/priorSearch?curPage=" + ((listLength / 2) - 1));
+            }
+            return mav;
+        }
+
+        List<Srchhisto> listUseLimit;
+        if (isPriorSearch == false) {
+            listUseLimit = imageService.viewBookmarked(authentication, startIndexOfData, 2);
+        } else {
+            listUseLimit = imageService.viewPrior(authentication, startIndexOfData, 2);
+        }
+
+        mav = makeJson(authentication, mav, listUseLimit);
+        mav.addObject("listSize", listLength);
+        // ------------------------------------------------
+
+        mav.addObject("curPage", curPage);
+
+        return mav;
     }
 
     @RequestMapping(value = "/bookmarkedSearch", method = RequestMethod.GET)
@@ -246,38 +305,39 @@ public class HomeController {
                                          @RequestParam(value = "curPage",
                                                  required = false,
                                                  defaultValue = "0") int curPage) throws JsonProcessingException {
-        cpuManage();
-        ModelAndView mav = new ModelAndView();
-
-        Cookie cookie = new Cookie("where", "bookmarkedSearch");
-        cookie.setPath("/");
-        response.addCookie(cookie);
-
-        mav.setViewName("priorSearch");
-        int startIndexOfData = curPage * 2;
-
-        // 3-----------------------------------------------
-        // COUNT, LIMIT 절을 이용한 paging
-        int listLength = imageService.getBookmarkedSize(authentication);
-
-        if (curPage < 0) {
-            mav.setViewName("redirect:/bookmarkedSearch");
-            return mav;
-        } else if (curPage >= Math.ceil(listLength / 2)) {
-            mav.setViewName("redirect:/bookmarkedSearch?curPage=" + ((listLength / 2) - 1));
-            return mav;
-        }
-        System.out.println("search history length: " + listLength);
-        List<Srchhisto> listUseLimit = imageService.viewBookmarked(authentication, startIndexOfData, 2);
-//        List<Srchhisto> listUseLimit = imageService.viewBookmarked(authentication, startIndexOfData,
-//                endIndexOfData - startIndexOfData);
-        mav = makeJson(authentication, mav, listUseLimit);
-        mav.addObject("listSize", listLength);
-        // ------------------------------------------------
-
-        mav.addObject("curPage", curPage);
-
-        return mav;
+//        cpuManage();
+//        ModelAndView mav = new ModelAndView();
+//
+//        Cookie cookie = new Cookie("where", "bookmarkedSearch");
+//        cookie.setPath("/");
+//        response.addCookie(cookie);
+//
+//        mav.setViewName("priorSearch");
+//        int startIndexOfData = curPage * 2;
+//
+//        // 3-----------------------------------------------
+//        // COUNT, LIMIT 절을 이용한 paging
+//        int listLength = imageService.getBookmarkedSize(authentication);
+//
+//        if (curPage < 0) {
+//            mav.setViewName("redirect:/bookmarkedSearch");
+//            return mav;
+//        } else if (curPage >= Math.ceil(listLength / 2)) {
+//            mav.setViewName("redirect:/bookmarkedSearch?curPage=" + ((listLength / 2) - 1));
+//            return mav;
+//        }
+//        System.out.println("search history length: " + listLength);
+//        List<Srchhisto> listUseLimit = imageService.viewBookmarked(authentication, startIndexOfData, 2);
+////        List<Srchhisto> listUseLimit = imageService.viewBookmarked(authentication, startIndexOfData,
+////                endIndexOfData - startIndexOfData);
+//        mav = makeJson(authentication, mav, listUseLimit);
+//        mav.addObject("listSize", listLength);
+//        // ------------------------------------------------
+//
+//        mav.addObject("curPage", curPage);
+//
+//        return mav;
+        return HistorySearch(response, authentication, curPage, false);
     }
 
     @RequestMapping(value = "/priorSearch", method = RequestMethod.GET)
@@ -286,43 +346,39 @@ public class HomeController {
                                     @RequestParam(value = "curPage",
                                             required = false,
                                             defaultValue = "0") int curPage) throws JsonProcessingException {
-        cpuManage();
-        ModelAndView mav = new ModelAndView();
-
-        if (curPage < 0) {
-            mav.setViewName("redirect:/priorSearch");
-            return mav;
-        }
-
-        Cookie cookie = new Cookie("where", "priorSearch");
-        cookie.setPath("/");
-        response.addCookie(cookie);
-
-        mav.setViewName("priorSearch");
-        int startIndexOfData = curPage * 2;
-
-        // 3-----------------------------------------------
-        // COUNT, LIMIT 절을 이용한 paging
-        int listLength = imageService.getListSize(authentication);
-
-        if (curPage < 0) {
-            mav.setViewName("redirect:/priorSearch");
-            return mav;
-        } else if (curPage >= Math.ceil(listLength / 2)) {
-            mav.setViewName("redirect:/priorSearch?curPage=" + ((listLength / 2) - 1));
-            return mav;
-        }
-        System.out.println("search history length: " + listLength);
-        List<Srchhisto> listUseLimit = imageService.viewPrior(authentication, startIndexOfData, 2);
-//        List<Srchhisto> listUseLimit = imageService.viewPrior(authentication, startIndexOfData,
-//                endIndexOfData - startIndexOfData);
-        mav = makeJson(authentication, mav, listUseLimit);
-        mav.addObject("listSize", listLength);
-        // ------------------------------------------------
-
-        mav.addObject("curPage", curPage);
-
-        return mav;
+//        cpuManage();
+//        ModelAndView mav = new ModelAndView();
+//
+//        Cookie cookie = new Cookie("where", "priorSearch");
+//        cookie.setPath("/");
+//        response.addCookie(cookie);
+//
+//        mav.setViewName("priorSearch");
+//        int startIndexOfData = curPage * 2;
+//
+//        // 3-----------------------------------------------
+//        // COUNT, LIMIT 절을 이용한 paging
+//        int listLength = imageService.getListSize(authentication);
+//
+//        if (curPage < 0) {
+//            mav.setViewName("redirect:/priorSearch");
+//            return mav;
+//        } else if (curPage >= Math.ceil(listLength / 2)) {
+//            mav.setViewName("redirect:/priorSearch?curPage=" + ((listLength / 2) - 1));
+//            return mav;
+//        }
+//        System.out.println("search history length: " + listLength);
+//        List<Srchhisto> listUseLimit = imageService.viewPrior(authentication, startIndexOfData, 2);
+////        List<Srchhisto> listUseLimit = imageService.viewPrior(authentication, startIndexOfData,
+////                endIndexOfData - startIndexOfData);
+//        mav = makeJson(authentication, mav, listUseLimit);
+//        mav.addObject("listSize", listLength);
+//        // ------------------------------------------------
+//
+//        mav.addObject("curPage", curPage);
+//
+//        return mav;
+        return HistorySearch(response, authentication, curPage, true);
     }
 
     @RequestMapping(value = "/bookmarkHistory", method = RequestMethod.POST)
