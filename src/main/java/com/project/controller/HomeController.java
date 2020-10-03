@@ -305,7 +305,38 @@ public class HomeController {
                                          @RequestParam(value = "curPage",
                                                  required = false,
                                                  defaultValue = "0") int curPage) throws JsonProcessingException {
-
+//        cpuManage();
+//        ModelAndView mav = new ModelAndView();
+//
+//        Cookie cookie = new Cookie("where", "bookmarkedSearch");
+//        cookie.setPath("/");
+//        response.addCookie(cookie);
+//
+//        mav.setViewName("priorSearch");
+//        int startIndexOfData = curPage * 2;
+//
+//        // 3-----------------------------------------------
+//        // COUNT, LIMIT 절을 이용한 paging
+//        int listLength = imageService.getBookmarkedSize(authentication);
+//
+//        if (curPage < 0) {
+//            mav.setViewName("redirect:/bookmarkedSearch");
+//            return mav;
+//        } else if (curPage >= Math.ceil(listLength / 2)) {
+//            mav.setViewName("redirect:/bookmarkedSearch?curPage=" + ((listLength / 2) - 1));
+//            return mav;
+//        }
+//        System.out.println("search history length: " + listLength);
+//        List<Srchhisto> listUseLimit = imageService.viewBookmarked(authentication, startIndexOfData, 2);
+////        List<Srchhisto> listUseLimit = imageService.viewBookmarked(authentication, startIndexOfData,
+////                endIndexOfData - startIndexOfData);
+//        mav = makeJson(authentication, mav, listUseLimit);
+//        mav.addObject("listSize", listLength);
+//        // ------------------------------------------------
+//
+//        mav.addObject("curPage", curPage);
+//
+//        return mav;
         return HistorySearch(response, authentication, curPage, false);
     }
 
@@ -315,7 +346,38 @@ public class HomeController {
                                     @RequestParam(value = "curPage",
                                             required = false,
                                             defaultValue = "0") int curPage) throws JsonProcessingException {
-
+//        cpuManage();
+//        ModelAndView mav = new ModelAndView();
+//
+//        Cookie cookie = new Cookie("where", "priorSearch");
+//        cookie.setPath("/");
+//        response.addCookie(cookie);
+//
+//        mav.setViewName("priorSearch");
+//        int startIndexOfData = curPage * 2;
+//
+//        // 3-----------------------------------------------
+//        // COUNT, LIMIT 절을 이용한 paging
+//        int listLength = imageService.getListSize(authentication);
+//
+//        if (curPage < 0) {
+//            mav.setViewName("redirect:/priorSearch");
+//            return mav;
+//        } else if (curPage >= Math.ceil(listLength / 2)) {
+//            mav.setViewName("redirect:/priorSearch?curPage=" + ((listLength / 2) - 1));
+//            return mav;
+//        }
+//        System.out.println("search history length: " + listLength);
+//        List<Srchhisto> listUseLimit = imageService.viewPrior(authentication, startIndexOfData, 2);
+////        List<Srchhisto> listUseLimit = imageService.viewPrior(authentication, startIndexOfData,
+////                endIndexOfData - startIndexOfData);
+//        mav = makeJson(authentication, mav, listUseLimit);
+//        mav.addObject("listSize", listLength);
+//        // ------------------------------------------------
+//
+//        mav.addObject("curPage", curPage);
+//
+//        return mav;
         return HistorySearch(response, authentication, curPage, true);
     }
 
